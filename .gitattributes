@@ -1,6 +1,1 @@
-*.go linguist-language=go
-*.java linguist-language=go
-*.js linguist-language=go
-*.html linguist-language=go
-*.xml linguist-language=go
-*.css linguist-language=go
+* linguist-language=go
