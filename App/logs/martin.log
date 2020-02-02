@@ -892,3 +892,7 @@
 2020-02-02T14:07:34+07:00 SYSTEM main.go:27: Starting Application
 2020-02-02T14:07:34+07:00 SYSTEM customlogger.go:51: Login Page
 2020-02-02T14:07:34+07:00 SYSTEM customlogger.go:51: Login Page
+2020-02-02T14:56:59+07:00 SYSTEM main.go:27: Starting Application
+2020-02-02T14:56:59+07:00 SYSTEM customlogger.go:51: Login Page
+2020-02-02T14:56:59+07:00 SYSTEM customlogger.go:51: Login Page
+2020-02-02T14:56:59+07:00 SYSTEM customlogger.go:51: Login Page
