@@ -37,7 +37,7 @@ const (
 ```
 - Run Redis Service
 - Run Mysql Service
-- Masuk ke /App/. kemudiankan jalankan melalui CLI ( go run main.go )
+- Masuk ke .App/ kemudiankan jalankan melalui CLI ( go run main.go )
 - Go Framework already serve
 
 
