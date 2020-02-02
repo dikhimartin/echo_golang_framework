@@ -34,7 +34,7 @@
                                     <div class="form-group" id="text_input">
                                         <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12">Text Input <span class="required">*</span></label>
                                         <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
-                                            <input type="text" class="form-control" name="text_input" required placeholder="Text Input" />
+                                            <input type="text" class="form-control" name="text_input"  placeholder="Text Input" />
                                             <small class='form-control-feedback' id='alert-text-input'></small>
                                         </div>
                                     </div>
@@ -89,11 +89,8 @@
                 form.text_input.focus();
                 return (false);
             }
-
             return (true);
         }
     </script>
-
-
 	{{template "lastfooter"}}
 {{end}}

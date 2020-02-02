@@ -27,22 +27,24 @@
                             <h4 class="card-title m-b-0 text-white">Edit Data</h4>
                         </div>
                         <div class="card-body">
-                            <form action="/lib/sample_crud/editform/{{.response.Id}}" method="post">
+                            <form action="/lib/sample_crud/editform/{{.response.Id}}" method="POST" enctype="multipart/form-data"
+                            onsubmit="return validasi_input(this)">
                             <div class="row">
                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                    <div class="form-group row">
+                                    <div class="form-group" id="text_input">
                                         <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12">Text Input <span class="required">*</span></label>
                                         <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
-                                            <input type="text" class="form-control" name="text_input" required placeholder="Text Input" value="{{.response.Text_input}}" />
+                                            <input type="text" class="form-control" name="text_input" placeholder="Text Input" value="{{.response.Text_input}}" />
+                                            <small class='form-control-feedback' id='alert-text-input'></small>
                                         </div>
                                     </div>
-                                    <div class="form-group row">
+                                    <div class="form-group">
                                         <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12">Text Area</label>
                                         <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
                                              <textarea name="text_area" class="form-control" placeholder="Text Area" data-autosize>{{.response.Text_area}}</textarea>
                                         </div>
                                     </div>
-                                    <div class="form-group row">
+                                    <div class="form-group">
                                         <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12">Radio Button</label>
                                         <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
                                             <label class="custom-control custom-radio">
@@ -76,5 +78,20 @@
 
     </div>
     {{template "footer"}}
+    <script type="text/javascript">
+        function validasi_input(form) {
+            $('.has-danger').removeClass( "has-danger");
+            $('.form-control-feedback').text("");
+
+            // validasi
+            if (form.text_input.value == "") {
+                $("#text_input").addClass("form-group has-danger");
+                $("#alert-text-input").text("Please fill in Text input");
+                form.text_input.focus();
+                return (false);
+            }
+            return (true);
+        }
+    </script>
     {{template "lastfooter"}}
 {{end}}
