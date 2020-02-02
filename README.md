@@ -10,19 +10,13 @@
 [![Twitter](https://img.shields.io/badge/twitter-@labstack-55acee.svg?style=flat-square)](https://twitter.com/labstack)
 [![License](http://img.shields.io/badge/license-mit-blue.svg?style=flat-square)](https://raw.githubusercontent.com/labstack/echo/master/LICENSE)
 
-## Supported Go versions
-
-As of version 4.0.0, Echo is available as a [Go module](https://github.com/golang/go/wiki/Modules).
-Therefore a Go version capable of understanding /vN suffixed imports is required:
-
+## Versi Go yang didukung
+Pada versi 4.0.0, Echo tersedia sebagai modul [Go module](https://github.com/golang/go/wiki/Modules). Oleh karena itu diperlukan versi Go :
 - 1.9.7+
 - 1.10.3+
 - 1.11+
 
-Any of these versions will allow you to import Echo as `github.com/labstack/echo/v4` which is the recommended
-way of using Echo going forward.
 
 
 ## License
-
 [MIT](https://github.com/labstack/echo/blob/master/LICENSE)
