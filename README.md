@@ -23,6 +23,24 @@ Ini adalah repository sample kerangka projek (Bahan ), dengan menggunakan teknol
 - Go - https://golang.org/doc/install
 - Mysql - https://www.mysql.com/downloads/
 
+
+## Cara Menjalankan
+- Import database mysql
+```go
+const (
+    DB_HOST = "tcp(127.0.0.1:3306)"
+    DB_NAME = "db_jamu_golang_auth"
+    DB_USER = "root"
+    DB_PASS = ""
+)
+
+```
+- Run Redis Service
+- Run Mysql Service
+- Masuk ke /App/. kemudiankan jalankan melalui CLI ( go run main.go )
+- server already serve
+
+
 ## Author Owner
 - [Dikhi Martin](https://www.linkedin.com/in/dikhi-martin/)
 - [Hajik Gustian Hidayat](https://www.linkedin.com/in/hajik-gustian-hidayat-6ab575162/)
