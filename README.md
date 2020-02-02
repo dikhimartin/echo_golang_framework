@@ -25,7 +25,7 @@ Ini adalah repository sample kerangka projek (Bahan ), dengan menggunakan teknol
 
 
 ## Cara Menjalankan
-- Import database mysql
+- Import database mysql dengan keterangan sebagai berikut
 ```go
 const (
     DB_HOST = "tcp(127.0.0.1:3306)"
