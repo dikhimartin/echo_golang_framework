@@ -16,6 +16,8 @@ Pada versi 4.0.0, Echo tersedia sebagai modul [Go module](https://github.com/gol
 - 1.10.3+
 - 1.11+
 
+Ini adalah repository sample kerangka projek (Bahan ), dengan menggunakan teknologi Bahasa Pemrogrman Go.  framework yang saya buat sudah dilengkapi dengan fitur otentifikasi dan Priviledges. Mohon di bantu dan evaluasi apabila masih ada kekurangan dalam kerangka projek ini.  Say yes to code :)
+
 ## Requirement
 - Redis Server Cache - https://redis.io/
 - Go - https://golang.org/doc/install
