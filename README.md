@@ -16,10 +16,10 @@ Pada versi 4.0.0, Echo tersedia sebagai modul [Go module](https://github.com/gol
 - 1.10.3+
 - 1.11+
 
-
-## Tools yang dibutuhkan
+## Teknologi
 - Redis Server Cache
 - Go
+- Mysql
 
 
 ## License
