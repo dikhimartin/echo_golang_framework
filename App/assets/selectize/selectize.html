@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+	<head>
+		<meta charset="utf-8">
+		<title>test ssel#1</title>
+		<link rel="stylesheet" href="selectize3.css">
+	</head>
+	<body>
+		<select class="" id="sel" name="">
+			<option value="1">Satu</option>
+			<option value="2">Dua</option>
+			<option value="3">Tiga</option>
+			<option value="4">Empat</option>
+		</select>
+		<select class="" id="sel2" name="">
+			<option value="1">Satu aku </option>
+			<option value="2">Dua dia</option>
+			<option value="3">Tiga kita</option>
+			<option value="4">Empat kami</option>
+		</select>
+		<script src="jquery.min.js" charset="utf-8"></script>
+		<script src="selectize.js" charset="utf-8"></script>
+		<script type="text/javascript">
+		     $(function(){
+				 $('#sel').selectize();
+		        $('#sel2').selectize();
+		     });
+		</script>
+	</body>
+</html>

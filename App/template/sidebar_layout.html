@@ -1,0 +1,65 @@
+{{define "sidebar_layout"}}
+
+        <aside class="left-sidebar">
+            <!-- Sidebar scroll-->
+            <div class="scroll-sidebar">
+                <!-- User profile -->
+                <div class="user-profile">
+                    <!-- User profile image -->
+                    <div class="profile-img">
+                        <!-- this is blinking heartbit-->
+                        <div class="notify setpos"> <span class="heartbit"></span> <span class="point"></span> </div>
+                    </div>
+                    <!-- User profile text-->
+                    <div class="profile-text">
+                        <h5 id="account_name"></h5>
+                        <h6 id="account_group" class="text-muted">Superadmin</h6>
+                        <a href="javascript:void:0" class="dropdown-toggle u-dropdown" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true"><i class="mdi mdi-settings"></i></a>
+                        <a href="/logout/" class="" data-toggle="tooltip" title="Logout"><i class="mdi mdi-power"></i></a>
+                        <div class="dropdown-menu animated flipInY">
+                            <!-- text-->
+                            <a href="javascript:void(0)" class="dropdown-item"><i class="ti-user"></i> My Profile</a>
+                            <!-- text -->
+                            <div class="dropdown-divider"></div>
+                            <!-- text-->
+                            <a href="/logout/" class="dropdown-item"><i class="fa fa-power-off"></i> Logout</a>
+                            <!-- text-->
+                        </div>
+                    </div>
+                </div>
+                <!-- End User profile text-->
+                <!-- Sidebar navigation-->
+                <nav class="sidebar-nav">
+                    <ul id="sidebarnav">
+                        <li class="nav-devider"></li>
+                        <li> <a href="/lib/dashboard/" aria-expanded="false"><i class="mdi mdi-gauge"></i><span class="hide-menu">Dashboard</span></a>
+                        </li>
+     
+                        <!-- Sample Crud -->
+                        <li id="sample_crud"></li>
+
+                        <!-- SETTING -->
+                        <li id="setting"> <a class="has-arrow waves-effect waves-dark" href="javascript:void:0" aria-expanded="false"><i class="fa fa-wrench" aria-hidden="true"></i><span class="hide-menu">Setting</span></a>
+                            <ul id="setting_expand" aria-expanded="false" class="collapse">
+                                <li id="users_privilege"> 
+                                    <a class="has-arrow" href="javascript:void:0" aria-expanded="false">
+                                        <i class="fa fa-user" aria-hidden="true"></i>&nbsp;Users Privilege
+                                    </a>
+                                    <ul aria-expanded="false" class="collapse">
+                                        <li id="setting_user_grup"></li>
+                                        <li id="setting_user_privilege"></li>
+                                        <li id="setting_user_users"></li>
+                                        <li id="setting_user_grup_privilege"></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </nav>
+                <!-- End Sidebar navigation -->
+            </div>
+            <!-- End Sidebar scroll-->
+        </aside>
+
+
+{{end}}

@@ -1,0 +1,307 @@
+{{define "list_sample_crud"}}
+	{{template "layout"}}
+
+	<style type="text/css">
+		table , td, th {
+			border: 1px solid #595959;
+			border-collapse: collapse;
+		}
+	</style>
+
+	<div class="page-wrapper">
+        <!-- Bread crumb and right sidebar toggle -->
+        <div class="row page-titles">
+            <div class="col-md-5 align-self-center">
+                <h3 class="text-themecolor">Sample Crud</h3>
+            </div>
+            <div class="col-md-7 align-self-center">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
+                    <li class="breadcrumb-item active">Sample Crud</li>
+                </ol>
+            </div>
+        </div>
+        <!-- End Bread crumb and right sidebar toggle -->
+
+        <!-- Konten -->
+		<div class="container-fluid">
+            <div class="row">
+            	<!-- Filter Data -->
+				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+	                <div class="card card-default">
+	                    <div class="card-header bg-info text-white">
+							<div class="card-actions">
+								<a class="" data-action="collapse"><i class="ti-minus"></i></a>
+							</div>
+							<h4 class="card-title m-b-0 text-white">Filter Data</h4>
+						</div>
+	                    <div class="card-body p-0 collapse show">
+	                        <div class="card-body">
+	                    		<form action="" method="GET">
+	                            	<div class="row">
+										<div class="col-sm-6">
+							    			<div class="form-group">
+												<input type="text" name="search" class="form-control" value="{{.search}}" placeholder="Search data...">
+											</div>
+								    	</div>
+	                                </div>
+	                                <div class="button-group">
+	                                     <button class="btn btn-info btn-sm waves-light" type="submit" data-toggle="tooltip" data-placement="top" title="Filter"><span class="btn-label"><i class="fa fa-search"></i></span>&nbsp;Filter
+	                                     </button>
+
+										<a href="/lib/sample_crud/" class="btn btn-warning btn-sm" data-toggle="tooltip" data-placement="top" title="Refresh">
+											<i class="fa fa-refresh"></i>&nbsp;Refresh
+										</a>
+	                                </div>
+	                        	</form>
+	                        </div>
+	                    </div>
+	                </div>
+	            </div>
+            	<!-- Data -->
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="card">
+						<div class="card-header bg-info text-white">
+							<h4 class="card-title m-b-0 text-white">List Data</h4>
+						</div>
+                        <div class="card-body">
+			                <div class="row">
+	                    		<div class="col-md-12">
+	                                <div class="button-group">
+										<a href="/lib/sample_crud/addform">
+										 <button class="btn btn-info btn-sm waves-light" type="button" data-toggle="tooltip" data-placement="top" title="Add New"><span class="btn-label"><i class="fa fa-plus"></i></span>&nbsp;Add New
+										 </button>
+										</a>
+										<a href="javascript:void(0)" onclick=delete_all_data()>
+											<button class="btn btn-danger btn-sm waves-light" type="button" id="btn-hps-semua" data-toggle="tooltip" data-placement="top" title="Deleted All"><span class="btn-label"><i class="fa fa-trash"></i></span>&nbsp;Deleted All
+											</button>
+										</a>
+		                            </div>
+                            	</div>
+                            </div>
+                        		<p style="margin-bottom: 20px;"></p>
+                        		<div id="notif_success"></div>
+						        <div class="table-responsive">
+						        	<table class="table table-hover" id="recordsTable">
+										<thead>
+											<tr class="bg-secondary text-white">
+												<td>
+		                                            <label class="custom-control custom-checkbox">
+		                                                <input type="checkbox" class="custom-control-input" id="parent-checkbox-hapus" onClick="toggle(this)">
+		                                                <span class="custom-control-label"></span>
+		                                            </label>
+												</td>
+												<td>Text Input</td>
+												<td>Created at</td>
+												<td>Updated at</td>
+												<td>Status</td>
+												<td>Action</td>
+											</tr>
+										</thead>
+										<tbody>
+											{{if .posts}}
+											{{range .posts}}
+											<tr id='tr_{{.Id}}'>
+												<td>
+		                                            <label class="custom-control custom-checkbox">
+		                                                <input  name="ceklis_data" type="checkbox" class="custom-control-input" id='del_{{.Id}}'>
+		                                                <span class="custom-control-label"></span>
+		                                            </label>
+		                                        </td>
+												<td>{{.Text_input}}</td>
+												<td>{{.Created_at}}</td>
+												<td>{{.Updated_at}}</td>
+												<td>
+													{{if (eq .Status "Y") }}
+													<label class="label label-success">Active</label>
+													{{else if (eq .Status "N") }}
+													<label class="label label-danger">Non-Active</label>
+													{{else}}
+													<label class="label label-danger">Empty</label>
+													{{end}}
+												</td>
+												<td class="text-nowrap">
+													<a href="/lib/sample_crud/editform/{{.Id}}" class="btn btn-sm btn-info" data-toggle="tooltip" data-placement="top" title="Edit data!">
+														<i class="fa fa-pencil"></i>
+													</a>
+
+													 <a href="javascript:void(0)" onclick=delete_data({{ .Id }})><button type="button" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="Delete data!">
+													<i class="fa fa-trash"></i>
+													</button></a>
+												</td>
+											</tr>
+											{{end}}
+											{{else}}
+											<tr>
+												<td colspan="6" class="text-center alert-danger">Data is empty</td>
+											</tr>
+											{{end}}
+										</tbody>
+									</table>
+						        </div>
+								<p style="margin-bottom: 20px;"></p>
+								<div class="text-center">
+									{{if .paginator.HasPages}}
+										<ul class="pagination">
+											{{if .paginator.HasPrev }}
+														<li class="page-item"><a class="page-link" href="{{.paginator.PageLinkFirst}}">First</a></li>
+														<li class="page-item"><a class="page-link" href="{{.paginator.PageLinkPrev}}">&lt;</a></li>
+												{{ else }}
+														<li class="page-item disabled"><a class="page-link"> First</a></li>
+														<li class="page-item disabled"><a class="page-link">&lt;</a></li>
+												{{ end }}
+
+												{{range $index, $page := .paginator.Pages}}
+														<li{{if $.paginator.IsActive .}} class="page-item active"{{end}}>
+																<a class="page-link" href="{{$.paginator.PageLink $page}}">{{$page}}</a>
+														</li>
+												{{end}}
+
+												{{ if .paginator.HasNext }}
+														<li class="page-item"><a class="page-link" href="{{.paginator.PageLinkNext}}">&gt;</a></li>
+														<li class="page-item"><a class="page-link" href="{{.paginator.PageLinkLast}}">Last</a></li>
+												{{ else }}
+														<li class="page-item disabled"><a class="page-link">&gt;</a></li>
+														<li class="page-item disabled"><a class="page-link">Last</a></li>
+												{{end}}
+										</ul>
+									{{end}}
+								</div>
+
+
+                       </div>
+                </div>
+            </div>
+		</div>
+    </div>
+
+
+	{{template "footer"}}
+		<script>
+			$(document).ready(function(){
+			//tootltip
+			  $('[data-toggle="tooltip"]').tooltip();
+				disabledButtonHapusSemua();
+			});
+
+			$("input[type=checkbox]").on("click", function() {
+				disabledButtonHapusSemua();
+			});
+
+			// ceklis_data
+			function toggle(source) {
+			  checkboxes = document.getElementsByName('ceklis_data');
+			  for(var i=0, n=checkboxes.length;i<n;i++) {
+			    checkboxes[i].checked = source.checked;
+			  }
+			}
+
+
+			// delete_all_data
+	        function delete_all_data(){
+	                swal({
+	                    title: "Are you sure?",
+	                    text: "All selected data will be deleted, you will not be able to recover this data!",
+	                    type: "warning",
+	                    showCancelButton: true,
+	                    confirmButtonColor: "#dc3545",
+	                    confirmButtonText: "Yes, delete it!",
+	                    cancelButtonText: "No, cancel it!",
+	                    closeOnConfirm: false,
+	                    closeOnCancel: false,
+      					showLoaderOnConfirm: true
+	                },
+	                 function(isConfirm){
+	                 	if (isConfirm) {
+
+					        var post_arr = [];
+					        $('#recordsTable input[type=checkbox]').each(function() {
+					            if (jQuery(this).is(":checked")) {
+					                var id = this.id;
+					                var splitid = id.split('_');
+					                var postid = splitid[1];
+
+					                post_arr.push(postid);
+
+					            }
+					        });
+					        console.log(post_arr)
+					        if(post_arr.length > 0){
+					            var url ="/lib/sample_crud/delete_all/"+post_arr+"/";
+					            // AJAX Request
+					            $.ajax({
+					                url: url,
+					                type: 'POST',
+					                data: { id: post_arr},
+					                success: function(response){
+					                	swal("Done!","File deleted successfully!","success");
+					                    $.each(post_arr, function( i,l ){
+					                        $("#tr_"+l).remove();
+					                    });
+
+			                        	document.getElementById("notif_success").innerHTML ="<div class='alert alert-warning'>Data Successfully deleted </div>";
+
+			                        	setTimeout(function() {
+			                                $('#notif_success').hide();
+			                            }, 3000);
+
+					                }
+					            });
+					        }
+			                }else{
+			                        swal("Canceled", "Your data is still safe :)", "error");
+			                }
+			             })
+	        }
+
+
+			// delete_data
+	        function delete_data(id){
+	                swal({
+	                    title: "Are you sure?",
+	                    text: "You will not be able to recover this data!",
+	                    type: "warning",
+	                    showCancelButton: true,
+	                    confirmButtonColor: "#dc3545",
+	                    confirmButtonText: "Yes, delete it!",
+	                    cancelButtonText: "No, cancel it!",
+	                    closeOnConfirm: false,
+	                    closeOnCancel: false
+	                },
+	                 function(isConfirm){
+	                   if (isConfirm) {
+	                    var url ="/lib/sample_crud/deleteform/"+id+"/";
+	                    $.ajax({
+	                        url : url,
+	                        type: "POST",
+	                        data: {"id":id},
+	                        dataType: "JSON",
+	                        success: function(result)
+	                        {
+	                             if(result) //if success close modal and reload ajax table
+	                            {
+	                                swal("Done!","File deleted successfully!","success");
+					                    $("#tr_"+id).remove();
+
+			                        	document.getElementById("notif_success").innerHTML ="<div class='alert alert-warning'>Data Successfully deleted </div>";
+
+			                        	setTimeout(function() {
+			                                $('#notif_success').hide();
+			                            }, 3000);
+	                            }
+	                        },
+	                        error: function (jqXHR, textStatus, errorThrown)
+	                        {
+	                            console.log(url);
+	                            alert('Error deleting data');
+	                        }
+	                    });
+	                  }else{
+	                        swal("Canceled", "Your data is still safe :)", "error");
+	                  }
+	               })
+	        }
+
+		</script>
+	{{template "lastfooter"}}
+{{end}}

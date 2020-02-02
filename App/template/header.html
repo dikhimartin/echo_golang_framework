@@ -1,0 +1,132 @@
+{{define "header"}}
+
+    <!-- jam digital men -->
+    <style type="text/css">
+    /*.clockdate-wrapper {
+        background-color: #333;
+        padding:25px;
+        max-width:350px;
+        width:100%;
+        text-align:center;
+        border-radius:5px;
+        margin:0 auto;
+    }*/
+    #clock{
+        /*background-color:#333;*/
+        font-family: sans-serif;
+        font-size:20px;
+        text-shadow:0px 0px 1px #fff;
+        color:#fff;
+    }
+    #clock span {
+        /*color:#888;*/
+        text-shadow:0px 0px 1px #333;
+        font-size:8px;
+        position:relative;
+        top:-6.75px;
+        left:-2.5px;
+    }
+    #date {
+        letter-spacing:1.25px;
+        font-size:9px;
+        font-family:arial,sans-serif;
+        color:#fff;
+    }
+    </style>
+
+    <header class="topbar">
+        <nav class="navbar top-navbar navbar-expand-md navbar-light">
+            <!-- ============================================================== -->
+            <!-- Logo -->
+            <!-- ============================================================== -->
+            <!-- NAVBAR IS HERE -->
+            <div class="navbar-header">
+                <a class="navbar-brand" href="/">
+                    <!-- Logo icon -->
+                    <b>
+                        <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
+                        <!-- Dark Logo icon -->
+                         <!-- <img src="/static/images/logo.png" alt="homepage" class="dark-logo" /> -->
+                        <img src="/static/images/logo-icon-small.png" alt="homepage" class="dark-logo" />
+                        <!-- Light Logo icon -->
+                        <!-- <img src="/static/images/logo-light-icon.png" alt="homepage" class="light-logo" /> -->
+                    </b>
+                    <!--End Logo icon -->
+                    <!-- Logo text -->
+                    <span>
+                     <!-- dark Logo text -->
+                     <!-- <img src="/static/images/logo.png" alt="homepage" class="dark-logo" /> -->
+                     <img src="/static/images/logo-text.png" alt="homepage" class="dark-logo" />
+                     <!-- Light Logo text -->
+                     <img src="/static/images/logo-light-text.png" class="light-logo" alt="homepage" />
+                    </span>
+                </a>
+            </div>
+            <!-- ============================================================== -->
+            <!-- End Logo -->
+            <!-- ============================================================== -->
+            <div class="navbar-collapse">
+                <!-- ============================================================== -->
+                <!-- toggle and nav items -->
+                <!-- ============================================================== -->
+                <ul class="navbar-nav mr-auto mt-md-0">
+                     <li class="nav-item"> <a class="nav-link nav-toggler hidden-md-up text-muted waves-effect waves-dark" href="javascript:void(0)"><i class="mdi mdi-menu"></i></a> </li>
+                    <li class="nav-item m-l-10"> <a class="nav-link sidebartoggler hidden-sm-down text-muted waves-effect waves-dark" href="javascript:void(0)"><i class="ti-menu"></i></a> </li>
+
+                    <!-- notifications -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle text-muted text-muted waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="mdi mdi-message"></i>
+                            <div class="notify"> 
+                                <span class="heartbit"></span> <span class="point"></span> 
+                            </div>
+                        </a>
+                        <div class="dropdown-menu mailbox animated slideInUp">
+                            <ul>
+                                <li>
+                                    <div class="drop-title">Notifications</div>
+                                </li>
+                                <li>
+                                    <div class="message-center">
+                                        <!-- Message -->
+                                        <a href="/">
+                                            <div class="mail-contnet">
+                                             <h5>Out of Stock</h5> 
+                                                <span class="mail-desc">Romano Force Anti..</span> 
+                                                <span class="time">9:30 AM</span> 
+                                            </div>
+                                        </a>
+                                        <a href="/">
+                                            <div class="mail-contnet">
+                                             <h5>Incoming Goods</h5> 
+                                                <span class="mail-desc">Romano Force Anti..</span> 
+                                                <span class="time">9:30 AM</span> 
+                                            </div>
+                                        </a>
+                                    </div>
+                                </li>
+                                <li>
+                                    <a class="nav-link text-center" href="javascript:void(0);"> <strong>Check all notifications</strong> <i class="fa fa-angle-right"></i> </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+
+
+                </ul>
+                <!-- ============================================================== -->
+                <!-- User profile and search -->
+                <!-- ============================================================== -->
+                <ul class="navbar-nav my-lg-0">
+                    <li class="nav-item">
+                        <body onload="startTime()">
+                              <div class="clockdate-wrapper">
+                                <div id="clock" class="text-white"></div>
+                                <div id="date" class="text-white"></div>
+                              </div>
+                        </body>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+{{end}}

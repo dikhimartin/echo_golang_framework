@@ -1,0 +1,584 @@
+{{define "edit_setting_user"}}
+	{{template "layout"}}
+
+    <!-- CSS -->
+    <style type="text/css">
+
+        .msg {
+        display: none;
+        }
+        .error {
+            color: red;
+        }
+        .success {
+            color: green;
+        }
+        .img-profile {
+          border-radius: 50%;
+        }
+
+
+        /* Image Profile*/
+        .bgColor {
+            max-width: 440px;
+            height: 400px;
+            background-color: #ffff;
+            padding: 30px;
+            border-radius: 4px;
+            text-align: center;    
+        }
+        .upload-preview {border-radius:4px;width: 200px;height: 200px;}
+        #targetOuter{   
+            position:relative;
+            text-align: center;
+            background-color: #dddddd;
+            margin: 20px auto;
+            width: 200px;
+            height: 200px;
+            border-radius: 4px;
+        }
+        #DivtargetOuter{   
+            position:relative;
+            text-align: center;
+            margin: auto;
+            width: 200px;
+        }
+        .btnSubmit {
+            background-color: #565656;
+            border-radius: 4px;
+            padding: 10px;
+            border: #333 1px solid;
+            color: #FFFFFF;
+            width: 200px;
+            cursor:pointer;
+        }
+        .inputFile{
+            margin-top: 0px;
+            left: 0px;
+            right: 0px;
+            top: 0px;
+            width: 200px;
+            height: 36px;
+            background-color: #FFFFFF;
+            overflow: hidden;
+            opacity: 0;
+            position: absolute;
+            cursor: pointer;
+        }
+        .icon-choose-image {
+            position: absolute;
+            opacity: 0.5;
+            top: 50%;
+            left: 50%;
+            margin-top: -24px;
+            margin-left: -24px;
+            width: 48px;
+            height: 48px;
+            cursor:pointer;
+            
+        }
+        #profile-upload-option{
+            display:none;
+            position: absolute;
+            top: 163px;
+            left: 23px;
+            margin-top: -24px;
+            margin-left: -24px;
+            border: #d8d1ca 1px solid;
+            border-radius: 4px;
+            background-color: #dddddd;
+            width: 200px;
+        }
+        .profile-upload-option-list{
+            margin: 1px;
+            height: 25px;
+            border-bottom: 1px solid #c4c4c4;
+            cursor: pointer;
+            position: relative;
+            padding:5px 0px;
+        }
+        .profile-upload-option-list:hover{
+            background-color: #fffaf5;
+        }
+    </style>
+
+    <!-- Select Live Seacrh -->
+    <link href="/static/plugins/select2/dist/css/select2.min.css" rel="stylesheet" type="text/css" />
+
+	<div class="page-wrapper">
+		<!-- Bread crumb and right sidebar toggle -->
+		<div class="row page-titles">
+			<div class="col-md-5 align-self-center">
+				<h3 class="text-themecolor">Setting User</h3>
+			</div>
+			<div class="col-md-7 align-self-center">
+				<ol class="breadcrumb">
+					<li class="breadcrumb-item"><a href="/">Dashboard</a></li>
+					<li class="breadcrumb-item"><a href="javascript:void(0)">Setting</a></li>
+					<li class="breadcrumb-item active">User</li>
+				</ol>
+			</div>
+		</div>
+		<!-- End Bread crumb and right sidebar toggle -->
+
+
+		<div class="container-fluid">
+            <form action="/lib/setting/user/editform/{{.setting_user.Id}}" method="POST" enctype="multipart/form-data" onsubmit="return validasi_input(this)">
+    			<div class="row ">
+                        <!-- Image Session -->
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="profile-info-inner">
+                                        <div class="profile-image">
+                                            <!-- Upload Image Profile -->
+                                            <div class="form-group">
+
+                                                <div class="bgColor">
+                                                         <div id="DivtargetOuter">
+                                                            <div class="alert alert-info">For the best view 300 x 300 px</div>
+                                                         </div>
+
+                                                         <div id="targetOuter">
+                                                            <div id="targetLayer"></div>
+                                                            <img src="/static/images/photo.png"  class="icon-choose-image"/>
+                                                            <div class="icon-choose-image" onClick="showUploadOption()"></div>
+                                                            <div id="profile-upload-option">
+                                                                <div class="profile-upload-option-list">
+                                                                    <input name="image" id="userImage" type="file" class="inputFile" onChange="showPreview(this);" accept="image/*">
+                                                                    </input>
+                                                                    <span>Upload</span>
+                                                                </div>
+                                                                <div class="profile-upload-option-list" onClick="removeProfilePhoto();">Delete</div>
+                                                                <div class="profile-upload-option-list" onClick="hideUploadOption();">Cancel</div>
+                                                            </div>
+                                                        </div>  
+                                                        <div>
+
+                                                        <input type="button" value="Choose photo" class="btnSubmit" onClick="showUploadOption()"/>
+                                                        </div>
+                                                </div>  
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>				
+        				<!-- Data -->
+        				<div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+        					<div class="card">
+        						<div class="card-body">
+        							<div class="form-horizontal">
+        								<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+        									<input type="hidden" name="type_check" value="2">
+
+                                            <div class="form-group" id="full_name">
+                                                <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12" style="margin-bottom: 5px;">Full Name &nbsp;<span class="required">*</span></label>
+                                                <div class="col-lg-11 col-md-11 col-sm-11 col-xs-12">
+                                                    <input type="text" class="form-control" name="full_name" placeholder="Full Name" value="{{.setting_user.Full_name}}" />
+                                                    <small class='form-control-feedback' id="alert-full-name"></small>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group" id="email_verif">
+                                                <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12" style="margin-bottom: 5px;">Email &nbsp;<span class="required">*</span></label>
+                                                <div class="col-lg-11 col-md-11 col-sm-11 col-xs-12">
+                                                    <input name="email" type="email" class="form-control" placeholder="Email" value="{{.setting_user.Email}}" >
+                                                    <small class='form-control-feedback msg error'>Not a valid email address</small>
+                                                    <small class='form-control-feedback msg success'>Valid email address!</small>
+                                                    <small class='form-control-feedback' id="alert-email"></small>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+        										{{$Gender := .setting_user.Gender}}
+                                                <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12" style="margin-bottom: 5px;">Gender &nbsp;<span class="required">*</span></label>
+                                                <div class="col-lg-11 col-md-11 col-sm-11 col-xs-12">
+                                                    <label class="custom-control custom-radio">
+                                                        <input id="jk1" name="gender" type="radio" class="custom-control-input" value="L" {{if eq $Gender ("L")}} checked="" {{end}}>
+                                                        <span class="custom-control-label">Male</span>
+                                                    </label>
+                                                    <label class="custom-control custom-radio">
+                                                        <input id="jk2" name="gender" type="radio" class="custom-control-input" value="P" {{if eq $Gender ("P")}} checked="" {{end}}>
+                                                        <span class="custom-control-label">Female</span>
+                                                    </label>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group" id="id_grup">
+                                                <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12" style="margin-bottom: 5px;">Select Group &nbsp;<span class="required">*</span></label>
+                                                <div class="col-lg-11 col-md-11 col-sm-11 col-xs-12">
+        											<select name="id_group" class="form-control">
+        												{{$id_setting_group := .setting_user.Id_group}}
+        												<option selected="" disabled="">-- choose --</option>
+        												{{range .resultGrup}}
+        													<option value="{{.Id}}" {{if eq $id_setting_group .Id}} selected="" {{end}}>{{.Name_Grup}}</option>
+        												{{end}}
+        											</select>
+        											<small class='form-control-feedback' id='alert-id-grup'></small>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group" id="username">
+                                                <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12" style="margin-bottom: 5px;">Username &nbsp;<span class="required">*</span></label>
+                                                <div class="col-lg-11 col-md-11 col-sm-11 col-xs-12">
+        											<input type="hidden" name="username_old" value="{{.setting_user.Username}}" autocomplete="off" />
+        											<input type="text" class="form-control" name="username" value="{{.setting_user.Username}}" autocomplete="off" />
+        											<small class='form-control-feedback' id='alert-username'></small>
+                                                </div>
+                                            </div>
+
+											<div class="col-sm-12">
+		                                        <div class="m-b-10">
+		                                            <label class="custom-control custom-checkbox">
+		                                                <input type="checkbox" class="custom-control-input check_password">
+		                                                <span class="custom-control-label">Change Password</span>
+		                                            </label>
+		                                        </div>
+		                                    </div>
+
+											<div class="form-group">
+					                            <div class="col-lg-11 col-md-11 col-sm-11 col-xs-12">
+													<div class="alert alert-success"> 
+					                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">×</span> </button>
+														Password is not required to be filled in</br>
+														just leave it blank if you dont want to change it
+					                                </div>
+					                            </div>
+					                        </div>
+					                        
+		                                    <!-- changes passsword -->
+		                                    <div class="col-md-12 option_changes_password" style="display: none;">
+		                                    	<div id="option_changes_password"></div>
+		                                    </div>
+
+                                            <div class="form-group">
+                                                <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12" style="margin-bottom: 5px;">Status &nbsp;<span class="required">*</span></label>
+                                                <div class="col-lg-11 col-md-11 col-sm-11 col-xs-12">
+                                                    <label class="custom-control custom-radio">
+                                                        <input id="radio1" name="status" type="radio" class="custom-control-input" value="Y" {{if eq .setting_user.Status ("Y")}} checked="" {{end}}>
+                                                        <span class="custom-control-label">Active</span>
+                                                    </label>
+                                                    <label class="custom-control custom-radio">
+                                                        <input id="radio2" name="status" type="radio" class="custom-control-input" value="N" {{if eq .setting_user.Status ("N")}} checked="" {{end}}>
+                                                        <span class="custom-control-label">Non Active</span>
+                                                    </label>
+                                                </div>
+                                            </div>
+
+        									<div class="form-group">
+        										<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        											<button class="btn btn-sm btn-info" type="submit">
+        												<i class="fa fa-paper-plane"></i>&nbsp;&nbsp;Update
+        											</button>
+        											<a href="/lib/setting/user/" class="btn-sm btn waves-effect waves-light btn-secondary">
+        												<i class="fa fa-reply"></i>&nbsp;&nbsp;Back
+        											</a>
+        										</div>
+        									</div>
+
+        								</div>
+        							</div>
+        					</div>
+        				</div>
+    			</div>
+			</form>
+		</div>
+
+	</div>
+
+	{{template "footer"}}
+
+    <script src="/static/plugins/select2/dist/js/select2.full.min.js" type="text/javascript"></script>
+	<script type="text/javascript">
+        // Select2
+        jQuery(document).ready(function() {
+            // For select 2
+            $(".select2").select2();
+        });
+
+		$(".check_password").change(function() {
+		    if(this.checked) {
+		    	$(".option_changes_password").show();
+
+		    	data = '<div class="form-group" id="password">'+
+                            '<label class="col-lg-3 col-md-3 col-sm-3 col-xs-12" style="margin-bottom: 5px;">Password</label>'+
+                            '<div class="col-lg-11 col-md-11 col-sm-11 col-xs-12">'+
+								'<input type="password" class="form-control password" name="password" />'+
+								'<small class="form-control-feedback" id="alert-password"></small>'+
+                            '</div>'+
+                        '</div>'+
+
+                       '<div class="form-group" id="confirm_password">'+
+                            '<label class="col-lg-3 col-md-3 col-sm-3 col-xs-12" style="margin-bottom: 5px;">Repeat Password</label>'+
+                           '<div class="col-lg-11 col-md-11 col-sm-11 col-xs-12">'+
+								'<input type="password" class="form-control confirm_password" name="confirm_password"/>'+
+								'<small class="form-control-feedback" id="alert-confirm-password"></small>'+
+                            '</div>'+
+                        '</div>';
+		    	$("#option_changes_password").html(data);
+		    }else{
+		    	$(".option_changes_password").hide();
+		    	$("#option_changes_password div.form-group").remove();
+		    }
+		});
+
+        function validasi_input(form){
+
+            $('.has-success').removeClass( "has-success");
+            $('.has-danger').removeClass( "has-danger");
+            $('.form-control-feedback').text("");
+
+            // validasi
+            if (form.full_name.value == ""){
+                $("#full_name").addClass("form-group has-danger");
+                $("#alert-full-name").text("Please fill in Full Name");
+                form.full_name.focus();
+                return (false);
+            }
+            if (form.email.value == ""){
+                $("#email_verif").addClass("form-group has-danger");
+                $("#alert-email").text("Please fill in Email");
+                form.email.focus();
+                return (false);
+            }
+            var id_grup   = $("select[name='id_group']").select().val();
+            if (id_grup == null){
+                $("#id_grup").addClass("form-group has-danger");
+                $("#alert-id-grup").text("Please fill in Group");
+                form.id_group.focus();
+                return (false);
+            }
+            if (form.username.value == ""){
+                $("#username").addClass("form-group has-danger");
+                $("#alert-username").text("Please fill in Username");
+                form.username.focus();
+                return (false);
+            }
+
+            // cek username
+            	var type_check     = $("input[name=type_check]").val()
+            	var username   	   = $("input[name=username]").val()
+            	var username_old   = $("input[name=username_old]").val()
+
+	            $('.has-danger').removeClass( "has-danger");
+	            $('.has-success').removeClass( "has-success");
+	            $('.form-control-feedback').text("");
+
+            	var value = $("input[name='username']").val();
+            	if (value.length < 5) {
+	                $("#username").addClass("form-group has-danger");
+	                $("#alert-username").text("Must be at least 5 characters");
+	                return false;
+            	}
+
+
+		        $.ajax({
+		            url: "/lib/setting/user/check_username/",
+		            type: "POST",
+		            data: {
+		            		"username"	 :username,
+			            	"type_check" :type_check,
+			            	"username_old" :username_old
+		        			},
+		            contentType: 'application/json',
+		        }).then(function (res) {
+
+		            if (res.kode == "1") {
+		                $("#username").addClass("form-group has-danger");
+		                $("#alert-username").text("Sorry , Username is already used");
+		                return (false);
+		            }else{
+		           		return (false);
+		            }
+
+		        }).catch(function (a) {
+		            alert("ERROR");
+		        });
+	        // end            
+
+	        // cek password
+            var password = $("input[name=password]").val();
+            if (password != "") {
+		        if(password.length < 8){
+	                $("#password").addClass("form-group has-danger");
+	                $("#alert-password").text("must be at least 8 characters");
+	                return false
+		        }
+		        if(!/\d/.test(password)){
+	                $("#password").addClass("form-group has-danger");
+	                $("#alert-password").text("should contain at least one number");
+	                return false
+		        }
+		        if(!/[a-z]/.test(password)){
+	                $("#password").addClass("form-group has-danger");
+	                $("#alert-password").text("should contain at least one lower case");
+	                return false
+		        }
+		        if(!/[A-Z]/.test(password)){
+	                $("#password").addClass("form-group has-danger");
+	                $("#alert-password").text("should contain at least one upper case");
+	                return false
+		        }
+		        if(/[^0-9a-zA-Z]/.test(password)){
+	                $("#password").addClass("form-group has-danger");
+	                $("#alert-password").text("should contain at least 8 from the mentioned characters");
+	                return false
+		        }	            
+			    if ($('.password').val() != $('.confirm_password').val()) {
+	                $("#password").addClass("form-group has-danger");
+	                $("#alert-password").text("Password Not Match");
+
+	                $("#confirm_password").addClass("form-group has-danger");
+	                $("#alert-confirm-password").text("Password Not Match");
+	                return false
+			    }            
+            }
+            // end
+          
+
+            return (true);
+        }
+
+		$(function(){
+
+			$("select[name='status']").selectize();
+			// cek username
+            $("input[name='username']").on("submit keyup", function (e) {
+
+
+            	var type_check     = $("input[name=type_check]").val()
+            	var username   	   = $("input[name=username]").val()
+            	var username_old   = $("input[name=username_old]").val()
+
+	            $('.has-danger').removeClass( "has-danger");
+	            $('.has-success').removeClass( "has-success");
+	            $('.form-control-feedback').text("");
+
+            	var value = $("input[name='username']").val();
+            	if (value.length < 5) {
+	                $("#username").addClass("form-group has-danger");
+	                $("#alert-username").text("Must be at least 5 characters");
+	                return false;
+            	}
+                $.ajax({
+                    url: "/lib/setting/user/check_username/",
+                    type: "POST",
+                    data: {
+                    		'type_check':type_check,
+                    		'username'	:username,
+                    		'username_old'	:username_old
+                		  },
+                }).then(function (res) {
+
+                    if (res.kode == "1") {
+		                $("#username").addClass("form-group has-danger");
+		                $("#alert-username").text("Sorry , Username is already used");
+                    }else{
+		                $("#username").addClass("form-group has-success");
+		                $("#alert-username").text("Correct username");
+                    }
+                }).catch(function (a) {
+                    alert("ERROR");
+                });
+            });
+
+			$('.password, .confirm_password').on('submit keyup', function () {
+
+	            $('.has-danger').removeClass( "has-danger");
+	            $('.has-success').removeClass( "has-success");
+	            $('.form-control-feedback').text("");
+
+	            var value = $("input[name=password]").val();
+		        if(value.length < 8){
+	                $("#password").addClass("form-group has-danger");
+	                $("#alert-password").text("must be at least 8 characters");
+	                return false
+		        }
+		        if(!/\d/.test(value)){
+	                $("#password").addClass("form-group has-danger");
+	                $("#alert-password").text("should contain at least one number");
+	                return false
+		        }
+		        if(!/[a-z]/.test(value)){
+	                $("#password").addClass("form-group has-danger");
+	                $("#alert-password").text("should contain at least one lower case");
+	                return false
+		        }
+		        if(!/[A-Z]/.test(value)){
+	                $("#password").addClass("form-group has-danger");
+	                $("#alert-password").text("should contain at least one upper case");
+	                return false
+		        }
+		        if(/[^0-9a-zA-Z]/.test(value)){
+	                $("#password").addClass("form-group has-danger");
+	                $("#alert-password").text("should contain at least 8 from the mentioned characters");
+	                return false
+		        }
+
+	            // match
+			    if ($('.password').val() == $('.confirm_password').val()) {
+
+	                $("#password").addClass("form-group has-success");
+	                $("#alert-password").text("Password Match");
+
+	                $("#confirm_password").addClass("form-group has-success");
+	                $("#alert-confirm-password").text("Password Match");
+			    } else {
+
+	                $("#password").addClass("form-group has-danger");
+	                $("#alert-password").text("Password Not Match");
+
+	                $("#confirm_password").addClass("form-group has-danger");
+	                $("#alert-confirm-password").text("Password Not Match");
+			    }
+			});  
+		});
+
+		// email validation
+		$('form input[name="email"]').blur(function () {
+		    var email = $(this).val();
+			var re = /[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}/igm;
+			if (re.test(email)) {
+			    $('.msg').hide();
+			    $('.success').show();
+			} else {
+			    $('.msg').hide();
+			    $('.error').show();
+			}
+		});	  
+
+        // image profile
+        function showPreview(objFileInput) {
+            hideUploadOption();
+            if (objFileInput.files[0]) {
+                var fileReader = new FileReader();
+                fileReader.onload = function (e) {
+                    $("#targetLayer").html('<img src="'+e.target.result+'" width="200px" height="200px" class="upload-preview" />');
+                    $("#targetLayer").css('opacity','0.7');
+                    $(".icon-choose-image").css('opacity','0.5');
+                }
+                fileReader.readAsDataURL(objFileInput.files[0]);
+            }
+        }
+        function showUploadOption(){
+            $("#profile-upload-option").css('display','block');
+        }
+        function hideUploadOption(){
+            $("#profile-upload-option").css('display','none');
+        }
+        function removeProfilePhoto(){
+            hideUploadOption();
+            $("#userImage").val('');
+            $("#targetLayer").html('');
+        }
+
+        // Get Image Profile
+         $("#targetLayer").html('<img src="{{.Path_image_profile}}" width="200px" height="200px" class="upload-preview" />');
+         $("#targetLayer").css('opacity','0.7');
+         $(".icon-choose-image").css('opacity','0.5');
+	</script>
+	
+	{{template "lastfooter"}}
+{{end}}

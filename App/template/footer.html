@@ -1,0 +1,186 @@
+{{define "footer"}}
+
+        <!-- ============================================================== -->
+        <!-- footer -->
+        <!-- ============================================================== -->
+        <footer class="footer" id="copyright_libpos">
+        </footer>
+        <!-- ============================================================== -->
+        <!-- End footer -->
+        <!-- ============================================================== -->
+        </div>
+
+    <!-- ============================================================== -->
+    <!-- All Jquery -->
+    <!-- ============================================================== -->
+    <script src="/static/plugins/jquery/jquery.min.js"></script>
+    <!-- Bootstrap tether Core JavaScript -->
+    <script src="/static/plugins/bootstrap/js/popper.min.js"></script>
+
+    <script src="/static/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <!-- slimscrollbar scrollbar JavaScript -->
+    <script src="/static/js/jquery.slimscroll.js"></script>
+    <!--Wave Effects -->
+    <script src="/static/js/waves.js"></script>
+    <!--Menu sidebar -->
+    <script src="/static/js/sidebarmenu.js"></script>
+    <!--stickey kit -->
+    <script src="/static/plugins/sticky-kit-master/dist/sticky-kit.min.js"></script>
+    <script src="/static/plugins/sparkline/jquery.sparkline.min.js"></script>
+    <!--Custom JavaScript -->
+    <script src="/static/js/custom.min.js"></script>
+    <!-- Sweet-Alert  -->
+    <script src="/static/plugins/sweetalert/sweetalert.min.js"></script>
+    <script src="/static/plugins/sweetalert/jquery.sweet-alert.custom.js"></script>
+
+    <!-- Magnific popup JavaScript -->
+    <script src="/static/plugins/Magnific-Popup-master/dist/jquery.magnific-popup.min.js"></script>
+    <script src="/static/plugins/Magnific-Popup-master/dist/jquery.magnific-popup-init.js"></script>
+
+
+    <!-- Image Preview  -->
+    <!-- <script type="text/javascript" src="/js/html5.image.preview.min.js"></script> -->
+
+    <!-- Validation  -->
+    <script src="/static/js/validation.js"></script>
+
+    <!-- Notifikasi Toast -->
+    <script src="/static/plugins/toast-master/js/jquery.toast.js"></script>
+
+
+    <!-- Autosize text area  -->
+    <script src="/static/js/autosize/autosize.min.js"></script>
+    <script>
+        $(function() {
+            getaccountinfo();
+            autosize($('textarea[data-autosize]'));
+        });
+
+
+        var dt   = new Date();
+        var data = ''+dt.getFullYear()+' &copy; GOLANG | Echo Framework v.1 | '+
+                    '<a href="http://dikhimartin.com/" class="m-link">'+
+                        'Dikhi Martin'+
+                    '</a>';
+        $("#copyright_libpos").html(data);
+
+
+        function getaccountinfo(){
+            $.ajax({
+                url : "/lib/dashboard/getinfologin/",
+                type: "POST",
+                dataType: "JSON",
+                success: function(data)
+                {
+                    var users = data.data_users;
+                    
+                    $("#account_name").text(users.name_users);
+                    $("#account_group").text(users.name_group);
+
+                    if (users.Image  != "") {
+                        $(".profile-img").html('<img src="/upload/profile_user/'+users.Image+users.Extension+'?='+data.time+'" alt="'+ users.name_users +'" />');
+                    }else if (users.Image == "") {
+                        $(".profile-img").html('<img src="/static/images/users/anonymous.png" alt="'+ users.name_users +'"/>');
+                    }
+
+                },
+                error: function (jqXHR, textStatus, errorThrown)
+                {
+                    // belum login
+                    // alert('Error');
+                }
+            });
+        }
+        // create date realtime
+        function startTime() {
+            var today = new Date();
+            var hr = today.getHours();
+            var min = today.getMinutes();
+            var sec = today.getSeconds();
+            ap = (hr < 12) ? "<span>AM</span>" : "<span>PM</span>";
+            hr = (hr == 0) ? 12 : hr;
+            hr = (hr > 12) ? hr - 12 : hr;
+            //Add a zero in front of numbers<10
+            hr = checkTime(hr);
+            min = checkTime(min);
+            sec = checkTime(sec);
+            document.getElementById("clock").innerHTML = hr + ":" + min + ":" + sec + " " + ap;
+
+            var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+            var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+            var curWeekDay = days[today.getDay()];
+            var curDay = today.getDate();
+            var curMonth = months[today.getMonth()];
+            var curYear = today.getFullYear();
+            var date = curWeekDay + ", " + curDay + " " + curMonth + " " + curYear;
+            document.getElementById("date").innerHTML = date;
+
+            var time = setTimeout(function() {
+                startTime()
+            }, 500);
+        }
+
+        function checkTime(i) {
+            if (i < 10) {
+                i = "0" + i;
+            }
+            return i;
+        }
+
+    </script>
+
+    <!-- Chart JS -->
+    <script src="/static/plugins/peity/jquery.peity.min.js"></script>
+    <script src="/static/plugins/peity/jquery.peity.init.js"></script>
+
+
+    <!-- ============================================================== -->
+    <!-- Style switcher -->
+    <!-- ============================================================== -->
+    <!-- <script src="/static/plugins/styleswitcher/jQuery.style.switcher.js"></script> -->
+
+    <!-- This is Table -->
+    <script src="/static/plugins/datatables/jquery.dataTables.min.js"></script>
+
+    <!-- form Mask -->
+    <script src="/static/js/mask.js"></script>
+    <!-- add#1 -->
+    <script src="/static/selectize/selectize.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('[data-toggle="popover"]').popover();   
+        });
+        
+        function disabledButtonHapusSemua() {
+            countChecked = $("input[type=checkbox]:checked").not("#parent-checkbox-hapus").length;
+            if (countChecked == 0) {
+                $("#btn-hps-semua").prop("disabled", true);
+            }else{
+                $("#btn-hps-semua").prop("disabled", false);
+            }
+        }
+
+        function disabledButtonRestoreSemua() {
+            countChecked = $("input[type=checkbox]:checked").length;
+            if (countChecked == 0) {
+                $("#btn-restore-semua").prop("disabled", true);
+            }else{
+                $("#btn-restore-semua").prop("disabled", false);
+            }
+        }
+
+        function disabledButtonTerimaSemua() {
+            countChecked = $("input[type=checkbox]:checked").length;
+            if (countChecked == 0) {
+                $("#btn-terima-semua").prop("disabled", true);
+            }else{
+                $("#btn-terima-semua").prop("disabled", false);
+            }
+        }
+    </script>
+
+
+{{template "sidebar_privilege"}}
+
+{{end}}
