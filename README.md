@@ -21,10 +21,10 @@ Pada versi 4.0.0, Echo tersedia sebagai modul [Go module](https://github.com/gol
 - Go - https://golang.org/doc/install
 - Mysql - https://www.mysql.com/downloads/
 
-## Author
-- Dikhi Martin
-- Hajik Gustian Hidayat
-- Adam Arya Pratama
+## Author Owner
+- [Dikhi Martin](https://www.linkedin.com/in/dikhi-martin/)
+- [Hajik Gustian Hidayat](https://www.linkedin.com/in/hajik-gustian-hidayat-6ab575162/)
+- [Adam Arya Pratama](https://www.linkedin.com/in/adam-arya-pratama-76781a140/)
 
 ## License
 [MIT](https://github.com/labstack/echo/blob/master/LICENSE)
