@@ -224,8 +224,11 @@ func Index() *echo.Echo {
 			"view/setting/user_grup/add-form.html",
 			"view/setting/user_grup/edit-form.html",
 
+			//PROFILE
+			"view/profile/my-profile.html",
 
-			//login
+
+			//LOGIN
 			"view/auth/login.html",
 		)).Funcs(Map),
 	}
@@ -251,6 +254,9 @@ func Index() *echo.Echo {
 	SettingUser(cookieGroup)
 	SettingUserGrup(cookieGroup)
 
+	//Profile 
+	MyProfile(cookieGroup)
+	
 	//Auth 
 	AppAuth(e.Group("login"))
 

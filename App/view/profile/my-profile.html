@@ -1,0 +1,193 @@
+{{define "my_profile"}}
+    {{template "layout"}}
+
+    <div class="page-wrapper">
+        <!-- Bread crumb and right sidebar toggle -->
+        <div class="row page-titles">
+            <div class="col-md-5 align-self-center">
+                <h3 class="text-themecolor">Profile</h3>
+            </div>
+            <div class="col-md-7 align-self-center">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
+                    <li class="breadcrumb-item active">Profile</li>
+                </ol>
+            </div>
+        </div>
+        <!-- End Bread crumb and right sidebar toggle -->
+
+
+    <div class="container-fluid">
+        <!-- ============================================================== -->
+        <!-- Start Page Content -->
+        <!-- ============================================================== -->
+        <!-- Row -->
+        <div class="row">
+            <!-- Column -->
+            <div class="col-lg-4 col-xlg-3 col-md-5">
+                <div class="card">
+                    <div class="card-body">
+                        <center class="m-t-30">
+                            <div id="profile-img"></div>
+                            <h4 class="card-title m-t-10">
+                                <a href="javascript:void(0)" id="account_names" data-type="text" data-pk="" 
+                                    data-title="Edit Name">
+                                </a>
+                            </h4>
+                            <h6 id="account_groups" class="card-subtitle"></h6>
+                            <div class="row text-center justify-content-md-center">
+                            </div>
+                        </center>
+                    </div>
+                    <div><hr></div>
+                    <div id="_token" class="hidden" data-token=""></div>
+                    <div class="card-body"> 
+                        <small class="text-muted"></small>
+                        <h6></h6> 
+                        <small class="text-muted">Email address </small>
+                        <h6> <a href="javascript:void(0)" id="email" data-type="text" data-pk="" 
+                                data-title="Edit Email">
+                            </a>
+                        </h6> 
+
+                        <small class="text-muted">Phone</small>
+                        <h6>
+                            <a href="javascript:void(0)" id="telephone" data-type="text" data-pk="" 
+                                data-title="Edit telephone">
+                            </a>
+                        </h6> 
+
+                        <small class="text-muted">Address</small>
+                        <h6>
+                            <a href="javascript:void(0)" id="address" data-type="textarea" data-pk="" 
+                                data-title="Edit Address">
+                            </a>
+                        </h6> 
+                    
+                    </div>
+                </div>
+            </div>
+            <!-- Column -->
+            <!-- Column -->
+            <div class="col-lg-8 col-xlg-9 col-md-7">
+                <div class="card">
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs profile-tab" role="tablist">
+                        <li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#profile" role="tab">Profile</a> </li>
+                        <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#settings" role="tab">Settings</a> </li>
+                    </ul>
+
+                        <!-- form profile-->
+                        <form method="POST" action="" enctype="multipart/form-data">
+
+                            <!-- Tab panes -->
+                            <div class="tab-content">
+
+                            <!--profile-->
+                            <div class="tab-pane active" id="profile" role="tabpanel">
+                                <div class="card-body">
+
+
+                                </div>
+                            </div>
+                        </form>
+                        <!-- end form profile-->
+
+                        <div class="tab-pane" id="settings" role="tabpanel">
+                            <!-- form Password-->
+                             <div class="card-body">
+                                  <h3></h3>
+                                  </br>
+                                    <form class="form-horizontal" role="form" id="password_change" method="post" action="">
+                                
+                                  </form>
+                            </div>
+                            <!--end  form Password-->
+                        </div>
+
+
+                    </div><!-- end Tab panes -->
+                </div>
+            </div>
+            <!-- Column -->
+        </div>
+        <!-- Row -->
+        <!-- ============================================================== -->
+        <!-- End PAge Content -->
+
+    </div>
+
+    </div>
+    {{template "footer"}}
+
+    <script type="text/javascript" src="/static/plugins/x-editable/dist/bootstrap3-editable/js/bootstrap-editable.js">
+    </script>  
+
+    <script type="text/javascript">
+    //text inline update
+    $(document).ready(function() {
+
+     $.fn.editable.defaults.mode = 'inline';
+
+       $.fn.editable.defaults.params = function (params) 
+       {
+        params._token = $("#_token").data("token");
+        return params;
+       };
+
+        $('#name').editable({
+                validate: function(value) {
+                    if($.trim(value) == '') 
+                        return 'Value is required.';
+                    },
+                type: "text",
+                url:'',  
+                send:'always',
+                ajaxOptions: {
+                dataType: 'json'
+                }
+        });
+
+        $('#email').editable({
+            validate: function(value) {
+                if($.trim(value) == '') 
+                    return 'Value is required.';
+                },
+            type: "text",
+            url:'',  
+            send:'always',
+            ajaxOptions: {
+            dataType: 'json'
+            }
+        });
+
+        $('#telephone').editable({
+            validate: function(value) {
+                if($.trim(value) == '') 
+                    return 'Value is required.';
+                },
+            type: "text",
+            url:'',  
+            send:'always',
+            ajaxOptions: {
+            dataType: 'json'
+            }
+        });
+
+        $('#address').editable({
+            validate: function(value) {
+                if($.trim(value) == '') 
+                    return 'Value is required.';
+                },
+            type: "text",
+            url:'',  
+            send:'always',
+            ajaxOptions: {
+            dataType: 'json'
+            }
+        });
+    } );     
+
+    </script>
+    {{template "lastfooter"}}
+{{end}}

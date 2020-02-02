@@ -14,7 +14,7 @@ import (
 	"github.com/flosch/pongo2"
 )
 
-func ListSampleCrud(c echo.Context) error {
+func ListSampleCrudController(c echo.Context) error {
 
 	db := database.CreateCon()
 	defer db.Close()
@@ -126,8 +126,7 @@ func ListSampleCrud(c echo.Context) error {
 	return c.Render(http.StatusOK, "list_sample_crud", data)
 }
 
-
-func AddSampleCrud(c echo.Context) error {
+func AddSampleCrudController(c echo.Context) error {
 
 	errorInsert := ""
 	if errorFeedback != nil {
@@ -144,7 +143,7 @@ func AddSampleCrud(c echo.Context) error {
 	return c.Render(http.StatusOK, "add_form_sample_crud", data)
 }
 
-func StoreSampleCrud(c echo.Context) error {
+func StoreSampleCrudController(c echo.Context) error {
 
 	db := database.CreateCon()
 	defer db.Close()
@@ -171,7 +170,7 @@ func StoreSampleCrud(c echo.Context) error {
 	return c.Redirect(301, "/lib/sample_crud/")
 }
 
-func EditSampleCrud(c echo.Context) error {
+func EditSampleCrudController(c echo.Context) error {
 
 	db := database.CreateCon()
 	defer db.Close()
@@ -202,7 +201,7 @@ func EditSampleCrud(c echo.Context) error {
 	return c.Render(http.StatusOK, "edit_form_sample_crud", data)
 }
 
-func UpdateSampleCrud(c echo.Context) error {
+func UpdateSampleCrudController(c echo.Context) error {
 
 	db := database.CreateCon()
 	defer db.Close()
@@ -224,7 +223,7 @@ func UpdateSampleCrud(c echo.Context) error {
 	return c.Redirect(301, "/lib/sample_crud/")
 }
 
-func DeleteSampleCrud(c echo.Context) error {
+func DeleteSampleCrudController(c echo.Context) error {
 	db := database.CreateCon()
 	defer db.Close()
 
@@ -248,7 +247,7 @@ func DeleteSampleCrud(c echo.Context) error {
 	return c.JSON(http.StatusOK, requested_id)
 }
 
-func DeleteAllSampleCrud(c echo.Context) error {
+func DeleteAllSampleCrudController(c echo.Context) error {
 
 	db := database.CreateCon()
 	defer db.Close()
