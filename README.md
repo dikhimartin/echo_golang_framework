@@ -38,7 +38,7 @@ const (
 - Run Redis Service
 - Run Mysql Service
 - Masuk ke /App/. kemudiankan jalankan melalui CLI ( go run main.go )
-- server already serve
+- Go Framework already serve
 
 
 ## Author Owner
