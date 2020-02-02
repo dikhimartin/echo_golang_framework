@@ -331,7 +331,7 @@ func StoreSettingGrupPrivilege(c echo.Context) error {
 		}		
 	}
 
-	return c.Redirect(301, "/setting/grup_privilege/")
+	return c.Redirect(301, "/lib/setting/grup_privilege/")
 }
 
 func EditSettingGrupPrivilege(c echo.Context) error {
@@ -543,7 +543,7 @@ func UpdateSettingGrupPrivilege(c echo.Context) error {
 		}		
 	}
 
-	return c.Redirect(301, "/setting/grup_privilege/")
+	return c.Redirect(301, "/lib/setting/grup_privilege/")
 }
 
 func ShowSettingGrupPrivilege(c echo.Context) error {

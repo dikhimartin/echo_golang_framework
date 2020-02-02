@@ -244,10 +244,13 @@ func POSTRedirectLogout(c echo.Context) error {
 // session_expire
 func AuthorizationSession(c echo.Context) error {
 
+	t   			   := time.Now().UnixNano()
+	current_time 	   := strconv.FormatInt(t, 10)
+
 	cookie, err := c.Cookie(api_middleware.COOKIE_NAME)
 	if err != nil {
 		if strings.Contains(err.Error(), "named cookie not present") {
-			return c.Redirect(http.StatusTemporaryRedirect, "/?session_expire=true")
+			return c.Redirect(http.StatusTemporaryRedirect, "/?session_expire=true?="+current_time)
 		}
 		log.Println("err cookie singout")
 		log.Println(err)
@@ -287,9 +290,11 @@ func AuthorizationSession(c echo.Context) error {
 		//end set expire cookie
 	}
 
-	return c.Redirect(http.StatusTemporaryRedirect, "/?session_expire=true")
+	return c.Redirect(http.StatusTemporaryRedirect, "/?session_expire=true=?"+current_time)
 }
 
 func RedirectSession(c echo.Context) error {
-	return c.Redirect(http.StatusTemporaryRedirect, "/?session_expire=true")
+	t   			   := time.Now().UnixNano()
+	current_time 	   := strconv.FormatInt(t, 10)	
+	return c.Redirect(http.StatusTemporaryRedirect, "/?session_expire=true=?"+current_time)
 }
