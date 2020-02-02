@@ -17,10 +17,14 @@ Pada versi 4.0.0, Echo tersedia sebagai modul [Go module](https://github.com/gol
 - 1.11+
 
 ## Teknologi
-- Redis Server Cache
-- Go
-- Mysql
+- Redis Server Cache - https://redis.io/
+- Go - https://golang.org/doc/install
+- Mysql - https://www.mysql.com/downloads/
 
+## Author
+- Dikhi Martin
+- Hajik Gustian Hidayat
+- Adam Arya Pratama
 
 ## License
 [MIT](https://github.com/labstack/echo/blob/master/LICENSE)
