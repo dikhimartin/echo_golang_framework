@@ -17,6 +17,10 @@ Pada versi 4.0.0, Echo tersedia sebagai modul [Go module](https://github.com/gol
 - 1.11+
 
 
+## Tools yang dibutuhkan
+- Redis Server Cache
+- Go
+
 
 ## License
 [MIT](https://github.com/labstack/echo/blob/master/LICENSE)
