@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 02 Feb 2020 pada 22.48
+-- Generation Time: 03 Feb 2020 pada 08.49
 -- Versi Server: 10.1.28-MariaDB
 -- PHP Version: 5.6.32
 
@@ -74,19 +74,6 @@ CREATE TABLE `tb_sample_crud` (
   `additional` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data untuk tabel `tb_sample_crud`
---
-
-INSERT INTO `tb_sample_crud` (`id`, `text_input`, `text_area`, `created_by`, `updated_by`, `created_at`, `updated_at`, `status`, `additional`) VALUES
-(27, 'Text Input 1', 'Text Area 1', 1, 1, '2020-02-01 09:51:38', '2020-02-02 08:23:08', 'Y', NULL),
-(28, 'Text Input 2', 'Text Area 2', 1, 1, '2020-02-01 09:51:43', '2020-02-01 09:54:15', 'Y', NULL),
-(29, 'Text Input 3', 'Text Area 3', 1, 1, '2020-02-01 09:51:47', '2020-02-01 09:54:19', 'Y', NULL),
-(30, 'Text Input 4', 'Text Area 4', 1, 1, '2020-02-01 09:51:51', '2020-02-01 09:54:25', 'Y', NULL),
-(31, 'Text input 5', 'Text Area 5', 1, 1, '2020-02-01 09:52:58', '2020-02-01 09:54:29', 'Y', NULL),
-(32, 'Text Input 6', 'Text Area 6', 1, 1, '2020-02-01 09:53:09', '2020-02-01 09:54:33', 'Y', NULL),
-(33, 'Text Input 7', 'Text Area 7', 1, 1, '2020-02-01 09:54:49', '2020-02-02 12:42:55', 'Y', NULL);
-
 -- --------------------------------------------------------
 
 --
@@ -132,7 +119,7 @@ CREATE TABLE `tb_setting_grup_privilege` (
 INSERT INTO `tb_setting_grup_privilege` (`id`, `id_setting_grup`, `remarks`, `status`, `created_at`, `updated_at`, `additional`) VALUES
 (1, 1, 'Superadmin', 'Y', '2019-11-11 11:58:30', '2020-01-26 20:29:38', NULL),
 (2, 2, 'Administrator', 'Y', '2019-11-11 12:00:05', '2020-02-02 16:53:21', NULL),
-(7, 6, '', 'Y', '2020-01-26 20:48:16', '2020-02-02 15:28:53', NULL);
+(3, 6, 'User', 'Y', '2020-02-03 12:34:02', '2020-02-03 14:46:29', NULL);
 
 -- --------------------------------------------------------
 
@@ -173,17 +160,17 @@ INSERT INTO `tb_setting_grup_privilege_detail` (`id`, `id_setting_grup_privilege
 (38, 1, 'setting.user.user_2', '2020-01-26 13:29:38', NULL),
 (39, 1, 'setting.user.user_3', '2020-01-26 13:29:38', NULL),
 (40, 1, 'setting.user.user_4', '2020-01-26 13:29:38', NULL),
-(64, 7, 'samplecrud_1', '2020-02-02 08:28:53', NULL),
-(65, 7, 'samplecrud_2', '2020-02-02 08:28:53', NULL),
-(66, 7, 'samplecrud_3', '2020-02-02 08:28:53', NULL),
-(67, 7, 'samplecrud_4', '2020-02-02 08:28:53', NULL),
 (76, 2, 'samplecrud_1', '2020-02-02 09:53:21', NULL),
 (77, 2, 'samplecrud_2', '2020-02-02 09:53:21', NULL),
 (78, 2, 'samplecrud_3', '2020-02-02 09:53:21', NULL),
 (79, 2, 'samplecrud_4', '2020-02-02 09:53:21', NULL),
 (80, 2, 'setting.user.grupprivilege_2', '2020-02-02 09:53:21', NULL),
 (81, 2, 'setting.user.grup_2', '2020-02-02 09:53:21', NULL),
-(82, 2, 'setting.user.user_2', '2020-02-02 09:53:21', NULL);
+(82, 2, 'setting.user.user_2', '2020-02-02 09:53:21', NULL),
+(128, 3, 'samplecrud_1', '2020-02-03 07:46:29', NULL),
+(129, 3, 'samplecrud_2', '2020-02-03 07:46:29', NULL),
+(130, 3, 'samplecrud_3', '2020-02-03 07:46:29', NULL),
+(131, 3, 'samplecrud_4', '2020-02-03 07:46:29', NULL);
 
 -- --------------------------------------------------------
 
@@ -275,10 +262,9 @@ CREATE TABLE `tb_setting_user` (
 --
 
 INSERT INTO `tb_setting_user` (`id`, `full_name`, `username`, `email`, `gender`, `password`, `salt`, `add_date`, `update_date`, `status`, `image`, `additional`) VALUES
-(1, 'Dikhi Martin', 'superadmin', 'dikhi.martin@gmail.com', 'L', '1d5c16ef6797717252b5d161a9958ce2', '4ec051ac2d933468de837eab4c6cacfa', '2019-11-11', '2020-01-26', 'Y', '8936ccd137d75e5721614562f54f3ced', '.jpg'),
-(13, 'Adminman', 'adminman', 'adminman@gmail.com', 'L', '4550ddbdef40f075abc4a6a44d8ecfd0', '077c79d74ac64f0456c872758a9cfd9f', '2020-01-26', '2020-02-02', 'Y', 'cf7481a8939e9d187d5cacbb6c1dd95b', '.png'),
-(14, 'Admin Office', 'adminoffice', 'adminoffice@gmail.com', 'L', '09ead1c0111153d77bba4fc22c8d8118', '9fd81d49dd9917f1e2932451b69cea83', '2020-01-26', '2020-02-02', 'Y', NULL, NULL),
-(15, 'userstore', 'userstore', 'userstore@gmail.com', 'P', '09ead1c0111153d77bba4fc22c8d8118', '9fd81d49dd9917f1e2932451b69cea83', '2020-01-26', '2020-02-02', 'Y', '2d62e250c272f0e1e2724b9acda981b8', '.png');
+(1, 'Dikhi Martin', 'superadmin', 'dikhi.martin@gmail.com', 'L', '1d5c16ef6797717252b5d161a9958ce2', '4ec051ac2d933468de837eab4c6cacfa', '2019-11-11', '2020-02-03', 'Y', '8936ccd137d75e5721614562f54f3ced', '.jpg'),
+(2, 'Admin', 'admin', 'admin@gmail.com', 'L', '430f0a65a72899a4fd537630c95cbe43', 'a81d5a36f960977694589733e2ded569', '2020-02-03', NULL, 'Y', NULL, NULL),
+(3, 'User', 'username', 'user@gmail.com', 'L', '430f0a65a72899a4fd537630c95cbe43', 'a81d5a36f960977694589733e2ded569', '2020-02-03', NULL, 'Y', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -300,10 +286,9 @@ CREATE TABLE `tb_setting_user_grup` (
 --
 
 INSERT INTO `tb_setting_user_grup` (`id`, `id_setting_user`, `id_setting_grup`, `status`, `add_date`, `update_date`) VALUES
-(2, 1, 1, 'Y', '2019-11-11', '2020-01-26'),
-(12, 13, 2, 'N', '2020-01-26', '2020-02-02'),
-(13, 14, 2, 'Y', '2020-01-26', '2020-02-02'),
-(14, 15, 6, 'Y', '2020-01-26', '2020-02-02');
+(2, 1, 1, 'Y', '2019-11-11', '2020-02-03'),
+(3, 2, 2, 'Y', '2020-02-03', NULL),
+(4, 3, 6, 'Y', '2020-02-03', NULL);
 
 -- --------------------------------------------------------
 
@@ -562,7 +547,7 @@ ALTER TABLE `tb_master_permission`
 -- AUTO_INCREMENT for table `tb_sample_crud`
 --
 ALTER TABLE `tb_sample_crud`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=308;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT for table `tb_setting_grup`
@@ -574,13 +559,13 @@ ALTER TABLE `tb_setting_grup`
 -- AUTO_INCREMENT for table `tb_setting_grup_privilege`
 --
 ALTER TABLE `tb_setting_grup_privilege`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `tb_setting_grup_privilege_detail`
 --
 ALTER TABLE `tb_setting_grup_privilege_detail`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=83;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=132;
 
 --
 -- AUTO_INCREMENT for table `tb_setting_privilege`
@@ -598,13 +583,13 @@ ALTER TABLE `tb_setting_privilege_detail`
 -- AUTO_INCREMENT for table `tb_setting_user`
 --
 ALTER TABLE `tb_setting_user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `tb_setting_user_grup`
 --
 ALTER TABLE `tb_setting_user_grup`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
