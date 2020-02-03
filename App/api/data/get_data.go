@@ -10,6 +10,7 @@ import (
 	"github.com/labstack/echo"
 )
 
+
 //Get GetDataJWT
 func GetDataJWT(c echo.Context) (map[string]string, error) {
 
@@ -20,7 +21,6 @@ func GetDataJWT(c echo.Context) (map[string]string, error) {
 	if err != nil {
 		if strings.Contains(err.Error(), "named cookie not present") {
 			fmt.Println("named named cookie not present")
-			// return c.Redirect(301, "/")
 		}
 
 		return nil, err
@@ -49,7 +49,9 @@ func GetDataJWT(c echo.Context) (map[string]string, error) {
 				return []byte(api_middleware.JWT_KEY), nil
 			})
 
-			if err != nil {
+			// jika session habis
+			if err != nil {	
+				RedirectSessionExpired(c)
 				return nil, err
 			}
 
@@ -71,11 +73,16 @@ func GetDataJWT(c echo.Context) (map[string]string, error) {
 	return nil, errs
 }
 
+func RedirectSessionExpired(c echo.Context) error{
+	return c.Redirect(http.StatusTemporaryRedirect, "/session_expire")
+}
+
 func ShowDataJWT(c echo.Context) error {
 
 	JSON, err := GetDataJWT(c)
 
 	if err != nil {
+		fmt.Println("kosong")
 		return err
 	}
 
