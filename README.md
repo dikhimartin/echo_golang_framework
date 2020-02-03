@@ -43,8 +43,6 @@ const (
 
 ## Author Owner
 - [Dikhi Martin](https://www.linkedin.com/in/dikhi-martin/)
-- [Hajik Gustian Hidayat](https://www.linkedin.com/in/hajik-gustian-hidayat-6ab575162/)
-- [Adam Arya Pratama](https://www.linkedin.com/in/adam-arya-pratama-76781a140/)
 
 ## License
 [MIT](https://github.com/labstack/echo/blob/master/LICENSE)

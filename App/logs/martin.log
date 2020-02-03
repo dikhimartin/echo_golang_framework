@@ -130,3 +130,14 @@
 2020-02-03T12:00:36+07:00 SYSTEM main.go:27: Starting Application
 2020-02-03T12:00:36+07:00 SYSTEM customlogger.go:51: Login Page
 2020-02-03T12:01:23+07:00 SYSTEM main.go:27: Starting Application
+2020-02-03T12:19:47+07:00 SYSTEM main.go:27: Starting Application
+2020-02-03T12:19:47+07:00 SYSTEM customlogger.go:51: Login Page
+2020-02-03T12:19:47+07:00 SYSTEM customlogger.go:51: Login Page
+2020-02-03T12:19:47+07:00 SYSTEM customlogger.go:51: Login Page
+2020-02-03T12:19:47+07:00 SYSTEM customlogger.go:51: Login Page
+2020-02-03T12:19:47+07:00 SYSTEM customlogger.go:51: Login Page
+2020-02-03T12:19:47+07:00 SYSTEM customlogger.go:51: Login Page
+2020-02-03T12:19:47+07:00 SYSTEM customlogger.go:51: Login Page
+2020-02-03T12:21:53+07:00 SYSTEM main.go:27: Starting Application
+2020-02-03T12:22:05+07:00 SYSTEM main.go:27: Starting Application
+2020-02-03T12:22:26+07:00 SYSTEM main.go:27: Starting Application
