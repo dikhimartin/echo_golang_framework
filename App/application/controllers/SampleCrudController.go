@@ -19,6 +19,31 @@ func ListSampleCrudController(c echo.Context) error {
 	db := database.CreateCon()
 	defer db.Close()
 
+	cc := &MyCustomContext{c}
+	data_users			:= cc.getDataLogin()
+
+	// check_privilege
+	var check_privilege []byte
+	check_privileges, errPriv := db.Prepare("SELECT kode_permissions FROM v_get_grup_privilege_detail WHERE id_setting_grup = ? AND kode_permissions = 'samplecrud_2'")
+	if errPriv != nil {
+		fmt.Printf("%s", errPriv)
+	}
+	errPriv = check_privileges.QueryRow(data_users.Id_group).Scan(&check_privilege)	
+	defer check_privileges.Close()
+	if string(check_privilege) != "samplecrud_2"{
+		return c.Render(http.StatusInternalServerError, "error_403", nil)
+	}
+
+	var delete_permission []byte
+	delete_permissions, errPriv := db.Prepare("SELECT kode_permissions FROM v_get_grup_privilege_detail WHERE id_setting_grup = ? AND kode_permissions = 'samplecrud_4'")
+	if errPriv != nil {
+		fmt.Printf("%s", errPriv)
+	}
+	errPriv = delete_permissions.QueryRow(data_users.Id_group).Scan(&delete_permission)	
+	defer delete_permissions.Close()
+	//end check_privilege
+
+
 	var selected string
 	var whrs string
 	var search string
@@ -97,10 +122,8 @@ func ListSampleCrudController(c echo.Context) error {
 		result = append(result, each)
 	}
 
-
 	// Lets use the Forbes top 7.
 	paginate := result
-
 
 	// sets paginator with the current offset (from the url query param)
 	postsPerPage := 10
@@ -118,15 +141,35 @@ func ListSampleCrudController(c echo.Context) error {
 	}
 
 	data = pongo2.Context{
-		"paginator"		:    paginator,
-		"posts"			:    paginates,
-		"search"		:    search,
-		"searchStatus"	:    searchStatus}
+		"delete_permission"		:    string(delete_permission),
+		"paginator"				:    paginator,
+		"posts"					:    paginates,
+		"search"				:    search,
+		"searchStatus"			:    searchStatus}
 
 	return c.Render(http.StatusOK, "list_sample_crud", data)
 }
 
 func AddSampleCrudController(c echo.Context) error {
+
+	db := database.CreateCon()
+	defer db.Close()
+
+	cc := &MyCustomContext{c}
+	data_users			:= cc.getDataLogin()
+
+	// check_privilege
+	var check_privilege []byte
+	check_privileges, errPriv := db.Prepare("SELECT kode_permissions FROM v_get_grup_privilege_detail WHERE id_setting_grup = ? AND kode_permissions = 'samplecrud_1'")
+	if errPriv != nil {
+		fmt.Printf("%s", errPriv)
+	}
+	errPriv = check_privileges.QueryRow(data_users.Id_group).Scan(&check_privilege)	
+	defer check_privileges.Close()
+	if string(check_privilege) != "samplecrud_1"{
+		return c.Render(http.StatusInternalServerError, "error_403", nil)
+	}
+	//end check_privilege
 
 	errorInsert := ""
 	if errorFeedback != nil {
@@ -147,6 +190,22 @@ func StoreSampleCrudController(c echo.Context) error {
 
 	db := database.CreateCon()
 	defer db.Close()
+
+	cc := &MyCustomContext{c}
+	data_users			:= cc.getDataLogin()
+
+	// check_privilege
+	var check_privilege []byte
+	check_privileges, errPriv := db.Prepare("SELECT kode_permissions FROM v_get_grup_privilege_detail WHERE id_setting_grup = ? AND kode_permissions = 'samplecrud_1'")
+	if errPriv != nil {
+		fmt.Printf("%s", errPriv)
+	}
+	errPriv = check_privileges.QueryRow(data_users.Id_group).Scan(&check_privilege)	
+	defer check_privileges.Close()
+	if string(check_privilege) != "samplecrud_1"{
+		return c.Render(http.StatusInternalServerError, "error_403", nil)
+	}
+	//end check_privilege
 
 	text_input     := c.FormValue("text_input")
 	text_area  	   := c.FormValue("text_area")
@@ -174,6 +233,22 @@ func EditSampleCrudController(c echo.Context) error {
 
 	db := database.CreateCon()
 	defer db.Close()
+
+	cc := &MyCustomContext{c}
+	data_users			:= cc.getDataLogin()
+
+	// check_privilege
+	var check_privilege []byte
+	check_privileges, errPriv := db.Prepare("SELECT kode_permissions FROM v_get_grup_privilege_detail WHERE id_setting_grup = ? AND kode_permissions = 'samplecrud_3'")
+	if errPriv != nil {
+		fmt.Printf("%s", errPriv)
+	}
+	errPriv = check_privileges.QueryRow(data_users.Id_group).Scan(&check_privilege)	
+	defer check_privileges.Close()
+	if string(check_privilege) != "samplecrud_3"{
+		return c.Render(http.StatusInternalServerError, "error_403", nil)
+	}
+	//end check_privilege
 
 	requested_id := c.Param("id")
 
@@ -206,6 +281,22 @@ func UpdateSampleCrudController(c echo.Context) error {
 	db := database.CreateCon()
 	defer db.Close()
 
+	cc := &MyCustomContext{c}
+	data_users			:= cc.getDataLogin()
+
+	// check_privilege
+	var check_privilege []byte
+	check_privileges, errPriv := db.Prepare("SELECT kode_permissions FROM v_get_grup_privilege_detail WHERE id_setting_grup = ? AND kode_permissions = 'samplecrud_3'")
+	if errPriv != nil {
+		fmt.Printf("%s", errPriv)
+	}
+	errPriv = check_privileges.QueryRow(data_users.Id_group).Scan(&check_privilege)	
+	defer check_privileges.Close()
+	if string(check_privilege) != "samplecrud_3"{
+		return c.Render(http.StatusInternalServerError, "error_403", nil)
+	}
+	//end check_privilege
+
 	requested_id := c.Param("id")
 
 	text_input 		 := c.FormValue("text_input")
@@ -226,6 +317,23 @@ func UpdateSampleCrudController(c echo.Context) error {
 func DeleteSampleCrudController(c echo.Context) error {
 	db := database.CreateCon()
 	defer db.Close()
+
+	cc := &MyCustomContext{c}
+	data_users			:= cc.getDataLogin()
+
+	// check_privilege
+	var check_privilege []byte
+	check_privileges, errPriv := db.Prepare("SELECT kode_permissions FROM v_get_grup_privilege_detail WHERE id_setting_grup = ? AND kode_permissions = 'samplecrud_4'")
+	if errPriv != nil {
+		fmt.Printf("%s", errPriv)
+	}
+	errPriv = check_privileges.QueryRow(data_users.Id_group).Scan(&check_privilege)	
+	defer check_privileges.Close()
+	if string(check_privilege) != "samplecrud_4"{
+		return c.Render(http.StatusInternalServerError, "error_403", nil)
+	}
+	//end check_privilege
+
 
 	emp := new(models.SampleCrud)
 	if err := c.Bind(emp); err != nil {
@@ -251,6 +359,23 @@ func DeleteAllSampleCrudController(c echo.Context) error {
 
 	db := database.CreateCon()
 	defer db.Close()
+
+	cc := &MyCustomContext{c}
+	data_users			:= cc.getDataLogin()
+
+	// check_privilege
+	var check_privilege []byte
+	check_privileges, errPriv := db.Prepare("SELECT kode_permissions FROM v_get_grup_privilege_detail WHERE id_setting_grup = ? AND kode_permissions = 'samplecrud_4'")
+	if errPriv != nil {
+		fmt.Printf("%s", errPriv)
+	}
+	errPriv = check_privileges.QueryRow(data_users.Id_group).Scan(&check_privilege)	
+	defer check_privileges.Close()
+	if string(check_privilege) != "samplecrud_4"{
+		return c.Render(http.StatusInternalServerError, "error_403", nil)
+	}
+	//end check_privilege
+
 	
 	requested_id := c.Param("id")
 

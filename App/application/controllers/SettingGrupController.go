@@ -8,12 +8,10 @@ import (
 	"github.com/labstack/echo"
 	_ "database/sql"
 	"fmt"
-	// "time"
 	"../../database"
 	"github.com/astaxie/beego/utils/pagination"
 	"github.com/flosch/pongo2"
 )
-
 
 
 func (c *MyCustomContext) getDataGrup() ([]models.SettingGrup) {
@@ -49,10 +47,26 @@ func (c *MyCustomContext) getDataGrup() ([]models.SettingGrup) {
 	return result
 }
 
-
 func ListSettingGrup(c echo.Context) error {
+
 	db := database.CreateCon()
 	defer db.Close()
+
+	cc := &MyCustomContext{c}
+	data_users			:= cc.getDataLogin()
+
+	// check_privilege
+	var check_privilege []byte
+	check_privileges, errPriv := db.Prepare("SELECT kode_permissions FROM v_get_grup_privilege_detail WHERE id_setting_grup = ? AND kode_permissions = 'setting.user.grup_2'")
+	if errPriv != nil {
+		fmt.Printf("%s", errPriv)
+	}
+	errPriv = check_privileges.QueryRow(data_users.Id_group).Scan(&check_privilege)	
+	defer check_privileges.Close()
+	if string(check_privilege) != "setting.user.grup_2"{
+		return c.Render(http.StatusInternalServerError, "error_403", nil)
+	}
+	//end check_privilege
 
 	var selected string
 	var whrs string
@@ -148,12 +162,48 @@ func ListSettingGrup(c echo.Context) error {
 }
 
 func AddSettingGrup(c echo.Context) error {
+	db := database.CreateCon()
+	defer db.Close()
+
+	cc := &MyCustomContext{c}
+	data_users			:= cc.getDataLogin()
+
+	// check_privilege
+	var check_privilege []byte
+	check_privileges, errPriv := db.Prepare("SELECT kode_permissions FROM v_get_grup_privilege_detail WHERE id_setting_grup = ? AND kode_permissions = 'setting.user.grup_1'")
+	if errPriv != nil {
+		fmt.Printf("%s", errPriv)
+	}
+	errPriv = check_privileges.QueryRow(data_users.Id_group).Scan(&check_privilege)	
+	defer check_privileges.Close()
+	if string(check_privilege) != "setting.user.grup_1"{
+		return c.Render(http.StatusInternalServerError, "error_403", nil)
+	}
+	//end check_privilege
+
+
 	return c.Render(http.StatusOK, "add_setting_grup", nil)
 }
 
 func StoreSettingGrup(c echo.Context) error {
 	db := database.CreateCon()
 	defer db.Close()
+
+	cc := &MyCustomContext{c}
+	data_users			:= cc.getDataLogin()
+
+	// check_privilege
+	var check_privilege []byte
+	check_privileges, errPriv := db.Prepare("SELECT kode_permissions FROM v_get_grup_privilege_detail WHERE id_setting_grup = ? AND kode_permissions = 'setting.user.grup_1'")
+	if errPriv != nil {
+		fmt.Printf("%s", errPriv)
+	}
+	errPriv = check_privileges.QueryRow(data_users.Id_group).Scan(&check_privilege)	
+	defer check_privileges.Close()
+	if string(check_privilege) != "setting.user.grup_1"{
+		return c.Render(http.StatusInternalServerError, "error_403", nil)
+	}
+	//end check_privilege
 
 	emp := new(models.SettingGrup)
 	if err := c.Bind(emp); err != nil {
@@ -180,6 +230,22 @@ func EditSettingGrup(c echo.Context) error {
 	db := database.CreateCon()
 	defer db.Close()
 
+	cc := &MyCustomContext{c}
+	data_users			:= cc.getDataLogin()
+
+	// check_privilege
+	var check_privilege []byte
+	check_privileges, errPriv := db.Prepare("SELECT kode_permissions FROM v_get_grup_privilege_detail WHERE id_setting_grup = ? AND kode_permissions = 'setting.user.grup_3'")
+	if errPriv != nil {
+		fmt.Printf("%s", errPriv)
+	}
+	errPriv = check_privileges.QueryRow(data_users.Id_group).Scan(&check_privilege)	
+	defer check_privileges.Close()
+	if string(check_privilege) != "setting.user.grup_3"{
+		return c.Render(http.StatusInternalServerError, "error_403", nil)
+	}
+	//end check_privilege
+
 	requested_id := c.Param("id")
 	var name_grup string
 	var status string
@@ -203,6 +269,22 @@ func EditSettingGrup(c echo.Context) error {
 func UpdateSettingGrup(c echo.Context) error {
 	db := database.CreateCon()
 	defer db.Close()
+
+	cc := &MyCustomContext{c}
+	data_users			:= cc.getDataLogin()
+
+	// check_privilege
+	var check_privilege []byte
+	check_privileges, errPriv := db.Prepare("SELECT kode_permissions FROM v_get_grup_privilege_detail WHERE id_setting_grup = ? AND kode_permissions = 'setting.user.grup_3'")
+	if errPriv != nil {
+		fmt.Printf("%s", errPriv)
+	}
+	errPriv = check_privileges.QueryRow(data_users.Id_group).Scan(&check_privilege)	
+	defer check_privileges.Close()
+	if string(check_privilege) != "setting.user.grup_3"{
+		return c.Render(http.StatusInternalServerError, "error_403", nil)
+	}
+	//end check_privilege
 	
 	emp := new(models.SettingGrup)
 	if err := c.Bind(emp); err != nil {

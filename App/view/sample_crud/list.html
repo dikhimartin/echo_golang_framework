@@ -124,10 +124,10 @@
 													<a href="/lib/sample_crud/editform/{{.Id}}" class="btn btn-sm btn-info" data-toggle="tooltip" data-placement="top" title="Edit data!">
 														<i class="fa fa-pencil"></i>
 													</a>
-
-													 <a href="javascript:void(0)" onclick=delete_data({{ .Id }})><button type="button" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="Delete data!">
-													<i class="fa fa-trash"></i>
-													</button></a>
+													<a href="javascript:void(0)" onclick=delete_data({{ .Id }})><button type="button" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="Delete data!">
+														<i class="fa fa-trash"></i>
+														</button>
+													</a>
 												</td>
 											</tr>
 											{{end}}
@@ -196,111 +196,125 @@
 			  }
 			}
 
+	        {{if .delete_permission}}
+				// delete_all_data
+		        function delete_all_data(){
+		                swal({
+		                    title: "Are you sure?",
+		                    text: "All selected data will be deleted, you will not be able to recover this data!",
+		                    type: "warning",
+		                    showCancelButton: true,
+		                    confirmButtonColor: "#dc3545",
+		                    confirmButtonText: "Yes, delete it!",
+		                    cancelButtonText: "No, cancel it!",
+		                    closeOnConfirm: false,
+		                    closeOnCancel: false,
+	      					showLoaderOnConfirm: true
+		                },
+		                 function(isConfirm){
+		                 	if (isConfirm) {
 
-			// delete_all_data
-	        function delete_all_data(){
-	                swal({
-	                    title: "Are you sure?",
-	                    text: "All selected data will be deleted, you will not be able to recover this data!",
-	                    type: "warning",
-	                    showCancelButton: true,
-	                    confirmButtonColor: "#dc3545",
-	                    confirmButtonText: "Yes, delete it!",
-	                    cancelButtonText: "No, cancel it!",
-	                    closeOnConfirm: false,
-	                    closeOnCancel: false,
-      					showLoaderOnConfirm: true
-	                },
-	                 function(isConfirm){
-	                 	if (isConfirm) {
+						        var post_arr = [];
+						        $('#recordsTable input[type=checkbox]').each(function() {
+						            if (jQuery(this).is(":checked")) {
+						                var id = this.id;
+						                var splitid = id.split('_');
+						                var postid = splitid[1];
 
-					        var post_arr = [];
-					        $('#recordsTable input[type=checkbox]').each(function() {
-					            if (jQuery(this).is(":checked")) {
-					                var id = this.id;
-					                var splitid = id.split('_');
-					                var postid = splitid[1];
+						                post_arr.push(postid);
 
-					                post_arr.push(postid);
+						            }
+						        });
+						        console.log(post_arr)
+						        if(post_arr.length > 0){
+						            var url ="/lib/sample_crud/delete_all/"+post_arr+"/";
+						            // AJAX Request
+						            $.ajax({
+						                url: url,
+						                type: 'POST',
+						                data: { id: post_arr},
+						                success: function(response){
+						                	swal("Done!","File deleted successfully!","success");
+						                    $.each(post_arr, function( i,l ){
+						                        $("#tr_"+l).remove();
+						                    });
 
-					            }
-					        });
-					        console.log(post_arr)
-					        if(post_arr.length > 0){
-					            var url ="/lib/sample_crud/delete_all/"+post_arr+"/";
-					            // AJAX Request
-					            $.ajax({
-					                url: url,
-					                type: 'POST',
-					                data: { id: post_arr},
-					                success: function(response){
-					                	swal("Done!","File deleted successfully!","success");
-					                    $.each(post_arr, function( i,l ){
-					                        $("#tr_"+l).remove();
-					                    });
+				                        	document.getElementById("notif_success").innerHTML ="<div class='alert alert-warning'>Data Successfully deleted </div>";
 
-			                        	document.getElementById("notif_success").innerHTML ="<div class='alert alert-warning'>Data Successfully deleted </div>";
+				                        	setTimeout(function() {
+				                                $('#notif_success').hide();
+				                            }, 3000);
 
-			                        	setTimeout(function() {
-			                                $('#notif_success').hide();
-			                            }, 3000);
+						                }
+						            });
+						        }
+				                }else{
+				                        swal("Canceled", "Your data is still safe :)", "error");
+				                }
+				             })
+		        }
+				// delete_data
+		        function delete_data(id){
+		                swal({
+		                    title: "Are you sure?",
+		                    text: "You will not be able to recover this data!",
+		                    type: "warning",
+		                    showCancelButton: true,
+		                    confirmButtonColor: "#dc3545",
+		                    confirmButtonText: "Yes, delete it!",
+		                    cancelButtonText: "No, cancel it!",
+		                    closeOnConfirm: false,
+		                    closeOnCancel: false
+		                },
+		                 function(isConfirm){
+		                   if (isConfirm) {
+		                    var url ="/lib/sample_crud/deleteform/"+id+"/";
+		                    $.ajax({
+		                        url : url,
+		                        type: "POST",
+		                        data: {"id":id},
+		                        dataType: "JSON",
+		                        success: function(result)
+		                        {
+		                             if(result) //if success close modal and reload ajax table
+		                            {
+		                                swal("Done!","File deleted successfully!","success");
+						                    $("#tr_"+id).remove();
 
-					                }
-					            });
-					        }
-			                }else{
-			                        swal("Canceled", "Your data is still safe :)", "error");
-			                }
-			             })
-	        }
+				                        	document.getElementById("notif_success").innerHTML ="<div class='alert alert-warning'>Data Successfully deleted </div>";
 
-
-			// delete_data
-	        function delete_data(id){
-	                swal({
-	                    title: "Are you sure?",
-	                    text: "You will not be able to recover this data!",
-	                    type: "warning",
-	                    showCancelButton: true,
-	                    confirmButtonColor: "#dc3545",
-	                    confirmButtonText: "Yes, delete it!",
-	                    cancelButtonText: "No, cancel it!",
-	                    closeOnConfirm: false,
-	                    closeOnCancel: false
-	                },
-	                 function(isConfirm){
-	                   if (isConfirm) {
-	                    var url ="/lib/sample_crud/deleteform/"+id+"/";
-	                    $.ajax({
-	                        url : url,
-	                        type: "POST",
-	                        data: {"id":id},
-	                        dataType: "JSON",
-	                        success: function(result)
-	                        {
-	                             if(result) //if success close modal and reload ajax table
-	                            {
-	                                swal("Done!","File deleted successfully!","success");
-					                    $("#tr_"+id).remove();
-
-			                        	document.getElementById("notif_success").innerHTML ="<div class='alert alert-warning'>Data Successfully deleted </div>";
-
-			                        	setTimeout(function() {
-			                                $('#notif_success').hide();
-			                            }, 3000);
-	                            }
-	                        },
-	                        error: function (jqXHR, textStatus, errorThrown)
-	                        {
-	                            console.log(url);
-	                            alert('Error deleting data');
-	                        }
-	                    });
-	                  }else{
-	                        swal("Canceled", "Your data is still safe :)", "error");
-	                  }
-	               })
-	        }
+				                        	setTimeout(function() {
+				                                $('#notif_success').hide();
+				                            }, 3000);
+		                            }
+		                        },
+		                        error: function (jqXHR, textStatus, errorThrown)
+		                        {
+		                            console.log(url);
+		                            alert('Error deleting data');
+		                        }
+		                    });
+		                  }else{
+		                        swal("Canceled", "Your data is still safe :)", "error");
+		                  }
+		               })
+		        }
+	        {{else}}
+	            function delete_all_data(id){
+			        swal({   
+			            title: "don't have permission !",   
+			            type: "warning",
+			            text: "Please contact your administrator",   
+			        });
+			    }
+	            function delete_data(id){
+			        swal({   
+			            title: "don't have permission !",   
+			            type: "warning",
+			            text: "Please contact your administrator",   
+			        });
+			    }
+	        {{end}}
 
 		</script>
 	{{template "lastfooter"}}

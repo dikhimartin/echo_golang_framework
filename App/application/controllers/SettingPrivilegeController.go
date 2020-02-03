@@ -55,6 +55,22 @@ func ListSettingPrivilege(c echo.Context) error {
 	db := database.CreateCon()
 	defer db.Close()
 
+	cc := &MyCustomContext{c}
+	data_users			:= cc.getDataLogin()
+
+	// check_privilege
+	var check_privilege []byte
+	check_privileges, errPriv := db.Prepare("SELECT kode_permissions FROM v_get_grup_privilege_detail WHERE id_setting_grup = ? AND kode_permissions = 'setting.user.privilege_2'")
+	if errPriv != nil {
+		fmt.Printf("%s", errPriv)
+	}
+	errPriv = check_privileges.QueryRow(data_users.Id_group).Scan(&check_privilege)	
+	defer check_privileges.Close()
+	if string(check_privilege) != "setting.user.privilege_2"{
+		return c.Render(http.StatusInternalServerError, "error_403", nil)
+	}
+	//end check_privilege
+
 	var selected string
 	var whrs string
 	var search string
@@ -203,7 +219,26 @@ func ListSettingPrivilege(c echo.Context) error {
 
 func AddSettingPrivilege(c echo.Context) error {
 
+	db := database.CreateCon()
+	defer db.Close()
+
 	cc := &MyCustomContext{c}
+	data_users			:= cc.getDataLogin()
+
+	// check_privilege
+	var check_privilege []byte
+	check_privileges, errPriv := db.Prepare("SELECT kode_permissions FROM v_get_grup_privilege_detail WHERE id_setting_grup = ? AND kode_permissions = 'setting.user.privilege_1'")
+	if errPriv != nil {
+		fmt.Printf("%s", errPriv)
+	}
+	errPriv = check_privileges.QueryRow(data_users.Id_group).Scan(&check_privilege)	
+	defer check_privileges.Close()
+	if string(check_privilege) != "setting.user.privilege_1"{
+		return c.Render(http.StatusInternalServerError, "error_403", nil)
+	}
+	//end check_privilege
+
+
 	GetHakAkses			:= cc.GetMasterPermissions()
 
 	data = pongo2.Context{
@@ -216,6 +251,22 @@ func StoreSettingPrivilege(c echo.Context) error {
 
 	db := database.CreateCon()
 	defer db.Close()
+
+	cc := &MyCustomContext{c}
+	data_users			:= cc.getDataLogin()
+
+	// check_privilege
+	var check_privilege []byte
+	check_privileges, errPriv := db.Prepare("SELECT kode_permissions FROM v_get_grup_privilege_detail WHERE id_setting_grup = ? AND kode_permissions = 'setting.user.privilege_1'")
+	if errPriv != nil {
+		fmt.Printf("%s", errPriv)
+	}
+	errPriv = check_privileges.QueryRow(data_users.Id_group).Scan(&check_privilege)	
+	defer check_privileges.Close()
+	if string(check_privilege) != "setting.user.privilege_1"{
+		return c.Render(http.StatusInternalServerError, "error_403", nil)
+	}
+	//end check_privilege
 
 	emp := new(models.SettingPrivilege)
 	if err := c.Bind(emp); err != nil {
@@ -268,6 +319,23 @@ func StoreSettingPrivilege(c echo.Context) error {
 func EditSettingPrivilege(c echo.Context) error {
 	db := database.CreateCon()
 	defer db.Close()
+
+	cc := &MyCustomContext{c}
+	data_users			:= cc.getDataLogin()
+
+	// check_privilege
+	var check_privilege []byte
+	check_privileges, errPriv := db.Prepare("SELECT kode_permissions FROM v_get_grup_privilege_detail WHERE id_setting_grup = ? AND kode_permissions = 'setting.user.privilege_3'")
+	if errPriv != nil {
+		fmt.Printf("%s", errPriv)
+	}
+	errPriv = check_privileges.QueryRow(data_users.Id_group).Scan(&check_privilege)	
+	defer check_privileges.Close()
+	if string(check_privilege) != "setting.user.privilege_3"{
+		return c.Render(http.StatusInternalServerError, "error_403", nil)
+	}
+	//end check_privilege
+
 
 	requested_id := c.Param("id")
 	var kode_privilege, name_menu, status, keterangan string
@@ -336,6 +404,22 @@ func EditSettingPrivilege(c echo.Context) error {
 func UpdateSettingPrivilege(c echo.Context) error {
 	db := database.CreateCon()
 	defer db.Close()
+
+	cc := &MyCustomContext{c}
+	data_users			:= cc.getDataLogin()
+
+	// check_privilege
+	var check_privilege []byte
+	check_privileges, errPriv := db.Prepare("SELECT kode_permissions FROM v_get_grup_privilege_detail WHERE id_setting_grup = ? AND kode_permissions = 'setting.user.privilege_3'")
+	if errPriv != nil {
+		fmt.Printf("%s", errPriv)
+	}
+	errPriv = check_privileges.QueryRow(data_users.Id_group).Scan(&check_privilege)	
+	defer check_privileges.Close()
+	if string(check_privilege) != "setting.user.privilege_3"{
+		return c.Render(http.StatusInternalServerError, "error_403", nil)
+	}
+	//end check_privilege
 	
 	emp := new(models.SettingPrivilege)
 	if err := c.Bind(emp); err != nil {

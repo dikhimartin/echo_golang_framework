@@ -15,7 +15,7 @@
 
                     // => SAMPLE_CRUD
                     if (menu.Sample_crud == "samplecrud_2") {
-                         var  sample_crud = "";
+                        var  sample_crud = "";
                         if (curents_url.match("/lib/sample_crud/") != null) {
                             $("#sample_crud").addClass("active");
                             sample_crud += '<a class="waves-effect waves-dark" href="/lib/sample_crud/" aria-expanded="false"><i class="fa fa-table" aria-hidden="true"></i><span class="hide-menu">Sample Crud</span></a>';
@@ -26,6 +26,9 @@
                     }
 
                     // => SETTING
+                    if (menu.Setting_grup == "" && menu.Setting_privilege == "" && menu.Setting_user == "" && menu.Setting_grup_privilege == "") {
+                        $("#setting").remove();
+                    }
                     // User Privileges
                     if (menu.Setting_grup == "" && menu.Setting_privilege == "" && menu.Setting_user == "" && menu.Setting_grup_privilege == "") {
                         $("#users_privilege").remove();

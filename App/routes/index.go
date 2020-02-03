@@ -198,31 +198,27 @@ func Index() *echo.Echo {
 			 |--------------------------------------------------------------------------
 			*/
 
-			// GRUP PRIVILEGE
-			"view/setting/grup_privilege/list.html",
-			"view/setting/grup_privilege/add-form.html",
-			"view/setting/grup_privilege/edit-form.html",
-			"view/setting/grup_privilege/show-permissions.html",
+			// GROUP
+			"view/setting/grup/list.html",
+			"view/setting/grup/add-form.html",
+			"view/setting/grup/edit-form.html",
 
 			// PRIVILEGE
 			"view/setting/privilege/list.html",
 			"view/setting/privilege/add-form.html",
 			"view/setting/privilege/edit-form.html",
 
-			// GROUP
-			"view/setting/grup/list.html",
-			"view/setting/grup/add-form.html",
-			"view/setting/grup/edit-form.html",
-
 			// USER
 			"view/setting/user/list.html",
 			"view/setting/user/add-form.html",
 			"view/setting/user/edit-form.html",
+			
+			// GRUP PRIVILEGE
+			"view/setting/grup_privilege/list.html",
+			"view/setting/grup_privilege/add-form.html",
+			"view/setting/grup_privilege/edit-form.html",
+			"view/setting/grup_privilege/show-permissions.html",
 
-			// USER GROUP
-			"view/setting/user_grup/list.html",
-			"view/setting/user_grup/add-form.html",
-			"view/setting/user_grup/edit-form.html",
 
 			//PROFILE
 			"view/profile/my-profile.html",
@@ -248,11 +244,10 @@ func Index() *echo.Echo {
 	SampleCrud(cookieGroup)
 
 	// Modul Setting
-	SettingGrupPrivilege(cookieGroup)
-	SettingPrivilege(cookieGroup)
 	SettingGrup(cookieGroup)
+	SettingPrivilege(cookieGroup)
 	SettingUser(cookieGroup)
-	SettingUserGrup(cookieGroup)
+	SettingGrupPrivilege(cookieGroup)
 
 	//Profile 
 	MyProfile(cookieGroup)
