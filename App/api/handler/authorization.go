@@ -250,7 +250,7 @@ func AuthorizationSession(c echo.Context) error {
 	cookie, err := c.Cookie(api_middleware.COOKIE_NAME)
 	if err != nil {
 		if strings.Contains(err.Error(), "named cookie not present") {
-			return c.Redirect(http.StatusTemporaryRedirect, "/?session_expire=true?="+current_time)
+			return c.Redirect(http.StatusTemporaryRedirect, "/?session_expire=true=?"+current_time)
 		}
 		log.Println("err cookie singout")
 		log.Println(err)
