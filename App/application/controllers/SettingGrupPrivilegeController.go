@@ -638,13 +638,13 @@ func ShowSettingGrupPrivilege(c echo.Context) error {
 
 	// check_privilege
 	var check_privilege []byte
-	check_privileges, errPriv := db.Prepare("SELECT kode_permissions FROM v_get_grup_privilege_detail WHERE id_setting_grup = ? AND kode_permissions = 'setting.user.grupprivilege_1'")
+	check_privileges, errPriv := db.Prepare("SELECT kode_permissions FROM v_get_grup_privilege_detail WHERE id_setting_grup = ? AND kode_permissions = 'setting.user.grupprivilege_2'")
 	if errPriv != nil {
 		fmt.Printf("%s", errPriv)
 	}
 	errPriv = check_privileges.QueryRow(data_users.Id_group).Scan(&check_privilege)	
 	defer check_privileges.Close()
-	if string(check_privilege) != "setting.user.grupprivilege_1"{
+	if string(check_privilege) != "setting.user.grupprivilege_2"{
 		return c.Render(http.StatusInternalServerError, "error_403", nil)
 	}
 	//end check_privilege
