@@ -1,317 +1,213 @@
-2020-02-02T18:58:43+07:00 SYSTEM main.go:27: Starting Application
-2020-02-02T19:01:26+07:00 SYSTEM main.go:27: Starting Application
-2020-02-02T19:05:01+07:00 SYSTEM main.go:27: Starting Application
-2020-02-02T19:06:09+07:00 SYSTEM main.go:27: Starting Application
-2020-02-02T19:06:29+07:00 SYSTEM main.go:27: Starting Application
-2020-02-02T19:07:18+07:00 SYSTEM main.go:27: Starting Application
-2020-02-02T19:07:53+07:00 SYSTEM main.go:27: Starting Application
-2020-02-02T19:08:51+07:00 SYSTEM main.go:27: Starting Application
-2020-02-02T19:09:10+07:00 SYSTEM main.go:27: Starting Application
-2020-02-02T19:09:50+07:00 SYSTEM main.go:27: Starting Application
-2020-02-02T19:10:09+07:00 SYSTEM main.go:27: Starting Application
-2020-02-02T19:14:10+07:00 SYSTEM main.go:27: Starting Application
-2020-02-02T19:15:01+07:00 SYSTEM main.go:27: Starting Application
-2020-02-02T19:16:25+07:00 SYSTEM main.go:27: Starting Application
-2020-02-02T19:18:25+07:00 SYSTEM main.go:27: Starting Application
-2020-02-02T19:18:25+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-02T19:19:05+07:00 SYSTEM main.go:27: Starting Application
-2020-02-02T19:19:19+07:00 SYSTEM main.go:27: Starting Application
-2020-02-02T19:20:37+07:00 SYSTEM main.go:27: Starting Application
-2020-02-02T19:20:55+07:00 SYSTEM main.go:27: Starting Application
-2020-02-02T19:21:50+07:00 SYSTEM main.go:27: Starting Application
-2020-02-02T19:25:29+07:00 SYSTEM main.go:27: Starting Application
-2020-02-02T19:26:30+07:00 SYSTEM main.go:27: Starting Application
-2020-02-02T19:27:37+07:00 SYSTEM main.go:27: Starting Application
-2020-02-02T19:28:16+07:00 SYSTEM main.go:27: Starting Application
-2020-02-02T19:28:34+07:00 SYSTEM main.go:27: Starting Application
-2020-02-02T19:29:53+07:00 SYSTEM main.go:27: Starting Application
-2020-02-02T19:31:32+07:00 SYSTEM main.go:27: Starting Application
-2020-02-02T19:32:26+07:00 SYSTEM main.go:27: Starting Application
-2020-02-02T19:32:44+07:00 SYSTEM main.go:27: Starting Application
-2020-02-02T19:32:57+07:00 SYSTEM main.go:27: Starting Application
-2020-02-02T19:33:38+07:00 SYSTEM main.go:27: Starting Application
-2020-02-02T19:33:54+07:00 SYSTEM main.go:27: Starting Application
-2020-02-02T19:34:25+07:00 SYSTEM main.go:27: Starting Application
-2020-02-02T19:35:24+07:00 SYSTEM main.go:27: Starting Application
-2020-02-02T19:35:45+07:00 SYSTEM main.go:27: Starting Application
-2020-02-02T19:36:19+07:00 SYSTEM main.go:27: Starting Application
-2020-02-02T19:36:30+07:00 SYSTEM main.go:27: Starting Application
-2020-02-02T19:38:28+07:00 SYSTEM main.go:27: Starting Application
-2020-02-02T19:38:46+07:00 SYSTEM main.go:27: Starting Application
-2020-02-02T19:39:14+07:00 SYSTEM main.go:27: Starting Application
-2020-02-02T19:39:55+07:00 SYSTEM main.go:27: Starting Application
-2020-02-02T19:39:55+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-02T19:39:55+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-02T19:39:55+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-02T19:39:55+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-02T19:39:55+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-02T19:39:55+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-02T19:39:55+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-02T19:39:55+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-02T19:39:55+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-02T19:39:55+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-02T19:39:55+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-02T19:39:55+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-02T19:39:55+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-02T19:39:55+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-02T19:39:55+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-02T22:27:06+07:00 SYSTEM main.go:27: Starting Application
-2020-02-02T22:29:19+07:00 SYSTEM main.go:27: Starting Application
-2020-02-02T22:29:36+07:00 SYSTEM main.go:27: Starting Application
-2020-02-02T22:29:36+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-02T22:29:36+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T09:41:47+07:00 SYSTEM main.go:27: Starting Application
-2020-02-03T09:43:50+07:00 SYSTEM main.go:27: Starting Application
-2020-02-03T09:43:50+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T09:43:50+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T09:43:50+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T09:43:50+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T09:43:50+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T09:43:50+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T09:43:50+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T09:43:50+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T09:43:50+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T09:43:50+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T09:43:50+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T09:43:50+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T09:43:50+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T09:43:50+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T09:43:50+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T09:43:50+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T09:43:50+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T09:43:50+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T09:43:50+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T09:43:50+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T09:43:50+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T09:43:50+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T09:43:50+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T09:43:50+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T09:43:50+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T09:43:50+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T09:43:50+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T09:50:26+07:00 SYSTEM main.go:27: Starting Application
-2020-02-03T09:50:57+07:00 SYSTEM main.go:27: Starting Application
-2020-02-03T09:51:19+07:00 SYSTEM main.go:27: Starting Application
-2020-02-03T09:51:29+07:00 SYSTEM main.go:27: Starting Application
-2020-02-03T09:54:18+07:00 SYSTEM main.go:27: Starting Application
-2020-02-03T09:56:54+07:00 SYSTEM main.go:27: Starting Application
-2020-02-03T10:05:53+07:00 SYSTEM main.go:27: Starting Application
-2020-02-03T10:07:49+07:00 SYSTEM main.go:27: Starting Application
-2020-02-03T10:11:27+07:00 SYSTEM main.go:27: Starting Application
-2020-02-03T10:14:29+07:00 SYSTEM main.go:27: Starting Application
-2020-02-03T10:14:53+07:00 SYSTEM main.go:27: Starting Application
-2020-02-03T10:15:18+07:00 SYSTEM main.go:27: Starting Application
-2020-02-03T10:16:27+07:00 SYSTEM main.go:27: Starting Application
-2020-02-03T10:17:12+07:00 SYSTEM main.go:27: Starting Application
-2020-02-03T10:17:32+07:00 SYSTEM main.go:27: Starting Application
-2020-02-03T10:17:46+07:00 SYSTEM main.go:27: Starting Application
-2020-02-03T11:38:10+07:00 SYSTEM main.go:27: Starting Application
-2020-02-03T11:39:20+07:00 SYSTEM main.go:27: Starting Application
-2020-02-03T11:39:59+07:00 SYSTEM main.go:27: Starting Application
-2020-02-03T11:40:38+07:00 SYSTEM main.go:27: Starting Application
-2020-02-03T11:42:37+07:00 SYSTEM main.go:27: Starting Application
-2020-02-03T11:43:14+07:00 SYSTEM main.go:27: Starting Application
-2020-02-03T11:44:28+07:00 SYSTEM main.go:27: Starting Application
-2020-02-03T11:45:45+07:00 SYSTEM main.go:27: Starting Application
-2020-02-03T11:46:21+07:00 SYSTEM main.go:27: Starting Application
-2020-02-03T11:48:49+07:00 SYSTEM main.go:27: Starting Application
-2020-02-03T11:49:10+07:00 SYSTEM main.go:27: Starting Application
-2020-02-03T11:49:35+07:00 SYSTEM main.go:27: Starting Application
-2020-02-03T11:49:51+07:00 SYSTEM main.go:27: Starting Application
-2020-02-03T11:50:51+07:00 SYSTEM main.go:27: Starting Application
-2020-02-03T11:51:06+07:00 SYSTEM main.go:27: Starting Application
-2020-02-03T11:55:36+07:00 SYSTEM main.go:27: Starting Application
-2020-02-03T11:56:05+07:00 SYSTEM main.go:27: Starting Application
-2020-02-03T11:57:03+07:00 SYSTEM main.go:27: Starting Application
-2020-02-03T11:57:23+07:00 SYSTEM main.go:27: Starting Application
-2020-02-03T11:57:42+07:00 SYSTEM main.go:27: Starting Application
-2020-02-03T11:58:10+07:00 SYSTEM main.go:27: Starting Application
-2020-02-03T11:59:05+07:00 SYSTEM main.go:27: Starting Application
-2020-02-03T12:00:36+07:00 SYSTEM main.go:27: Starting Application
-2020-02-03T12:00:36+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T12:01:23+07:00 SYSTEM main.go:27: Starting Application
-2020-02-03T12:19:47+07:00 SYSTEM main.go:27: Starting Application
-2020-02-03T12:19:47+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T12:19:47+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T12:19:47+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T12:19:47+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T12:19:47+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T12:19:47+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T12:19:47+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T12:21:53+07:00 SYSTEM main.go:27: Starting Application
-2020-02-03T12:22:05+07:00 SYSTEM main.go:27: Starting Application
-2020-02-03T12:22:26+07:00 SYSTEM main.go:27: Starting Application
-2020-02-03T12:23:19+07:00 SYSTEM main.go:27: Starting Application
-2020-02-03T12:23:19+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T12:30:44+07:00 SYSTEM main.go:27: Starting Application
-2020-02-03T12:30:44+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T12:30:44+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T12:30:44+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T12:30:44+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T12:30:44+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T12:36:40+07:00 SYSTEM main.go:27: Starting Application
-2020-02-03T12:37:13+07:00 SYSTEM main.go:27: Starting Application
-2020-02-03T12:38:45+07:00 SYSTEM main.go:27: Starting Application
-2020-02-03T12:39:35+07:00 SYSTEM main.go:27: Starting Application
-2020-02-03T12:39:35+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T12:39:35+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T12:43:31+07:00 SYSTEM main.go:27: Starting Application
-2020-02-03T12:45:40+07:00 SYSTEM main.go:27: Starting Application
-2020-02-03T12:46:35+07:00 SYSTEM main.go:27: Starting Application
-2020-02-03T12:46:51+07:00 SYSTEM main.go:27: Starting Application
-2020-02-03T12:47:48+07:00 SYSTEM main.go:27: Starting Application
-2020-02-03T12:48:18+07:00 SYSTEM main.go:27: Starting Application
-2020-02-03T12:48:40+07:00 SYSTEM main.go:27: Starting Application
-2020-02-03T12:48:58+07:00 SYSTEM main.go:27: Starting Application
-2020-02-03T12:49:16+07:00 SYSTEM main.go:27: Starting Application
-2020-02-03T12:49:58+07:00 SYSTEM main.go:27: Starting Application
-2020-02-03T12:49:58+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T12:49:58+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T12:49:58+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T12:49:58+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T12:49:58+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T12:49:58+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T12:49:58+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T12:49:58+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T12:49:58+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T12:49:58+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T12:49:58+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T12:49:58+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T12:49:58+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T12:49:58+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T12:49:58+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T12:49:58+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T12:49:58+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T14:22:10+07:00 SYSTEM main.go:27: Starting Application
-2020-02-03T14:22:10+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T14:22:52+07:00 SYSTEM main.go:27: Starting Application
-2020-02-03T14:23:21+07:00 SYSTEM main.go:27: Starting Application
-2020-02-03T14:23:30+07:00 SYSTEM main.go:27: Starting Application
-2020-02-03T14:24:11+07:00 SYSTEM main.go:27: Starting Application
-2020-02-03T14:24:34+07:00 SYSTEM main.go:27: Starting Application
-2020-02-03T14:24:53+07:00 SYSTEM main.go:27: Starting Application
-2020-02-03T14:29:43+07:00 SYSTEM main.go:27: Starting Application
-2020-02-03T14:30:26+07:00 SYSTEM main.go:27: Starting Application
-2020-02-03T14:30:48+07:00 SYSTEM main.go:27: Starting Application
-2020-02-03T14:31:17+07:00 SYSTEM main.go:27: Starting Application
-2020-02-03T14:32:19+07:00 SYSTEM main.go:27: Starting Application
-2020-02-03T14:32:58+07:00 SYSTEM main.go:27: Starting Application
-2020-02-03T14:33:37+07:00 SYSTEM main.go:27: Starting Application
-2020-02-03T14:34:52+07:00 SYSTEM main.go:27: Starting Application
-2020-02-03T14:38:03+07:00 SYSTEM main.go:27: Starting Application
-2020-02-03T14:38:03+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T14:38:03+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T14:39:13+07:00 SYSTEM main.go:27: Starting Application
-2020-02-03T14:40:08+07:00 SYSTEM main.go:27: Starting Application
-2020-02-03T14:40:08+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T14:40:49+07:00 SYSTEM main.go:27: Starting Application
-2020-02-03T14:43:08+07:00 SYSTEM main.go:27: Starting Application
-2020-02-03T14:44:41+07:00 SYSTEM main.go:27: Starting Application
-2020-02-03T14:45:50+07:00 SYSTEM main.go:27: Starting Application
-2020-02-03T14:46:01+07:00 SYSTEM main.go:27: Starting Application
-2020-02-03T14:46:13+07:00 SYSTEM main.go:27: Starting Application
-2020-02-03T14:55:16+07:00 SYSTEM main.go:27: Starting Application
-2020-02-03T14:55:16+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T14:55:16+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T14:55:16+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T14:55:16+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T14:55:16+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T14:55:16+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T14:55:16+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T14:55:16+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T14:55:16+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T14:55:16+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T14:55:16+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T14:55:16+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T14:55:16+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T14:55:16+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T17:36:41+07:00 SYSTEM main.go:27: Starting Application
-2020-02-03T17:36:41+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T17:36:41+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T17:36:41+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T17:36:41+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T17:36:41+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T17:36:41+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T17:36:41+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T17:36:41+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T17:36:41+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T17:36:41+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T17:36:41+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T17:36:41+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T17:39:52+07:00 SYSTEM main.go:27: Starting Application
-2020-02-03T17:39:52+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T17:39:52+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T17:39:52+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T17:39:52+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T17:39:52+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T17:39:52+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T17:39:52+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T17:39:52+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T17:39:52+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T17:39:52+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T17:39:52+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T17:39:52+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T17:39:52+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T17:39:52+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T17:39:52+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T17:39:52+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T17:39:52+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T21:24:34+07:00 SYSTEM main.go:27: Starting Application
-2020-02-03T21:24:34+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T21:24:34+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T21:24:34+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T21:24:34+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T21:24:34+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T21:24:34+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T21:30:50+07:00 SYSTEM main.go:27: Starting Application
-2020-02-03T21:30:50+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T21:30:50+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T21:31:09+07:00 SYSTEM main.go:27: Starting Application
-2020-02-03T21:31:09+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T21:31:19+07:00 SYSTEM main.go:27: Starting Application
-2020-02-03T21:31:19+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T21:31:37+07:00 SYSTEM main.go:27: Starting Application
-2020-02-03T21:31:37+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T21:31:37+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T21:32:40+07:00 SYSTEM main.go:27: Starting Application
-2020-02-03T21:32:40+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T21:32:40+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T21:34:29+07:00 SYSTEM main.go:27: Starting Application
-2020-02-03T21:34:29+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T21:34:29+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T21:34:29+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T21:34:29+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T21:34:29+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T21:34:29+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T21:34:29+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T21:34:29+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T21:34:29+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T21:34:29+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T21:34:29+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T21:34:29+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T21:34:29+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T21:34:29+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T21:34:29+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T21:34:29+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T21:34:29+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T21:34:29+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T21:34:29+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T21:34:29+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T21:34:29+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T21:34:29+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T21:34:29+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T21:34:29+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T21:34:29+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T21:34:29+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T21:34:29+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T21:34:29+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T21:34:29+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T21:34:29+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T21:34:29+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T21:34:29+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T21:34:29+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T21:34:29+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T21:34:29+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T21:34:29+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T21:34:29+07:00 SYSTEM customlogger.go:51: Login Page
-2020-02-03T21:34:29+07:00 SYSTEM customlogger.go:51: Login Page
+2020-02-06T08:36:31+07:00 SYSTEMS - main.go:27: Starting Application
+2020-02-06T08:36:31+07:00 SYSTEMS - customlogger.go:51: Login Page
+2020-02-06T08:40:43+07:00 SYSTEMS - main.go:27: Starting Application
+2020-02-06T08:40:43+07:00 SYSTEMS - customlogger.go:51: Login Page
+2020-02-06T09:15:30+07:00 SYSTEMS - main.go:27: Starting Application
+2020-02-06T09:15:52+07:00 SYSTEMS - main.go:27: Starting Application
+2020-02-06T09:16:24+07:00 SYSTEMS - main.go:27: Starting Application
+2020-02-06T09:17:19+07:00 SYSTEMS - main.go:27: Starting Application
+2020-02-06T09:18:17+07:00 SYSTEMS - main.go:27: Starting Application
+2020-02-06T09:20:11+07:00 SYSTEMS - main.go:27: Starting Application
+2020-02-06T09:20:43+07:00 SYSTEMS - main.go:27: Starting Application
+2020-02-06T09:21:20+07:00 SYSTEMS - main.go:27: Starting Application
+2020-02-06T09:21:42+07:00 SYSTEMS - main.go:27: Starting Application
+2020-02-06T09:22:29+07:00 SYSTEMS - main.go:27: Starting Application
+2020-02-06T09:22:53+07:00 SYSTEMS - main.go:27: Starting Application
+2020-02-06T09:26:20+07:00 SYSTEMS - main.go:27: Starting Application
+2020-02-06T09:35:32+07:00 SYSTEMS - main.go:27: Starting Application
+2020-02-06T09:39:34+07:00 SYSTEMS - main.go:27: Starting Application
+2020-02-06T09:48:42+07:00 SYSTEMS - main.go:27: Starting Application
+2020-02-06T09:48:42+07:00 SYSTEMS - customlogger.go:51: Login Page
+2020-02-06T09:53:10+07:00 SYSTEMS - main.go:27: Starting Application
+2020-02-06T10:01:03+07:00 SYSTEMS - main.go:27: Starting Application
+2020-02-06T10:01:47+07:00 SYSTEMS - main.go:27: Starting Application
+2020-02-06T10:02:20+07:00 SYSTEMS - main.go:27: Starting Application
+2020-02-06T10:02:54+07:00 SYSTEMS - main.go:27: Starting Application
+2020-02-06T10:03:29+07:00 SYSTEMS - main.go:27: Starting Application
+2020-02-06T10:06:17+07:00 SYSTEMS - main.go:27: Starting Application
+2020-02-06T10:06:17+07:00 SYSTEMS - MyProfileController.go:200: password_false
+2020-02-06T10:06:17+07:00 SYSTEMS - MyProfileController.go:200: password_false
+2020-02-06T10:06:17+07:00 SYSTEMS - MyProfileController.go:200: password_false
+2020-02-06T10:06:17+07:00 SYSTEMS - MyProfileController.go:200: password_false
+2020-02-06T10:06:46+07:00 SYSTEMS - main.go:27: Starting Application
+2020-02-06T10:06:46+07:00 SYSTEMS - MyProfileController.go:200: password_false
+2020-02-06T10:06:46+07:00 SYSTEMS - MyProfileController.go:200: password_false
+2020-02-06T10:06:46+07:00 SYSTEMS - MyProfileController.go:200: password_false
+2020-02-06T10:06:46+07:00 SYSTEMS - MyProfileController.go:200: password_false
+2020-02-06T10:06:46+07:00 SYSTEMS - MyProfileController.go:200: password_false
+2020-02-06T10:06:46+07:00 SYSTEMS - MyProfileController.go:200: password_false
+2020-02-06T10:06:46+07:00 SYSTEMS - MyProfileController.go:200: password_false
+2020-02-06T10:06:46+07:00 SYSTEMS - MyProfileController.go:200: password_false
+2020-02-06T10:06:46+07:00 SYSTEMS - customlogger.go:51: Login Page
+2020-02-06T10:06:46+07:00 SYSTEMS - MyProfileController.go:200: password_false
+2020-02-06T10:08:19+07:00 SYSTEMS - main.go:27: Starting Application
+2020-02-06T10:08:19+07:00 SYSTEMS - MyProfileController.go:200: password_false
+2020-02-06T10:08:19+07:00 SYSTEMS - customlogger.go:51: Login Page
+2020-02-06T10:09:11+07:00 SYSTEMS - main.go:27: Starting Application
+2020-02-06T10:09:11+07:00 SYSTEMS - MyProfileController.go:200: password_false
+2020-02-06T10:09:11+07:00 SYSTEMS - MyProfileController.go:200: password_false
+2020-02-06T10:09:11+07:00 SYSTEMS - MyProfileController.go:200: password_false
+2020-02-06T10:09:11+07:00 SYSTEMS - MyProfileController.go:200: password_false
+2020-02-06T10:09:11+07:00 SYSTEMS - MyProfileController.go:200: password_false
+2020-02-06T10:09:11+07:00 SYSTEMS - MyProfileController.go:200: password_false
+2020-02-06T10:09:11+07:00 SYSTEMS - MyProfileController.go:200: password_false
+2020-02-06T10:09:11+07:00 SYSTEMS - MyProfileController.go:200: password_false
+2020-02-06T10:09:11+07:00 SYSTEMS - MyProfileController.go:200: password_false
+2020-02-06T10:09:11+07:00 SYSTEMS - MyProfileController.go:200: password_false
+2020-02-06T10:09:11+07:00 SYSTEMS - MyProfileController.go:200: password_false
+2020-02-06T10:09:11+07:00 SYSTEMS - MyProfileController.go:200: password_false
+2020-02-06T10:09:11+07:00 SYSTEMS - MyProfileController.go:200: password_false
+2020-02-06T10:09:11+07:00 SYSTEMS - MyProfileController.go:200: password_false
+2020-02-06T10:09:11+07:00 SYSTEMS - MyProfileController.go:200: password_false
+2020-02-06T10:09:11+07:00 SYSTEMS - MyProfileController.go:200: password_false
+2020-02-06T10:09:11+07:00 SYSTEMS - MyProfileController.go:200: password_false
+2020-02-06T10:09:11+07:00 SYSTEMS - MyProfileController.go:200: password_false
+2020-02-06T10:09:11+07:00 SYSTEMS - MyProfileController.go:200: password_false
+2020-02-06T10:09:11+07:00 SYSTEMS - customlogger.go:51: Login Page
+2020-02-06T10:09:11+07:00 SYSTEMS - MyProfileController.go:200: password_false
+2020-02-06T10:09:11+07:00 SYSTEMS - MyProfileController.go:200: password_false
+2020-02-06T10:09:11+07:00 SYSTEMS - MyProfileController.go:200: password_false
+2020-02-06T10:09:11+07:00 SYSTEMS - MyProfileController.go:200: password_false
+2020-02-06T10:09:11+07:00 SYSTEMS - MyProfileController.go:200: password_false
+2020-02-06T10:09:11+07:00 SYSTEMS - MyProfileController.go:200: password_false
+2020-02-06T10:09:11+07:00 SYSTEMS - MyProfileController.go:200: password_false
+2020-02-06T10:09:11+07:00 SYSTEMS - MyProfileController.go:200: password_false
+2020-02-06T10:09:11+07:00 SYSTEMS - MyProfileController.go:200: password_false
+2020-02-06T10:09:11+07:00 SYSTEMS - MyProfileController.go:200: password_false
+2020-02-06T10:09:11+07:00 SYSTEMS - MyProfileController.go:200: password_false
+2020-02-06T10:09:11+07:00 SYSTEMS - MyProfileController.go:200: password_false
+2020-02-06T10:09:11+07:00 SYSTEMS - MyProfileController.go:200: password_false
+2020-02-06T10:09:11+07:00 SYSTEMS - MyProfileController.go:200: password_false
+2020-02-06T10:09:11+07:00 SYSTEMS - MyProfileController.go:200: password_false
+2020-02-06T10:09:11+07:00 SYSTEMS - MyProfileController.go:200: password_false
+2020-02-06T10:09:11+07:00 SYSTEMS - MyProfileController.go:200: password_false
+2020-02-06T10:09:11+07:00 SYSTEMS - MyProfileController.go:200: password_false
+2020-02-06T10:09:11+07:00 SYSTEMS - MyProfileController.go:200: password_false
+2020-02-06T10:09:11+07:00 SYSTEMS - MyProfileController.go:200: password_false
+2020-02-06T10:09:11+07:00 SYSTEMS - MyProfileController.go:200: password_false
+2020-02-06T10:09:11+07:00 SYSTEMS - MyProfileController.go:200: password_false
+2020-02-06T10:09:11+07:00 SYSTEMS - MyProfileController.go:200: password_false
+2020-02-06T10:09:11+07:00 SYSTEMS - MyProfileController.go:200: password_false
+2020-02-06T10:09:11+07:00 SYSTEMS - MyProfileController.go:200: password_false
+2020-02-06T10:09:11+07:00 SYSTEMS - MyProfileController.go:200: password_false
+2020-02-06T10:09:11+07:00 SYSTEMS - MyProfileController.go:200: password_false
+2020-02-06T10:09:11+07:00 SYSTEMS - MyProfileController.go:200: password_false
+2020-02-06T10:09:11+07:00 SYSTEMS - MyProfileController.go:200: password_false
+2020-02-06T10:09:11+07:00 SYSTEMS - MyProfileController.go:200: password_false
+2020-02-06T10:09:11+07:00 SYSTEMS - MyProfileController.go:200: password_false
+2020-02-06T10:09:11+07:00 SYSTEMS - MyProfileController.go:200: password_false
+2020-02-06T10:09:11+07:00 SYSTEMS - MyProfileController.go:200: password_false
+2020-02-06T10:26:26+07:00 SYSTEMS - main.go:27: Starting Application
+2020-02-06T10:27:51+07:00 SYSTEMS - main.go:27: Starting Application
+2020-02-06T10:28:37+07:00 SYSTEMS - main.go:27: Starting Application
+2020-02-06T10:30:06+07:00 SYSTEMS - main.go:27: Starting Application
+2020-02-06T10:30:06+07:00 SYSTEMS - MyProfileController.go:200: password_false
+2020-02-06T10:30:06+07:00 SYSTEMS - MyProfileController.go:200: password_false
+2020-02-06T10:30:06+07:00 SYSTEMS - MyProfileController.go:200: password_false
+2020-02-06T10:31:01+07:00 SYSTEMS - main.go:27: Starting Application
+2020-02-06T10:31:01+07:00 SYSTEMS - MyProfileController.go:200: password_false
+2020-02-06T10:31:25+07:00 SYSTEMS - main.go:27: Starting Application
+2020-02-06T10:31:25+07:00 SYSTEMS - MyProfileController.go:200: password_false
+2020-02-06T10:31:25+07:00 SYSTEMS - MyProfileController.go:200: password_false
+2020-02-06T10:31:25+07:00 SYSTEMS - MyProfileController.go:200: password_false
+2020-02-06T10:57:14+07:00 SYSTEMS - main.go:27: Starting Application
+2020-02-06T10:59:52+07:00 SYSTEMS - main.go:27: Starting Application
+2020-02-06T10:59:52+07:00 SYSTEMS - MyProfileController.go:200: password_false
+2020-02-06T10:59:52+07:00 SYSTEMS - MyProfileController.go:200: password_false
+2020-02-06T10:59:52+07:00 SYSTEMS - MyProfileController.go:200: password_false
+2020-02-06T11:01:27+07:00 SYSTEMS - main.go:27: Starting Application
+2020-02-06T11:05:06+07:00 SYSTEMS - main.go:27: Starting Application
+2020-02-06T11:05:06+07:00 SYSTEMS - MyProfileController.go:202: password_false
+2020-02-06T11:05:06+07:00 SYSTEMS - MyProfileController.go:202: password_false
+2020-02-06T11:05:06+07:00 SYSTEMS - MyProfileController.go:202: password_false
+2020-02-06T11:06:04+07:00 SYSTEMS - main.go:27: Starting Application
+2020-02-06T11:07:33+07:00 SYSTEMS - main.go:27: Starting Application
+2020-02-06T11:10:09+07:00 SYSTEMS - main.go:27: Starting Application
+2020-02-06T11:10:09+07:00 SYSTEMS - MyProfileController.go:201: password_false
+2020-02-06T11:10:09+07:00 SYSTEMS - MyProfileController.go:201: password_false
+2020-02-06T11:10:09+07:00 SYSTEMS - MyProfileController.go:201: password_false
+2020-02-06T11:10:09+07:00 SYSTEMS - MyProfileController.go:201: password_false
+2020-02-06T11:10:09+07:00 SYSTEMS - MyProfileController.go:201: password_false
+2020-02-06T11:11:42+07:00 SYSTEMS - main.go:27: Starting Application
+2020-02-06T11:11:42+07:00 SYSTEMS - MyProfileController.go:201: password_false
+2020-02-06T11:12:16+07:00 SYSTEMS - main.go:27: Starting Application
+2020-02-06T11:12:51+07:00 SYSTEMS - main.go:27: Starting Application
+2020-02-06T11:14:00+07:00 SYSTEMS - main.go:27: Starting Application
+2020-02-06T11:14:00+07:00 SYSTEMS - customlogger.go:51: Login Page
+2020-02-06T11:14:42+07:00 SYSTEMS - main.go:27: Starting Application
+2020-02-06T11:14:42+07:00 SYSTEMS - MyProfileController.go:201: password_false
+2020-02-06T11:17:42+07:00 SYSTEMS - main.go:27: Starting Application
+2020-02-06T11:18:42+07:00 SYSTEMS - main.go:27: Starting Application
+2020-02-06T11:19:11+07:00 SYSTEMS - main.go:27: Starting Application
+2020-02-06T11:19:11+07:00 SYSTEMS - MyProfileController.go:201: password_false
+2020-02-06T11:19:11+07:00 SYSTEMS - MyProfileController.go:201: password_false
+2020-02-06T11:19:43+07:00 SYSTEMS - main.go:27: Starting Application
+2020-02-06T11:20:15+07:00 SYSTEMS - main.go:27: Starting Application
+2020-02-06T11:20:40+07:00 SYSTEMS - main.go:27: Starting Application
+2020-02-06T11:21:09+07:00 SYSTEMS - main.go:27: Starting Application
+2020-02-06T11:22:38+07:00 SYSTEMS - main.go:27: Starting Application
+2020-02-06T11:22:38+07:00 SYSTEMS - MyProfileController.go:201: password_false
+2020-02-06T11:23:25+07:00 SYSTEMS - main.go:27: Starting Application
+2020-02-06T11:23:25+07:00 SYSTEMS - MyProfileController.go:201: password_false
+2020-02-06T11:23:25+07:00 SYSTEMS - MyProfileController.go:201: password_false
+2020-02-06T11:23:25+07:00 SYSTEMS - MyProfileController.go:201: password_false
+2020-02-06T11:24:09+07:00 SYSTEMS - main.go:27: Starting Application
+2020-02-06T11:27:25+07:00 SYSTEMS - main.go:27: Starting Application
+2020-02-06T11:27:47+07:00 SYSTEMS - main.go:27: Starting Application
+2020-02-06T11:28:08+07:00 SYSTEMS - main.go:27: Starting Application
+2020-02-06T11:31:12+07:00 SYSTEMS - main.go:27: Starting Application
+2020-02-06T11:59:04+07:00 SYSTEMS - main.go:27: Starting Application
+2020-02-06T11:59:04+07:00 SYSTEMS - MyProfileController.go:201: password_false
+2020-02-06T11:59:04+07:00 SYSTEMS - MyProfileController.go:201: password_false
+2020-02-06T11:59:04+07:00 SYSTEMS - MyProfileController.go:201: password_false
+2020-02-06T11:59:04+07:00 SYSTEMS - MyProfileController.go:201: password_false
+2020-02-06T11:59:04+07:00 SYSTEMS - customlogger.go:51: Login Page
+2020-02-06T11:59:04+07:00 SYSTEMS - customlogger.go:51: Login Page
+2020-02-06T08:58:25+07:00 SYSTEMS - main.go:27: Starting Application
+2020-02-06T08:58:25+07:00 SYSTEMS - customlogger.go:51: Login Page
+2020-02-06T08:58:25+07:00 SYSTEMS - MyProfileController.go:30: Error 1054: Unknown column 'telephone' in 'field list'
+2020-02-06T08:59:50+07:00 SYSTEMS - main.go:27: Starting Application
+2020-02-06T08:59:50+07:00 SYSTEMS - MyProfileController.go:30: dial tcp 127.0.0.1:3306: connectex: No connection could be made because the target machine actively refused it.
+2020-02-06T08:59:50+07:00 SYSTEMS - MyProfileController.go:30: dial tcp 127.0.0.1:3306: connectex: No connection could be made because the target machine actively refused it.
+2020-02-06T08:59:50+07:00 SYSTEMS - MyProfileController.go:30: dial tcp 127.0.0.1:3306: connectex: No connection could be made because the target machine actively refused it.
+2020-02-06T08:59:50+07:00 SYSTEMS - MyProfileController.go:30: dial tcp 127.0.0.1:3306: connectex: No connection could be made because the target machine actively refused it.
+2020-02-06T08:59:50+07:00 SYSTEMS - customlogger.go:51: Login Page
+2020-02-06T08:59:50+07:00 SYSTEMS - customlogger.go:51: Login Page
+2020-02-06T08:59:50+07:00 SYSTEMS - customlogger.go:51: Login Page
+2020-02-06T08:59:50+07:00 SYSTEMS - MyProfileController.go:201: password_false
+2020-02-06T08:59:50+07:00 SYSTEMS - MyProfileController.go:201: password_false
+2020-02-06T16:59:05+07:00 SYSTEMS - main.go:27: Starting Application
+2020-02-06T17:00:05+07:00 SYSTEMS - main.go:27: Starting Application
+2020-02-06T17:00:30+07:00 SYSTEMS - main.go:27: Starting Application
+2020-02-06T17:01:50+07:00 SYSTEMS - main.go:27: Starting Application
+2020-02-06T17:01:50+07:00 SYSTEMS - MyProfileController.go:201: password_false
+2020-02-06T17:01:50+07:00 SYSTEMS - MyProfileController.go:201: password_false
+2020-02-06T17:10:29+07:00 SYSTEMS - main.go:27: Starting Application
+2020-02-06T17:10:29+07:00 SYSTEMS - MyProfileController.go:202: password_false
+2020-02-06T17:12:14+07:00 SYSTEMS - main.go:27: Starting Application
+2020-02-06T17:13:14+07:00 SYSTEMS - main.go:27: Starting Application
+2020-02-06T17:13:14+07:00 SYSTEMS - customlogger.go:51: Login Page
+2020-02-06T17:16:12+07:00 SYSTEMS - main.go:27: Starting Application
+2020-02-06T17:16:12+07:00 SYSTEMS - MyProfileController.go:206: password_false
+2020-02-06T17:16:12+07:00 SYSTEMS - MyProfileController.go:222: Error 1064: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'update_date = ? WHERE id=?' at line 1
+2020-02-06T17:16:12+07:00 SYSTEMS - MyProfileController.go:222: Error 1064: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'update_date = ? WHERE id=?' at line 1
+2020-02-06T17:16:12+07:00 SYSTEMS - MyProfileController.go:222: Error 1064: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'update_date = ? WHERE id=?' at line 1
+2020-02-06T17:16:12+07:00 SYSTEMS - MyProfileController.go:222: Error 1064: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'update_date = ? WHERE id=?' at line 1
+2020-02-06T17:16:12+07:00 SYSTEMS - MyProfileController.go:222: Error 1064: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'update_date = ? WHERE id=?' at line 1
+2020-02-06T17:16:12+07:00 SYSTEMS - MyProfileController.go:222: Error 1064: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'update_date = ? WHERE id=?' at line 1
+2020-02-06T17:16:12+07:00 SYSTEMS - MyProfileController.go:222: Error 1064: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'update_date = ? WHERE id=?' at line 1
+2020-02-06T17:16:12+07:00 SYSTEMS - MyProfileController.go:222: Error 1064: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'update_date = ? WHERE id=?' at line 1
+2020-02-06T17:17:51+07:00 SYSTEMS - main.go:27: Starting Application
+2020-02-06T17:17:51+07:00 SYSTEMS - MyProfileController.go:206: password_false
+2020-02-06T17:17:51+07:00 SYSTEMS - MyProfileController.go:206: password_false
+2020-02-06T17:17:51+07:00 SYSTEMS - MyProfileController.go:206: password_false
+2020-02-06T17:17:51+07:00 SYSTEMS - MyProfileController.go:206: password_false
+2020-02-06T17:17:51+07:00 SYSTEMS - MyProfileController.go:206: password_false
+2020-02-06T17:17:51+07:00 SYSTEMS - MyProfileController.go:206: password_false
+2020-02-06T17:17:51+07:00 SYSTEMS - MyProfileController.go:206: password_false
+2020-02-06T17:17:51+07:00 SYSTEMS - MyProfileController.go:206: password_false
+2020-02-06T17:17:51+07:00 SYSTEMS - customlogger.go:51: Login Page
+2020-02-06T17:17:51+07:00 SYSTEMS - customlogger.go:51: Login Page
+2020-02-06T17:20:29+07:00 SYSTEMS - main.go:27: Starting Application
+2020-02-06T17:20:29+07:00 SYSTEMS - MyProfileController.go:270: Changes Password
+2020-02-06T17:20:29+07:00 SYSTEMS - MyProfileController.go:270: Changes Password

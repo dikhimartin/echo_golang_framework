@@ -124,152 +124,188 @@
 		<div class="container-fluid">
             <form action="/lib/setting/user/addform/" method="POST" enctype="multipart/form-data" onsubmit="return validasi_input(this)">
     			<div class="row ">
-                        <!-- Image Session -->
-                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="profile-info-inner">
-                                        <div class="profile-image">
-                                            <!-- Upload Image Profile -->
-                                            <div class="form-group">
+                    <!-- Image Session -->
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="profile-info-inner">
+                                    <div class="profile-image">
+                                        <!-- Upload Image Profile -->
+                                        <div class="form-group">
 
-                                                <div class="bgColor">
-                                                         <div id="DivtargetOuter">
-                                                            <div class="alert alert-info">For the best view 300 x 300 px</div>
-                                                         </div>
+                                            <div class="bgColor">
+                                                     <div id="DivtargetOuter">
+                                                        <div class="alert alert-info">For the best view 300 x 300 px</div>
+                                                     </div>
 
-                                                         <div id="targetOuter">
-                                                            <div id="targetLayer"></div>
-                                                            <img src="/static/images/photo.png"  class="icon-choose-image"/>
-                                                            <div class="icon-choose-image" onClick="showUploadOption()"></div>
-                                                            <div id="profile-upload-option">
-                                                                <div class="profile-upload-option-list">
-                                                                    <input name="image" id="userImage" type="file" class="inputFile" onChange="showPreview(this);" accept="image/*">
-                                                                    </input>
-                                                                    <span>Upload</span>
-                                                                </div>
-                                                                <div class="profile-upload-option-list" onClick="removeProfilePhoto();">Delete</div>
-                                                                <div class="profile-upload-option-list" onClick="hideUploadOption();">Cancel</div>
+                                                     <div id="targetOuter">
+                                                        <div id="targetLayer"></div>
+                                                        <img src="/static/images/photo.png"  class="icon-choose-image"/>
+                                                        <div class="icon-choose-image" onClick="showUploadOption()"></div>
+                                                        <div id="profile-upload-option">
+                                                            <div class="profile-upload-option-list">
+                                                                <input name="image" id="userImage" type="file" class="inputFile" onChange="showPreview(this);" accept="image/*">
+                                                                </input>
+                                                                <span>Upload</span>
                                                             </div>
-                                                        </div>  
-                                                        <div>
-
-                                                        <input type="button" value="Choose photo" class="btnSubmit" onClick="showUploadOption()"/>
+                                                            <div class="profile-upload-option-list" onClick="removeProfilePhoto();">Delete</div>
+                                                            <div class="profile-upload-option-list" onClick="hideUploadOption();">Cancel</div>
                                                         </div>
-                                                </div>  
+                                                    </div>  
+                                                    <div>
+
+                                                    <input type="button" value="Choose photo" class="btnSubmit" onClick="showUploadOption()"/>
+                                                    </div>
+                                            </div>  
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>				
+    				<!-- Data -->
+    				<div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+    					<div class="card">
+                            <!-- Nav tabs -->
+                            <ul class="nav nav-tabs profile-tab" role="tablist">
+                                <li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#profile" role="tab">Profile</a> </li>
+                                <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#account" role="tab">Account</a> </li>
+                            </ul>
+
+                            <!-- Tab panes -->
+                            <div class="tab-content">
+                                <!-- Profile -->
+                                <div class="tab-pane active" id="profile" role="tabpanel">
+                                    <p style="margin-top: 25px;"></p>
+                                    <div class="card-body">
+                                        <input type="hidden" name="type_check" value="1">
+
+                                        <div class="form-group" id="full_name">
+                                            <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12" style="margin-bottom: 5px;">Full Name &nbsp;<span class="required">*</span></label>
+                                            <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
+                                                <input type="text" class="form-control" name="full_name" placeholder="Full Name" />
+                                                <small class='form-control-feedback' id="alert-full-name"></small>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12" style="margin-bottom: 5px;">Gender &nbsp;<span class="required">*</span></label>
+                                            <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
+                                                <label class="custom-control custom-radio">
+                                                    <input id="jk1" name="gender" type="radio" class="custom-control-input" value="L" checked="">
+                                                    <span class="custom-control-label">Male</span>
+                                                </label>
+                                                <label class="custom-control custom-radio">
+                                                    <input id="jk2" name="gender" type="radio" class="custom-control-input" value="P">
+                                                    <span class="custom-control-label">Female</span>
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group" id="email_verif">
+                                            <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12" style="margin-bottom: 5px;">Email &nbsp;<span class="required">*</span></label>
+                                            <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
+                                                <input name="email" type="email" class="form-control" placeholder="Email" >
+                                                <small class='form-control-feedback msg error'>Not a valid email address</small>
+                                                <small class='form-control-feedback msg success'>Valid email address!</small>
+                                                <small class='form-control-feedback' id="alert-email"></small>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-body">
+                                            <div class="form-group">
+                                                <label class="control-label col-md-5" style="margin-bottom: 5px;">Telephone</label>
+                                                <div class=" controls col-md-9">
+                                                    <input type="telephone" name="telephone" class="form-control" minlength="12" maxlength="20" placeholder="Telephone"> 
+                                                    <small class="form-control-feedback"></small>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-body">
+                                            <div class="form-group">
+                                                <label class="control-label col-md-5" style="margin-bottom: 5px;">Address</label>
+                                                <div class="col-md-9">
+                                                   <textarea name="address" class="form-control" placeholder="Address" data-autosize="" style="overflow: hidden visible; overflow-wrap: break-word;"></textarea>
+                                                    <small class="form-control-feedback"></small>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+
+                                <!-- Account -->
+                                <div class="tab-pane" id="account" role="tabpanel">
+                                    <p style="margin-top: 25px;"></p>
+                                     <div class="card-body">
+                                        <div class="form-group" id="id_grup">
+                                            <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12" style="margin-bottom: 5px;">Select Group &nbsp;<span class="required">*</span></label>
+                                            <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
+                                                <select name="id_group" class="form-control">
+                                                    <option selected="" disabled="">-- choose --</option>
+                                                    {{range .resultGrup}}
+                                                        <option value="{{.Id}}">{{.Name_Grup}}</option>
+                                                    {{end}}
+                                                </select>
+                                                <small class='form-control-feedback' id='alert-id-grup'></small>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group" id="username">
+                                            <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12" style="margin-bottom: 5px;">Username &nbsp;<span class="required">*</span></label>
+                                            <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
+                                                <input type="text" class="form-control" name="username"/>
+                                                <small class='form-control-feedback' id='alert-username'></small>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group" id="password">
+                                            <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12" style="margin-bottom: 5px;">Password<span class="required">*</span></label>
+                                            <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
+                                                <input type="password" class="form-control password" name="password" />
+                                                <small class='form-control-feedback' id='alert-password'></small>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group" id="confirm_password">
+                                            <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12" style="margin-bottom: 5px;">Repeat Password<span class="required">*</span></label>
+                                            <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
+                                                <input type="password" class="form-control confirm_password" name="confirm_password"/>
+                                                <small class='form-control-feedback' id='alert-confirm-password'></small>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group" id="confirm_password">
+                                            <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12" style="margin-bottom: 5px;">Status &nbsp;<span class="required">*</span></label>
+                                            <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
+                                                <label class="custom-control custom-radio">
+                                                    <input id="radio1" name="status" type="radio" class="custom-control-input" value="Y" checked="">
+                                                    <span class="custom-control-label">Active</span>
+                                                </label>
+                                                <label class="custom-control custom-radio">
+                                                    <input id="radio2" name="status" type="radio" class="custom-control-input" value="N">
+                                                    <span class="custom-control-label">Non Active</span>
+                                                </label>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>				
-        				<!-- Data -->
-        				<div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
-        					<div class="card">
-        						<div class="card-body">
-        							<div class="form-horizontal">
-        								<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 
-                                            <input type="hidden" name="type_check" value="1">
-
-                                            <div class="form-group" id="full_name">
-                                                <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12" style="margin-bottom: 5px;">Full Name &nbsp;<span class="required">*</span></label>
-                                                <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
-                                                    <input type="text" class="form-control" name="full_name" placeholder="Full Name" />
-                                                    <small class='form-control-feedback' id="alert-full-name"></small>
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group" id="email_verif">
-                                                <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12" style="margin-bottom: 5px;">Email &nbsp;<span class="required">*</span></label>
-                                                <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
-                                                    <input name="email" type="email" class="form-control" placeholder="Email" >
-                                                    <small class='form-control-feedback msg error'>Not a valid email address</small>
-                                                    <small class='form-control-feedback msg success'>Valid email address!</small>
-                                                    <small class='form-control-feedback' id="alert-email"></small>
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12" style="margin-bottom: 5px;">Gender &nbsp;<span class="required">*</span></label>
-                                                <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
-                                                    <label class="custom-control custom-radio">
-                                                        <input id="jk1" name="gender" type="radio" class="custom-control-input" value="L" checked="">
-                                                        <span class="custom-control-label">Male</span>
-                                                    </label>
-                                                    <label class="custom-control custom-radio">
-                                                        <input id="jk2" name="gender" type="radio" class="custom-control-input" value="P">
-                                                        <span class="custom-control-label">Female</span>
-                                                    </label>
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group" id="id_grup">
-                                                <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12" style="margin-bottom: 5px;">Select Group &nbsp;<span class="required">*</span></label>
-                                                <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
-        											<select name="id_group" class="form-control">
-        												<option selected="" disabled="">-- choose --</option>
-        												{{range .resultGrup}}
-        													<option value="{{.Id}}">{{.Name_Grup}}</option>
-        												{{end}}
-        											</select>
-        											<small class='form-control-feedback' id='alert-id-grup'></small>
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group" id="username">
-                                                <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12" style="margin-bottom: 5px;">Username &nbsp;<span class="required">*</span></label>
-                                                <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
-        											<input type="text" class="form-control" name="username"/>
-        											<small class='form-control-feedback' id='alert-username'></small>
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group" id="password">
-                                                <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12" style="margin-bottom: 5px;">Password<span class="required">*</span></label>
-                                                <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
-        											<input type="password" class="form-control password" name="password" />
-        											<small class='form-control-feedback' id='alert-password'></small>
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group" id="confirm_password">
-                                                <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12" style="margin-bottom: 5px;">Repeat Password<span class="required">*</span></label>
-                                                <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
-        											<input type="password" class="form-control confirm_password" name="confirm_password"/>
-        											<small class='form-control-feedback' id='alert-confirm-password'></small>
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group" id="confirm_password">
-                                                <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12" style="margin-bottom: 5px;">Status &nbsp;<span class="required">*</span></label>
-                                                <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
-                                                    <label class="custom-control custom-radio">
-                                                        <input id="radio1" name="status" type="radio" class="custom-control-input" value="Y" checked="">
-                                                        <span class="custom-control-label">Active</span>
-                                                    </label>
-                                                    <label class="custom-control custom-radio">
-                                                        <input id="radio2" name="status" type="radio" class="custom-control-input" value="N">
-                                                        <span class="custom-control-label">Non Active</span>
-                                                    </label>
-                                                </div>
-                                            </div>
-
-        									<div class="form-group">
-        										<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-        											<button class="btn btn-sm btn-info" type="submit">
-        												<i class="fa fa-paper-plane"></i>&nbsp;&nbsp;Save
-        											</button>
-        											<a href="/lib/setting/user/" class="btn-sm btn waves-effect waves-light btn-secondary">
-        												<i class="fa fa-reply"></i>&nbsp;&nbsp;Back
-        											</a>
-        										</div>
-        									</div>
-
-        								</div>
-        							</div>
-        					</div>
-        				</div>
+							<div class="form-group">
+								<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+									<button class="btn btn-sm btn-info" type="submit">
+										<i class="fa fa-paper-plane"></i>&nbsp;&nbsp;Save
+									</button>
+									<a href="/lib/setting/user/" class="btn-sm btn waves-effect waves-light btn-secondary">
+										<i class="fa fa-reply"></i>&nbsp;&nbsp;Back
+									</a>
+								</div>
+							</div>
+    					</div>
+    				</div>
     			</div>
 			</form>
 		</div>

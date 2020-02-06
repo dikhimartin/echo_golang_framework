@@ -5,11 +5,11 @@ import (
 	"net/http"
 	"strconv"
 	"time"
-	"path/filepath"
-	_ "database/sql"
 	"fmt"
 	"os"
 	"io"
+	"path/filepath"
+	_ "database/sql"
 	"../../database"
 	"../models"
 	"github.com/labstack/echo"
@@ -30,11 +30,13 @@ func ListSettingUser(c echo.Context) error {
 	var check_privilege []byte
 	check_privileges, errPriv := db.Prepare("SELECT kode_permissions FROM v_get_grup_privilege_detail WHERE id_setting_grup = ? AND kode_permissions = 'setting.user.user_2'")
 	if errPriv != nil {
-		fmt.Printf("%s", errPriv)
+		logs.Println(errPriv)
+		return c.Render(http.StatusInternalServerError, "error_505", nil)
 	}
 	errPriv = check_privileges.QueryRow(data_users.Id_group).Scan(&check_privilege)	
 	defer check_privileges.Close()
 	if string(check_privilege) != "setting.user.user_2"{
+		logs.Println(errPriv)
 		return c.Render(http.StatusInternalServerError, "error_403", nil)
 	}
 	//end check_privilege
@@ -70,8 +72,8 @@ func ListSettingUser(c echo.Context) error {
 
 	rows, err := db.Query(selected + whrs + " ORDER BY full_name ASC")
 	if err != nil {
-		// return c.Render(http.StatusInternalServerError, "error_500", nil)
-		fmt.Println(err)
+		logs.Println(err)
+		return c.Render(http.StatusInternalServerError, "error_500", nil)
 	}
 	defer rows.Close()
 
@@ -86,7 +88,7 @@ func ListSettingUser(c echo.Context) error {
 		var err = rows.Scan(&id, &id_setting_grup, &full_name, &email, &username, &name_grup, &status, &image, &extension)
 
 		if err != nil {
-			fmt.Println(err)
+			logs.Println(err)
 			return c.Render(http.StatusInternalServerError, "error_500", nil)
 		}
 
@@ -153,7 +155,8 @@ func AddSettingUser(c echo.Context) error {
 	var check_privilege []byte
 	check_privileges, errPriv := db.Prepare("SELECT kode_permissions FROM v_get_grup_privilege_detail WHERE id_setting_grup = ? AND kode_permissions = 'setting.user.user_1'")
 	if errPriv != nil {
-		fmt.Printf("%s", errPriv)
+		logs.Println(errPriv)
+		return c.Render(http.StatusInternalServerError, "error_500", nil)
 	}
 	errPriv = check_privileges.QueryRow(data_users.Id_group).Scan(&check_privilege)	
 	defer check_privileges.Close()
@@ -183,11 +186,13 @@ func StoreSettingUser(c echo.Context) error {
 	var check_privilege []byte
 	check_privileges, errPriv := db.Prepare("SELECT kode_permissions FROM v_get_grup_privilege_detail WHERE id_setting_grup = ? AND kode_permissions = 'setting.user.user_1'")
 	if errPriv != nil {
-		fmt.Printf("%s", errPriv)
+		logs.Println(errPriv)
+		return c.Render(http.StatusInternalServerError, "error_500", nil)
 	}
 	errPriv = check_privileges.QueryRow(data_users.Id_group).Scan(&check_privilege)	
 	defer check_privileges.Close()
 	if string(check_privilege) != "setting.user.user_1"{
+		logs.Println(errPriv)
 		return c.Render(http.StatusInternalServerError, "error_403", nil)
 	}
 	//end check_privilege
@@ -248,13 +253,14 @@ func StoreSettingUser(c echo.Context) error {
 	var extension 	= filepath.Ext(file.Filename)
 
 	// Insert user 
-	sql := "INSERT INTO tb_setting_user(full_name, username, email, gender, password, salt, add_date, status, additional) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)"
+	sql := "INSERT INTO tb_setting_user(full_name, username, email, telephone, address, gender, password, salt, add_date, status, additional) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)"
 	insert_user, err := db.Prepare(sql)
 	if err != nil {
-		fmt.Print(err.Error())
+		logs.Println(err)
+		return c.Render(http.StatusInternalServerError, "error_505", nil)	
 	}
 	defer insert_user.Close()
-	res, err2 := insert_user.Exec(emp.Full_name, emp.Username, emp.Email, emp.Gender, password, salt, current_time, emp.Status, extension)
+	res, err2 := insert_user.Exec(emp.Full_name, emp.Username, emp.Email, emp.Telephone, emp.Address, emp.Gender, password, salt, current_time, emp.Status, extension)
 
 	if err2 != nil {
 		return c.Render(http.StatusInternalServerError, "error_500", nil)
@@ -267,7 +273,8 @@ func StoreSettingUser(c echo.Context) error {
 	sql2 := "INSERT INTO tb_setting_user_grup(id_setting_user, id_setting_grup, status, add_date) VALUES(?, ?, ?, ?)"
 	insert_group, err := db.Prepare(sql2)
 	if err != nil {
-		fmt.Print(err.Error())
+		logs.Println(err)
+		return c.Render(http.StatusInternalServerError, "error_505", nil)	
 	}
 	defer insert_group.Close()
 	_, err3 := insert_group.Exec(get_last_id, emp.Id_group, emp.Status, current_time)
@@ -300,8 +307,9 @@ func StoreSettingUser(c echo.Context) error {
          // load original image
          img, err := imaging.Open("./upload/profile_user/"+FileNamePost)
          if err != nil {
-                 fmt.Println(err)
-                 os.Exit(1)
+			logs.Println(err)
+			return c.Render(http.StatusInternalServerError, "error_505", nil)	
+            os.Exit(1)
          }
 
          // crop from center
@@ -338,7 +346,8 @@ func SaveSettingUserWithoutImage(c echo.Context) error {
 	var check_privilege []byte
 	check_privileges, errPriv := db.Prepare("SELECT kode_permissions FROM v_get_grup_privilege_detail WHERE id_setting_grup = ? AND kode_permissions = 'setting.user.user_1'")
 	if errPriv != nil {
-		fmt.Printf("%s", errPriv)
+		logs.Println(errPriv)
+		return c.Render(http.StatusInternalServerError, "error_505", nil)	
 	}
 	errPriv = check_privileges.QueryRow(data_users.Id_group).Scan(&check_privilege)	
 	defer check_privileges.Close()
@@ -379,13 +388,13 @@ func SaveSettingUserWithoutImage(c echo.Context) error {
 	password 			:= hex.EncodeToString(hasher_salt_password.Sum(nil))
 
 	// Insert user 
-	sql := "INSERT INTO tb_setting_user(full_name, username, email, gender, password, salt, add_date, status) VALUES(?, ?, ?, ?, ?, ?, ?, ?)"
+	sql := "INSERT INTO tb_setting_user(full_name, username, email, telephone, address, gender, password, salt, add_date, status) VALUES(?, ?, ?, ?, ?, ?, ?, ?)"
 	insert_user, err := db.Prepare(sql)
 	if err != nil {
 		return c.Render(http.StatusInternalServerError, "error_500", nil)
 	}
 	defer insert_user.Close()
-	res, err2 := insert_user.Exec(emp.Full_name, emp.Username, emp.Email, emp.Gender, password, salt, current_time, emp.Status)
+	res, err2 := insert_user.Exec(emp.Full_name, emp.Username, emp.Email, emp.Telephone, emp.Address,  emp.Gender, password, salt, current_time, emp.Status)
 
 	if err2 != nil {
 		return c.Render(http.StatusInternalServerError, "error_500", nil)
@@ -421,7 +430,8 @@ func EditSettingUser(c echo.Context) error {
 	var check_privilege []byte
 	check_privileges, errPriv := db.Prepare("SELECT kode_permissions FROM v_get_grup_privilege_detail WHERE id_setting_grup = ? AND kode_permissions = 'setting.user.user_3'")
 	if errPriv != nil {
-		fmt.Printf("%s", errPriv)
+		logs.Println(errPriv)
+		return c.Render(http.StatusInternalServerError, "error_505", nil)	
 	}
 	errPriv = check_privileges.QueryRow(data_users.Id_group).Scan(&check_privilege)	
 	defer check_privileges.Close()
@@ -432,8 +442,8 @@ func EditSettingUser(c echo.Context) error {
 
 	requested_id := c.Param("id")
 
-	var id_setting_grup, full_name, gender, email, username, name_grup, status, image, extension []byte
-	err := db.QueryRow("SELECT id_setting_grup, full_name, gender, email, username, name_grup, status, image, extension FROM v_get_user WHERE md5(id) = ?", requested_id).Scan(&id_setting_grup, &full_name, &gender, &email, &username, &name_grup, &status, &image, &extension)
+	var id_setting_grup, full_name, gender, email, telephone, address, username, name_grup, status, image, extension []byte
+	err := db.QueryRow("SELECT id_setting_grup, full_name, gender, email, telephone, address,  username, name_grup, status, image, extension FROM v_get_user WHERE md5(id) = ?", requested_id).Scan(&id_setting_grup, &full_name, &gender, &email, &telephone, &address, &username, &name_grup, &status, &image, &extension)
 	if err != nil {
 		return c.Render(http.StatusInternalServerError, "error_500", nil)
 	}
@@ -460,6 +470,8 @@ func EditSettingUser(c echo.Context) error {
 		Full_name 	:  string(full_name),
 		Gender 		:  string(gender),
 		Email 		:  string(email),
+		Telephone 	:  string(telephone),
+		Address		:  string(address),
 		Username 	:  string(username),
 		Name_grup 	:  string(name_grup),
 		Status 		:  string(status),
@@ -489,29 +501,33 @@ func UpdateSettingUser(c echo.Context) error {
 	var check_privilege []byte
 	check_privileges, errPriv := db.Prepare("SELECT kode_permissions FROM v_get_grup_privilege_detail WHERE id_setting_grup = ? AND kode_permissions = 'setting.user.user_3'")
 	if errPriv != nil {
-		fmt.Printf("%s", errPriv)
+		logs.Println(errPriv)
+		return c.Render(http.StatusInternalServerError, "error_505", nil)	
 	}
 	errPriv = check_privileges.QueryRow(data_users.Id_group).Scan(&check_privilege)	
 	defer check_privileges.Close()
 	if string(check_privilege) != "setting.user.user_3"{
+		logs.Println(errPriv)
 		return c.Render(http.StatusInternalServerError, "error_403", nil)
 	}
-	//end check_privilege
+	// end check_privilege
 	
 	requested_id 		    := c.Param("id")
 	id_group 				:= c.FormValue("id_group")
 	full_name 				:= c.FormValue("full_name")
 	email 					:= c.FormValue("email")
+	telephone 				:= c.FormValue("telephone")
+	address 				:= c.FormValue("address")
 	gender 					:= c.FormValue("gender")
 	username    			:= c.FormValue("username")
 	status      			:= c.FormValue("status")
 	password_val    		:= c.FormValue("password")
 	confirm_password_val    := c.FormValue("confirm_password")
+	remove_image    		:= c.FormValue("remove_image")
 
 	jam   := strconv.Itoa(now.Hour())
 	menit := strconv.Itoa(now.Minute())
 	detik := strconv.Itoa(now.Second())
-
 
 	// SALT
 	var str_salt string = jam + menit + detik
@@ -542,29 +558,59 @@ func UpdateSettingUser(c echo.Context) error {
 	// if file null
 	if image_check != nil {
 		fmt.Println("Image Empty")
-		// Update Data User
-		if password_val == "" && confirm_password_val == ""{
+		// remove image
+		if remove_image == "1"{
+			// get_data_image
+			var image_user, additional []byte
+			get_images, err := db.Prepare("SELECT image, additional FROM tb_setting_user WHERE md5(id) = ?")
+			if err != nil {
+				logs.Println(err)
+				return c.Render(http.StatusInternalServerError, "error_500", nil)			
+			}
+			err = get_images.QueryRow(requested_id).Scan(&image_user, &additional)	
+			defer get_images.Close()
 
-			UpdateUser, err := db.Prepare("UPDATE tb_setting_user SET full_name=?, email=?, gender = ?, username = ?, status = ?, update_date=? WHERE md5(id)=?")
+			// update_data
+			Update_image, err := db.Prepare("UPDATE tb_setting_user SET image=?, additional=? WHERE md5(id)=?")
 			if err != nil{
 				return c.Render(http.StatusInternalServerError, "error_500", nil)
 			}
-			_, err2 :=UpdateUser.Exec(full_name, email, gender, username, status, current_time, requested_id)
+			_, err2 :=Update_image.Exec(nil, nil, requested_id)
+			if err2 != nil {
+				return EditSettingUser(c)
+			}
+			defer Update_image.Close()
+
+			// remove_file
+			err = os.Remove("upload/profile_user/" + string(image_user) + string(additional))
+			if err != nil {
+				return c.Render(http.StatusInternalServerError, "error_500", nil)
+			}
+		}
+		// Update Data User
+		if password_val == "" && confirm_password_val == ""{
+
+			UpdateUser, err := db.Prepare("UPDATE tb_setting_user SET full_name=?, email=?, telephone = ?, address = ?, gender = ?, username = ?, status = ?, update_date=? WHERE md5(id)=?")
+			if err != nil{
+				logs.Println(err)
+				return c.Render(http.StatusInternalServerError, "error_500", nil)			
+			}
+			_, err2 :=UpdateUser.Exec(full_name, email, telephone, address,  gender, username, status, current_time, requested_id)
 			if err2 != nil {
 				errorDuplikatData = "error_update_username"
 				return EditSettingUser(c)
 			}
 			defer UpdateUser.Close()
-
 		}else if password_val != "" && confirm_password_val != "" {
 
-			UpdateUser, err := db.Prepare("UPDATE tb_setting_user SET full_name=?, email=?, gender = ?, username = ?, password=?, salt = ?,  status=?, update_date=? WHERE md5(id)=?")
+			UpdateUser, err := db.Prepare("UPDATE tb_setting_user SET full_name=?, email=?, telephone = ?, address = ?, gender = ?, username = ?, password=?, salt = ?,  status=?, update_date=? WHERE md5(id)=?")
 			if err != nil{
-				return c.Render(http.StatusInternalServerError, "error_500", nil)
+				logs.Println(err)
+				return c.Render(http.StatusInternalServerError, "error_500", nil)			
 			}
-			_, err2 :=UpdateUser.Exec(full_name, email, gender, username, password, salt, status, current_time, requested_id)
+			_, err2 :=UpdateUser.Exec(full_name, email, telephone, address, gender, username, password, salt, status, current_time, requested_id)
 			if err2 != nil {
-				fmt.Println(err)
+				logs.Println(err)
 				errorDuplikatData = "error_update_username"
 				return EditSettingUser(c)
 			}
@@ -574,7 +620,8 @@ func UpdateSettingUser(c echo.Context) error {
 		// update group
 		UpdateUserGroup, err := db.Prepare("UPDATE tb_setting_user_grup SET id_setting_grup=?, update_date=? WHERE md5(id_setting_user)=?")
 		if err != nil{
-			return c.Render(http.StatusInternalServerError, "error_500", nil)
+			logs.Println(err)
+			return c.Render(http.StatusInternalServerError, "error_500", nil)			
 		}
 		UpdateUserGroup.Exec(id_group, current_time, requested_id)
 		defer UpdateUserGroup.Close()
@@ -589,7 +636,8 @@ func UpdateSettingUser(c echo.Context) error {
 		//if file not null
 		src, err := file.Open()
 		if err != nil {
-			return c.Render(http.StatusInternalServerError, "error_500", nil)
+			logs.Println(err)
+			return c.Render(http.StatusInternalServerError, "error_500", nil)			
 		}
 		defer src.Close()
 
@@ -601,18 +649,20 @@ func UpdateSettingUser(c echo.Context) error {
 		var id_user, image_user, additional []byte
 		err = db.QueryRow("SELECT id, image, extension FROM v_get_user WHERE md5(id) = ?", requested_id).Scan(&id_user, &image_user, &additional)
 		if err != nil {
-			return c.Render(http.StatusInternalServerError, "error_500", nil)
+			logs.Println(err)
+			return c.Render(http.StatusInternalServerError, "error_500", nil)			
 		}
 
 
 		// Update Data User
 		if password_val == "" && confirm_password_val == ""{
 
-			UpdateUser, err := db.Prepare("UPDATE tb_setting_user SET full_name=?, email=?, gender = ?, username = ?, status = ?, update_date=?, additional = ? WHERE md5(id)=?")
+			UpdateUser, err := db.Prepare("UPDATE tb_setting_user SET full_name=?, email=?, telephone = ?, address = ?, gender = ?, username = ?, status = ?, update_date=?, additional = ? WHERE md5(id)=?")
 			if err != nil{
-				return c.Render(http.StatusInternalServerError, "error_500", nil)
+				logs.Println(err)
+				return c.Render(http.StatusInternalServerError, "error_500", nil)			
 			}
-			_, err2 :=UpdateUser.Exec(full_name, email, gender, username, status, current_time, extension, requested_id)
+			_, err2 :=UpdateUser.Exec(full_name, email, telephone, address, gender, username, status, current_time, extension, requested_id)
 			if err2 != nil {
 				errorDuplikatData = "error_update_username"
 				return EditSettingUser(c)
@@ -620,13 +670,14 @@ func UpdateSettingUser(c echo.Context) error {
 			defer UpdateUser.Close()
 		}else if password_val != "" && confirm_password_val != "" {
 
-			UpdateUser, err := db.Prepare("UPDATE tb_setting_user SET full_name=?, email=?, gender = ?, username = ?, password=?, salt = ?,  status=?, update_date=?, additional = ? WHERE md5(id)=?")
+			UpdateUser, err := db.Prepare("UPDATE tb_setting_user SET full_name=?, email=?, telephone = ?, address = ?, gender = ?, username = ?, password=?, salt = ?,  status=?, update_date=?, additional = ? WHERE md5(id)=?")
 			if err != nil{
-				return c.Render(http.StatusInternalServerError, "error_500", nil)
+				logs.Println(err)
+				return c.Render(http.StatusInternalServerError, "error_500", nil)			
 			}
-			_, err2 :=UpdateUser.Exec(full_name, email, gender, username, password, salt, status, current_time, extension, requested_id)
+			_, err2 :=UpdateUser.Exec(full_name, email, telephone, address, gender, username, password, salt, status, current_time, extension, requested_id)
 			if err2 != nil {
-				fmt.Println(err)
+				logs.Println(err)
 				errorDuplikatData = "error_update_username"
 				return EditSettingUser(c)
 			}
@@ -636,7 +687,8 @@ func UpdateSettingUser(c echo.Context) error {
 		// update group
 		UpdateUserGroup, err := db.Prepare("UPDATE tb_setting_user_grup SET id_setting_grup=?, update_date=? WHERE md5(id_setting_user)=?")
 		if err != nil{
-			return c.Render(http.StatusInternalServerError, "error_500", nil)
+			logs.Println(err)
+			return c.Render(http.StatusInternalServerError, "error_500", nil)			
 		}
 		UpdateUserGroup.Exec(id_group, current_time, requested_id)
 		defer UpdateUserGroup.Close()
@@ -652,7 +704,8 @@ func UpdateSettingUser(c echo.Context) error {
 		if string(image_user) != ""{
 			err = os.Remove("upload/profile_user/" + string(image_user) + string(additional))
 			if err != nil {
-				return c.Render(http.StatusInternalServerError, "error_500", nil)
+				logs.Println(err)
+				return c.Render(http.StatusInternalServerError, "error_500", nil)			
 			}
 		}
 
@@ -660,20 +713,22 @@ func UpdateSettingUser(c echo.Context) error {
 		// Lokasi File
 		dst, err := os.Create("upload/profile_user/" + FileNamePost)
 		if err != nil {
+			logs.Println(err)
 			return c.Render(http.StatusInternalServerError, "error_500", nil)
 		}
 		defer dst.Close()
 
 		// Eksekusi File
 		if _, err = io.Copy(dst, src); err != nil {
-			return c.Render(http.StatusInternalServerError, "error_500", nil)
-		}
+			logs.Println(err)
+			return c.Render(http.StatusInternalServerError, "error_500", nil)		}
 
 		// Memotong Gambar
 		     // load original image
 		     img, err := imaging.Open("./upload/profile_user/"+FileNamePost)
 		     if err != nil {
-		             return c.Render(http.StatusInternalServerError, "error_500", nil)
+					 logs.Println(err)
+					 return c.Render(http.StatusInternalServerError, "error_500", nil)
 		             os.Exit(1)
 		     }
 
@@ -683,15 +738,17 @@ func UpdateSettingUser(c echo.Context) error {
 		     // save cropped image
 		     err = imaging.Save(centercropimg, "./upload/profile_user/"+FileNamePost)
 		     if err != nil {
-		             return c.Render(http.StatusInternalServerError, "error_500", nil)
-		             os.Exit(1)
+				logs.Println(err)
+				return c.Render(http.StatusInternalServerError, "error_500", nil)		             
+				os.Exit(1)
 		     }
 		// Memotong Gambar
 
 		// Simpan nama file ke database
 		insert_nama_image, err2 := db.Prepare("UPDATE tb_setting_user SET image = ? WHERE md5(id) = ?")
 		if err2 != nil {
-			return c.Render(http.StatusInternalServerError, "error_500", nil)
+			logs.Println(err)
+			return c.Render(http.StatusInternalServerError, "error_500", nil)			
 		}
 		defer insert_nama_image.Close()
 		insert_nama_image.Exec(EncryptName, requested_id)
@@ -716,7 +773,7 @@ func CheckUsername(c echo.Context) error{
 		//cek_data_add_new
 		query, err := db.Prepare("SELECT username FROM v_get_user WHERE username= ?")
 		if err != nil {
-			fmt.Println(err)
+			logs.Println(err)
 		}
 		defer query.Close()
 		err = query.QueryRow(username).Scan(&check_username)
@@ -726,7 +783,7 @@ func CheckUsername(c echo.Context) error{
 		//cek_data_edit
 		query, err := db.Prepare("SELECT username FROM v_get_user WHERE username= ? AND username != ?")
 		if err != nil {
-			fmt.Println(err)
+			logs.Println(err)
 		}
 		defer query.Close()
 		err = query.QueryRow(username, username_old).Scan(&check_username)

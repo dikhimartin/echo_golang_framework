@@ -6,16 +6,26 @@ import (
 	"../../database"
 	"../models"
 	"time"
+	logger    "../../customlogger"
 	data_user "../../api/data"
 	"github.com/flosch/pongo2"
 	"github.com/labstack/echo"
 )
 
+var logs = logger.GetInstance("SYSTEMS -")
+
+//generator
+func NewSlice(start, count, step int) []int {
+	s := make([]int, count)
+	for i := range s {
+		s[i] = start
+		start += step
+	}
+	return s
+}
 // get data login
 func (c *MyCustomContext) getDataLogin() (models.GetDataLogin) {
 
-	db := database.CreateCon()
-	defer db.Close()
 
 	// get data login
 		dt_user, err   := data_user.GetDataJWT(c)
@@ -47,20 +57,7 @@ func (c *MyCustomContext) getDataLogin() (models.GetDataLogin) {
 	return data_users
 }
 
-//generator
-func NewSlice(start, count, step int) []int {
-	s := make([]int, count)
-	for i := range s {
-		s[i] = start
-		start += step
-	}
-	return s
-}
-
 func Getinfologin(c echo.Context) error{
-
-	db := database.CreateCon()
-	defer db.Close()
 
 	// get data login
 		dt_user, err   := data_user.GetDataJWT(c)
@@ -90,7 +87,7 @@ func Getinfologin(c echo.Context) error{
 
 	data = pongo2.Context{
 		"data_users"				:   data_users,
-		"time":      time.Now().UnixNano(),
+		"time"						:   time.Now().UnixNano(),
 	}
 
 	return c.JSON(200, data)

@@ -73,9 +73,7 @@ func AuthorizationSignIn(c echo.Context) error {
 	//end check database
 
 	// MD5 PASSWORD
-
 	var str_password string = formpassword
-
 	hasher_password := md5.New()
 	hasher_password.Write([]byte(str_password))
 	md5password := hex.EncodeToString(hasher_password.Sum(nil))

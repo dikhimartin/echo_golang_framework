@@ -82,7 +82,6 @@ func ShowDataJWT(c echo.Context) error {
 	JSON, err := GetDataJWT(c)
 
 	if err != nil {
-		fmt.Println("kosong")
 		return err
 	}
 

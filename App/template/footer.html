@@ -3,7 +3,7 @@
         <!-- ============================================================== -->
         <!-- footer -->
         <!-- ============================================================== -->
-        <footer class="footer" id="copyright_libpos">
+        <footer class="footer" id="copyright_footer">
         </footer>
         <!-- ============================================================== -->
         <!-- End footer -->
@@ -62,7 +62,7 @@
                     '<a href="http://dikhimartin.com/" class="m-link">'+
                         'Dikhi Martin'+
                     '</a>';
-        $("#copyright_libpos").html(data);
+        $("#copyright_footer").html(data);
 
 
         function getaccountinfo(){
@@ -75,17 +75,12 @@
                     var users = data.data_users;
                     
                     $("#account_name").text(users.name_users);
-                    $("#account_names").text(users.name_users);
-                    
                     $("#account_group").text(users.name_group);
-                    $("#account_groups").text(users.name_group);
 
                     if (users.Image  != "") {
                         $(".profile-img").html('<img src="/upload/profile_user/'+users.Image+users.Extension+'?='+data.time+'" alt="'+ users.name_users +'" />');
-                        $("#profile-img").html('<img src="/upload/profile_user/'+users.Image+users.Extension+'?='+data.time+'" alt="'+ users.name_users +'" class="img-circle" width="150" />');
                     }else if (users.Image == "") {
                         $(".profile-img").html('<img src="/static/images/users/anonymous.png" alt="'+ users.name_users +'"/>');
-                        $("#profile-img").html('<img src="/static/images/users/anonymous.png" alt="'+ users.name_users +'" class="img-circle" width="150" />');
                     }
 
                 },

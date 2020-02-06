@@ -1,193 +1,762 @@
 {{define "my_profile"}}
     {{template "layout"}}
 
-    <div class="page-wrapper">
-        <!-- Bread crumb and right sidebar toggle -->
-        <div class="row page-titles">
-            <div class="col-md-5 align-self-center">
-                <h3 class="text-themecolor">Profile</h3>
-            </div>
-            <div class="col-md-7 align-self-center">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
-                    <li class="breadcrumb-item active">Profile</li>
-                </ol>
-            </div>
-        </div>
-        <!-- End Bread crumb and right sidebar toggle -->
+    <!-- CSS -->
+    <style type="text/css">
 
+        .msg {
+        display: none;
+        }
+        .error {
+            color: red;
+        }
+        .success {
+            color: green;
+        }
+        .img-profile {
+          border-radius: 50%;
+        }
 
-    <div class="container-fluid">
-        <!-- ============================================================== -->
-        <!-- Start Page Content -->
-        <!-- ============================================================== -->
-        <!-- Row -->
-        <div class="row">
-            <!-- Column -->
-            <div class="col-lg-4 col-xlg-3 col-md-5">
-                <div class="card">
-                    <div class="card-body">
-                        <center class="m-t-30">
-                            <div id="profile-img"></div>
-                            <h4 class="card-title m-t-10">
-                                <a href="javascript:void(0)" id="account_names" data-type="text" data-pk="" 
-                                    data-title="Edit Name">
-                                </a>
-                            </h4>
-                            <h6 id="account_groups" class="card-subtitle"></h6>
-                            <div class="row text-center justify-content-md-center">
-                            </div>
-                        </center>
-                    </div>
-                    <div><hr></div>
-                    <div id="_token" class="hidden" data-token=""></div>
-                    <div class="card-body"> 
-                        <small class="text-muted"></small>
-                        <h6></h6> 
-                        <small class="text-muted">Email address </small>
-                        <h6> <a href="javascript:void(0)" id="email" data-type="text" data-pk="" 
-                                data-title="Edit Email">
-                            </a>
-                        </h6> 
+        /* Image Profile*/
+        .bgColor {
+            background-color: #ffff;
+            border-radius: 4px;
+            text-align: center;    
+        }
+        .upload-preview {border-radius:4px;width: 200px;height: 200px;}
+        #targetOuter{   
+            position:relative;
+            text-align: center;
+            background-color: #dddddd;
+            margin: 20px auto;
+            width: 200px;
+            height: 200px;
+            border-radius: 4px;
+        }
+        .btnSubmit {
+            background-color: #565656;
+            border-radius: 4px;
+            padding: 10px;
+            border: #333 1px solid;
+            color: #FFFFFF;
+            width: 200px;
+            cursor:pointer;
+        }
+        .inputFile{
+            margin-top: 0px;
+            left: 0px;
+            right: 0px;
+            top: 0px;
+            width: 200px;
+            height: 36px;
+            background-color: #FFFFFF;
+            overflow: hidden;
+            opacity: 0;
+            position: absolute;
+            cursor: pointer;
+        }
+        .icon-choose-image {
+            position: absolute;
+            opacity: 0.5;
+            top: 50%;
+            left: 50%;
+            margin-top: -24px;
+            margin-left: -24px;
+            width: 48px;
+            height: 48px;
+            cursor:pointer;
+            
+        }
+        #profile-upload-option{
+            display:none;
+            position: absolute;
+            top: 163px;
+            left: 23px;
+            margin-top: -24px;
+            margin-left: -24px;
+            border: #d8d1ca 1px solid;
+            border-radius: 4px;
+            background-color: #dddddd;
+            width: 200px;
+        }
+        .profile-upload-option-list{
+            margin: 1px;
+            height: 25px;
+            border-bottom: 1px solid #c4c4c4;
+            cursor: pointer;
+            position: relative;
+            padding:5px 0px;
+        }
+        .profile-upload-option-list:hover{
+            background-color: #fffaf5;
+        }
+    </style>
 
-                        <small class="text-muted">Phone</small>
-                        <h6>
-                            <a href="javascript:void(0)" id="telephone" data-type="text" data-pk="" 
-                                data-title="Edit telephone">
-                            </a>
-                        </h6> 
-
-                        <small class="text-muted">Address</small>
-                        <h6>
-                            <a href="javascript:void(0)" id="address" data-type="textarea" data-pk="" 
-                                data-title="Edit Address">
-                            </a>
-                        </h6> 
-                    
-                    </div>
+    <form action="javascript:void(0)" class="form-horizontal" method="POST" id="form_update_data_user" enctype="multipart/form-data">
+        <div class="page-wrapper">
+            <!-- Bread crumb and right sidebar toggle -->
+            <div class="row page-titles">
+                <div class="col-md-5 align-self-center">
+                    <h3 class="text-themecolor">Profile</h3>
+                </div>
+                <div class="col-md-7 align-self-center">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
+                        <li class="breadcrumb-item active">Profile</li>
+                    </ol>
                 </div>
             </div>
-            <!-- Column -->
-            <!-- Column -->
-            <div class="col-lg-8 col-xlg-9 col-md-7">
-                <div class="card">
-                    <!-- Nav tabs -->
-                    <ul class="nav nav-tabs profile-tab" role="tablist">
-                        <li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#profile" role="tab">Profile</a> </li>
-                        <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#settings" role="tab">Settings</a> </li>
-                    </ul>
+            <!-- End Bread crumb and right sidebar toggle -->
 
-                        <!-- form profile-->
-                        <form method="POST" action="" enctype="multipart/form-data">
+            <div class="container-fluid">
+                <!-- ============================================================== -->
+                <!-- Start Page Content -->
+                <!-- ============================================================== -->
+                <!-- Row -->
+                <div class="row">
+                    <!-- Column -->
+                    <div class="col-lg-4 col-xlg-3 col-md-5">
+                        <div class="card">
+                            <div class="card-body">
+                                <center class="m-t-30">
+
+                                    <!-- Upload Image Profile -->
+                                    <div class="form-group">
+                                        <div class="bgColor">
+                                            <div id="targetOuter">
+                                                <div id="targetLayer"></div>
+                                                    <img src="/static/images/photo.png"  class="icon-choose-image"/>
+                                                    <div class="icon-choose-image" onClick="showUploadOption()"></div>
+                                                        <div id="profile-upload-option">
+                                                            <div class="profile-upload-option-list">
+                                                                <input name="image" id="userImage" type="file" class="inputFile" onChange="showPreview(this);" accept="image/*">
+                                                                </input>
+                                                                <span>Upload</span>
+                                                            </div>
+                                                            <div class="profile-upload-option-list" onClick="removeProfilePhoto();">Delete</div>
+                                                            <div class="profile-upload-option-list" onClick="hideUploadOption();">Cancel</div>
+                                                        </div>
+                                                </div>  
+                                            <div>
+                                        </div>  
+                                        <h4 class="card-title m-t-10">
+                                            <a href="javascript:void(0)" id="account_names" data-type="text" data-pk="" 
+                                                data-title="Edit Name">
+                                            </a>
+                                        </h4>
+                                        <h6 id="account_groups" class="card-subtitle"></h6>
+                                    </div>
+
+                                    <div class="row text-center justify-content-md-center">
+                                    </div>
+
+                                </center>
+                            </div>
+                            <div><hr></div>
+                            <div id="_token" class="hidden" data-token=""></div>
+                            <div class="card-body"> 
+                                <small class="text-muted"></small>
+                                <h6></h6> 
+                                <small class="text-muted">Email address </small>
+                                <h6> <a href="javascript:void(0)" id="email" data-type="text" data-pk="" 
+                                        data-title="Edit Email">
+                                    </a>
+                                </h6> 
+
+                                <small class="text-muted">Phone</small>
+                                <h6>
+                                    <a href="javascript:void(0)" id="telephone" data-type="text" data-pk="" 
+                                        data-title="Edit telephone">
+                                    </a>
+                                </h6> 
+
+                                <small class="text-muted">Address</small>
+                                <h6>
+                                    <a href="javascript:void(0)" id="address" data-type="textarea" data-pk="" 
+                                        data-title="Edit Address">
+                                    </a>
+                                </h6> 
+                            
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Column -->
+                    <!-- Column -->
+                    <div class="col-lg-8 col-xlg-9 col-md-7">
+                        <div class="card">
+                            <!-- Nav tabs -->
+                            <ul class="nav nav-tabs profile-tab" role="tablist">
+                                <li class="nav-item"> <a class="nav-link active profile" data-toggle="tab" href="#profile" role="tab">Profile</a> </li>
+                                <li class="nav-item"> <a class="nav-link account" data-toggle="tab" href="#account" role="tab">Account</a> </li>
+                            </ul>
 
                             <!-- Tab panes -->
                             <div class="tab-content">
+                                <!--profile-->
+                                <div class="tab-pane active" id="profile" role="tabpanel">
+                                    <p style="margin-top: 25px;"></p>
+                                    <div class="card-body">
+                                            <div class="form-group" id="full_name">
+                                                <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12" style="margin-bottom: 5px;">Full Name &nbsp;<span class="required">*</span></label>
+                                                <div class="col-lg-11 col-md-11 col-sm-11 col-xs-12">
+                                                    <input type="text" class="form-control" name="full_name" placeholder="Full Name" value="{{.setting_user.Full_name}}" />
+                                                    <small class='form-control-feedback' id="alert-full-name"></small>
+                                                </div>
+                                            </div>
 
-                            <!--profile-->
-                            <div class="tab-pane active" id="profile" role="tabpanel">
-                                <div class="card-body">
+                                            <div class="form-group">
+                                                {{$Gender := .setting_user.Gender}}
+                                                <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12" style="margin-bottom: 5px;">Gender &nbsp;<span class="required">*</span></label>
+                                                <div class="col-lg-11 col-md-11 col-sm-11 col-xs-12">
+                                                    <label class="custom-control custom-radio">
+                                                        <input id="jk1" name="gender" type="radio" class="custom-control-input" value="L" {{if eq $Gender ("L")}} checked="" {{end}}>
+                                                        <span class="custom-control-label">Male</span>
+                                                    </label>
+                                                    <label class="custom-control custom-radio">
+                                                        <input id="jk2" name="gender" type="radio" class="custom-control-input" value="P" {{if eq $Gender ("P")}} checked="" {{end}}>
+                                                        <span class="custom-control-label">Female</span>
+                                                    </label>
+                                                </div>
+                                            </div>
 
+                                            <div class="form-group" id="email_verif">
+                                                <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12" style="margin-bottom: 5px;">Email &nbsp;<span class="required">*</span></label>
+                                                <div class="col-lg-11 col-md-11 col-sm-11 col-xs-12">
+                                                    <input name="email" type="email" class="form-control" placeholder="Email" value="{{.setting_user.Email}}" >
+                                                    <small class='form-control-feedback msg error'>Not a valid email address</small>
+                                                    <small class='form-control-feedback msg success'>Valid email address!</small>
+                                                    <small class='form-control-feedback' id="alert-email"></small>
+                                                </div>
+                                            </div>
 
+                                            <div class="form-body">
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-5" style="margin-bottom: 5px;">Telephone</label>
+                                                    <div class=" controls col-md-9">
+                                                        <input type="telephone" name="telephone" class="form-control" minlength="12" maxlength="20" placeholder="Telephone" value="{{.setting_user.Telephone}}"> 
+                                                        <small class="form-control-feedback"></small>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-body">
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-5" style="margin-bottom: 5px;">Address</label>
+                                                    <div class="col-md-9">
+                                                       <textarea name="address" class="form-control" placeholder="Address" data-autosize="" style="overflow: hidden visible; overflow-wrap: break-word;">{{.setting_user.Address}}</textarea>
+                                                        <small class="form-control-feedback"></small>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                    </div>
+                                </div>
+
+                                <!-- Account -->
+                                <div class="tab-pane" id="account" role="tabpanel">
+                                    <div class="card-body">
+                                        <p style="margin-top: 25px;"></p>
+
+                                        <input type="hidden" name="type_check" value="2">
+
+                                        <div class="form-group" id="username">
+                                            <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12" style="margin-bottom: 5px;">Username &nbsp;<span class="required">*</span></label>
+                                            <div class="col-lg-11 col-md-11 col-sm-11 col-xs-12">
+                                                <input type="hidden" name="username_old" value="{{.setting_user.Username}}" autocomplete="off" />
+                                                <input type="text" class="form-control" name="username" value="{{.setting_user.Username}}" autocomplete="off" />
+                                                <small class='form-control-feedback' id='alert-username'></small>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-12">
+                                            <div class="m-b-10">
+                                                <label class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="custom-control-input check_password">
+                                                    <span class="custom-control-label">Change Password</span>
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <div class="col-lg-11 col-md-11 col-sm-11 col-xs-12">
+                                                <div class="alert alert-success"> 
+                                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">×</span> </button>
+                                                    Password is not required to be filled in</br>
+                                                    just leave it blank if you dont want to change it
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- changes passsword -->
+                                        <div class="option_changes_password" style="display: none;">
+                                            <div id="option_changes_password"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <a href="javascript:void(0)" id="update_button" class="btn btn-sm btn-info">
+                                            <i class="fa fa-paper-plane"></i>&nbsp;&nbsp;Update
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
-                        </form>
-                        <!-- end form profile-->
-
-                        <div class="tab-pane" id="settings" role="tabpanel">
-                            <!-- form Password-->
-                             <div class="card-body">
-                                  <h3></h3>
-                                  </br>
-                                    <form class="form-horizontal" role="form" id="password_change" method="post" action="">
-                                
-                                  </form>
-                            </div>
-                            <!--end  form Password-->
                         </div>
+                    </div>
+                    <!-- Column -->
+                </div>
+                <!-- Row -->
+                <!-- ============================================================== -->
+                <!-- End PAge Content -->
+            </div>
+        </div>
 
-
-                    </div><!-- end Tab panes -->
+        <!-- Form Modal -->
+        <div class="modal fade col-md-12" id="modals_confirm" role="dialog" data-backdrop="static"
+            data-keyboard="false">
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header bg-info">
+                        <h4 class="modal-title text-white"></h4>
+                        <button type="button" class="close text-white" data-dismiss="modal"
+                            aria-hidden="true">×</button>
+                    </div>
+                    <!-- Modal Form -->
+                    <div class="modal-body">
+                        <div class="widget-box">
+                            <div class="widget-body">
+                                <div class="widget-main">
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <h5>Please enter your password</h5>
+                                            <hr>
+                                            <input type="hidden" name="type_submit" value="profile">
+                                            <!-- Password -->
+                                            <div class="form-group">
+                                                <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12" style="margin-bottom: 5px;">Password</label>
+                                                <div class="col-lg-11 col-md-11 col-sm-11 col-xs-12">
+                                                    <input type="password" class="form-control" name="password_confirm">
+                                                    <small class="form-control-feedback" id="alert-password"></small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button id="btnSave" onclick="update_users()" class="btn btn-sm btn-info"><i
+                                    class="fa fa-paper-plane"></i> Confirm</button>
+                            <button type="button" class="btn-sm btn waves-effect waves-light btn-secondary"
+                                data-dismiss="modal"><i class="fa fa-reply"></i> Cancel</button>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <!-- Column -->
         </div>
-        <!-- Row -->
-        <!-- ============================================================== -->
-        <!-- End PAge Content -->
+    </form>
 
-    </div>
-
-    </div>
     {{template "footer"}}
 
     <script type="text/javascript" src="/static/plugins/x-editable/dist/bootstrap3-editable/js/bootstrap-editable.js">
     </script>  
 
     <script type="text/javascript">
-    //text inline update
-    $(document).ready(function() {
 
-     $.fn.editable.defaults.mode = 'inline';
+        //type_submit
+        $(".profile").on("click", function () {
+            $("input[name=type_submit]").val("profile")
+        });
+        $(".account").on("click", function () {
+            $("input[name=type_submit]").val("account")
+        });
 
-       $.fn.editable.defaults.params = function (params) 
-       {
-        params._token = $("#_token").data("token");
-        return params;
-       };
+        $("#update_button").on("click", function () {
+            $('#modals_confirm').modal('show');
+            $("input[name=password_confirm]").val("");
+            $(".modal-title").text("Confirmation of Change")
+        });
 
-        $('#name').editable({
+        function update_users() {
+            var url;
+            url = "/lib/my_profile/confirm_update/";
+            // ajax adding data to database
+            var formdata = new FormData($('#form_update_data_user')[0]);
+
+            $.ajax({
+                url: url,
+                type: "POST",
+                data: formdata,
+                contentType: false,
+                processData: false,
+                dataType: "JSON",
+                success: function (data) {
+                    if (data == "true") {
+                        $('#modals_confirm').modal('hide');
+                        swal("Finished!","Your data has been successfully changed","success");
+                    }else if (data == "username_false") {
+                        $('#modals_confirm').modal('show');
+                        swal("Failed", "Your username is incorrect", "error");
+                    }else if (data == "password_false") {
+                        $('#modals_confirm').modal('show');
+                        swal("Failed", "Your password is incorrect", "error");
+                    }
+                },
+                error: function (data) {
+                }
+            });
+        }
+
+        $(".check_password").change(function() {
+            if(this.checked) {
+                $(".option_changes_password").show();
+
+                data = '<div class="form-group" id="password">'+
+                            '<label class="col-lg-3 col-md-3 col-sm-3 col-xs-12" style="margin-bottom: 5px;">Password</label>'+
+                            '<div class="col-lg-11 col-md-11 col-sm-11 col-xs-12">'+
+                                '<input type="password" class="form-control password" name="password" />'+
+                                '<small class="form-control-feedback" id="alert-password"></small>'+
+                            '</div>'+
+                        '</div>'+
+
+                       '<div class="form-group" id="confirm_password">'+
+                            '<label class="col-lg-3 col-md-3 col-sm-3 col-xs-12" style="margin-bottom: 5px;">Repeat Password</label>'+
+                           '<div class="col-lg-11 col-md-11 col-sm-11 col-xs-12">'+
+                                '<input type="password" class="form-control confirm_password" name="confirm_password"/>'+
+                                '<small class="form-control-feedback" id="alert-confirm-password"></small>'+
+                            '</div>'+
+                        '</div>';
+                $("#option_changes_password").html(data);
+            }else{
+                $(".option_changes_password").hide();
+                $("#option_changes_password div.form-group").remove();
+            }
+        });
+
+        function validasi_input(form){
+
+            $('.has-success').removeClass( "has-success");
+            $('.has-danger').removeClass( "has-danger");
+            $('.form-control-feedback').text("");
+
+            // validasi
+            if (form.full_name.value == ""){
+                $("#full_name").addClass("form-group has-danger");
+                $("#alert-full-name").text("Please fill in Full Name");
+                form.full_name.focus();
+                return (false);
+            }
+            if (form.email.value == ""){
+                $("#email_verif").addClass("form-group has-danger");
+                $("#alert-email").text("Please fill in Email");
+                form.email.focus();
+                return (false);
+            }
+            var id_grup   = $("select[name='id_group']").select().val();
+            if (id_grup == null){
+                $("#id_grup").addClass("form-group has-danger");
+                $("#alert-id-grup").text("Please fill in Group");
+                form.id_group.focus();
+                return (false);
+            }
+            if (form.username.value == ""){
+                $("#username").addClass("form-group has-danger");
+                $("#alert-username").text("Please fill in Username");
+                form.username.focus();
+                return (false);
+            }
+
+            // cek username
+                var type_check     = $("input[name=type_check]").val()
+                var username       = $("input[name=username]").val()
+                var username_old   = $("input[name=username_old]").val()
+
+                $('.has-danger').removeClass( "has-danger");
+                $('.has-success').removeClass( "has-success");
+                $('.form-control-feedback').text("");
+
+                var value = $("input[name='username']").val();
+                if (value.length < 5) {
+                    $("#username").addClass("form-group has-danger");
+                    $("#alert-username").text("Must be at least 5 characters");
+                    return false;
+                }
+
+
+                $.ajax({
+                    url: "/lib/setting/user/check_username/",
+                    type: "POST",
+                    data: {
+                            "username"   :username,
+                            "type_check" :type_check,
+                            "username_old" :username_old
+                            },
+                    contentType: 'application/json',
+                }).then(function (res) {
+
+                    if (res.kode == "1") {
+                        $("#username").addClass("form-group has-danger");
+                        $("#alert-username").text("Sorry , Username is already used");
+                        return (false);
+                    }else{
+                        return (false);
+                    }
+
+                }).catch(function (a) {
+                    alert("ERROR");
+                });
+            // end            
+
+            // cek password
+            var password = $("input[name=password]").val();
+            if (password != "") {
+                if(password.length < 8){
+                    $("#password").addClass("form-group has-danger");
+                    $("#alert-password").text("must be at least 8 characters");
+                    return false
+                }
+                if(!/\d/.test(password)){
+                    $("#password").addClass("form-group has-danger");
+                    $("#alert-password").text("should contain at least one number");
+                    return false
+                }
+                if(!/[a-z]/.test(password)){
+                    $("#password").addClass("form-group has-danger");
+                    $("#alert-password").text("should contain at least one lower case");
+                    return false
+                }
+                if(!/[A-Z]/.test(password)){
+                    $("#password").addClass("form-group has-danger");
+                    $("#alert-password").text("should contain at least one upper case");
+                    return false
+                }
+                if(/[^0-9a-zA-Z]/.test(password)){
+                    $("#password").addClass("form-group has-danger");
+                    $("#alert-password").text("should contain at least 8 from the mentioned characters");
+                    return false
+                }               
+                if ($('.password').val() != $('.confirm_password').val()) {
+                    $("#password").addClass("form-group has-danger");
+                    $("#alert-password").text("Password Not Match");
+
+                    $("#confirm_password").addClass("form-group has-danger");
+                    $("#alert-confirm-password").text("Password Not Match");
+                    return false
+                }            
+            }
+            // end
+          
+
+            return (true);
+        }
+
+        $(function(){
+            $("select[name='status']").selectize();
+            // cek username
+            $("input[name='username']").on("submit keyup", function (e) {
+
+
+                var type_check     = $("input[name=type_check]").val()
+                var username       = $("input[name=username]").val()
+                var username_old   = $("input[name=username_old]").val()
+
+                $('.has-danger').removeClass( "has-danger");
+                $('.has-success').removeClass( "has-success");
+                $('.form-control-feedback').text("");
+
+                var value = $("input[name='username']").val();
+                if (value.length < 5) {
+                    $("#username").addClass("form-group has-danger");
+                    $("#alert-username").text("Must be at least 5 characters");
+                    return false;
+                }
+                $.ajax({
+                    url: "/lib/setting/user/check_username/",
+                    type: "POST",
+                    data: {
+                            'type_check':type_check,
+                            'username'  :username,
+                            'username_old'  :username_old
+                          },
+                }).then(function (res) {
+
+                    if (res.kode == "1") {
+                        $("#username").addClass("form-group has-danger");
+                        $("#alert-username").text("Sorry , Username is already used");
+                    }else{
+                        $("#username").addClass("form-group has-success");
+                        $("#alert-username").text("Correct username");
+                    }
+                }).catch(function (a) {
+                    alert("ERROR");
+                });
+            });
+
+            $('.password, .confirm_password').on('submit keyup', function () {
+
+                $('.has-danger').removeClass( "has-danger");
+                $('.has-success').removeClass( "has-success");
+                $('.form-control-feedback').text("");
+
+                var value = $("input[name=password]").val();
+                if(value.length < 8){
+                    $("#password").addClass("form-group has-danger");
+                    $("#alert-password").text("must be at least 8 characters");
+                    return false
+                }
+                if(!/\d/.test(value)){
+                    $("#password").addClass("form-group has-danger");
+                    $("#alert-password").text("should contain at least one number");
+                    return false
+                }
+                if(!/[a-z]/.test(value)){
+                    $("#password").addClass("form-group has-danger");
+                    $("#alert-password").text("should contain at least one lower case");
+                    return false
+                }
+                if(!/[A-Z]/.test(value)){
+                    $("#password").addClass("form-group has-danger");
+                    $("#alert-password").text("should contain at least one upper case");
+                    return false
+                }
+                if(/[^0-9a-zA-Z]/.test(value)){
+                    $("#password").addClass("form-group has-danger");
+                    $("#alert-password").text("should contain at least 8 from the mentioned characters");
+                    return false
+                }
+
+                // match
+                if ($('.password').val() == $('.confirm_password').val()) {
+
+                    $("#password").addClass("form-group has-success");
+                    $("#alert-password").text("Password Match");
+
+                    $("#confirm_password").addClass("form-group has-success");
+                    $("#alert-confirm-password").text("Password Match");
+                } else {
+
+                    $("#password").addClass("form-group has-danger");
+                    $("#alert-password").text("Password Not Match");
+
+                    $("#confirm_password").addClass("form-group has-danger");
+                    $("#alert-confirm-password").text("Password Not Match");
+                }
+            });  
+        });
+
+        // email validation
+        $('form input[name="email"]').blur(function () {
+            var email = $(this).val();
+            var re = /[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}/igm;
+            if (re.test(email)) {
+                $('.msg').hide();
+                $('.success').show();
+            } else {
+                $('.msg').hide();
+                $('.error').show();
+            }
+        });   
+
+        //text inline update
+        $(document).ready(function() {
+
+         $.fn.editable.defaults.mode = 'inline';
+
+           $.fn.editable.defaults.params = function (params) 
+           {
+            params._token = $("#_token").data("token");
+            return params;
+           };
+
+            $('#account_names').editable({
+                    validate: function(value) {
+                        if($.trim(value) == '') 
+                            return 'Value is required.';
+                        },
+                    type: "text",
+                    url:'/lib/my_profile/update_inline/name/',  
+                    send:'always',
+                    ajaxOptions: {
+                    dataType: 'json'
+                    }
+            });
+
+            $('#email').editable({
+                    validate: function(value) {
+                        if($.trim(value) == '') 
+                            return 'Value is required.';
+                        },
+                    type: "text",
+                    url:'/lib/my_profile/update_inline/email/',  
+                    send:'always',
+                    ajaxOptions: {
+                    dataType: 'json'
+                    }
+            });
+
+            $('#telephone').editable({
                 validate: function(value) {
                     if($.trim(value) == '') 
                         return 'Value is required.';
                     },
                 type: "text",
-                url:'',  
+                url:'/lib/my_profile/update_inline/telephone/',  
                 send:'always',
                 ajaxOptions: {
                 dataType: 'json'
                 }
-        });
+            });
 
-        $('#email').editable({
-            validate: function(value) {
-                if($.trim(value) == '') 
-                    return 'Value is required.';
+            $('#address').editable({
+                validate: function(value) {
+                    if($.trim(value) == '') 
+                        return 'Value is required.';
+                    },
+                type: "text",
+                url:'/lib/my_profile/update_inline/address/',  
+                send:'always',
+                ajaxOptions: {
+                dataType: 'json'
+                }
+            });
+        });     
+
+        // get_data
+        $(document).ready(function() {
+            $.ajax({
+                url : "/lib/my_profile/get_data/",
+                type: "POST",
+                dataType: "JSON",
+                success: function(data){
+                    dt_users = data.data_users;
+                    $("#account_names").text(dt_users.name_users);
+                    $("#account_groups").text(dt_users.name_group);
+                    $("#email").text(dt_users.email);
+                    $("#telephone").text(dt_users.telephone);
+                    $("#address").text(dt_users.address);
+
+                    if (dt_users.Image  != "") {
+
+                        // Get Image Profile
+                         $("#targetLayer").html('<img src="/upload/profile_user/'+dt_users.Image+dt_users.Extension+'?='+data.time+'" alt="'+ dt_users.name_users +'" width="200px" height="200px" class="upload-preview " />');
+                         $("#targetLayer").css('opacity','0.7');
+                         $(".icon-choose-image").css('opacity','0.5');
+
+                    }else if (dt_users.Image == "") {
+                        // Get Image Profile
+                         $("#targetLayer").html('<img src="/static/images/users/anonymous.png" alt="'+ dt_users.name_users +'" width="200px" height="200px" class="upload-preview " />');
+                         $("#targetLayer").css('opacity','0.7');
+                         $(".icon-choose-image").css('opacity','0.5');
+                    }
+
+
                 },
-            type: "text",
-            url:'',  
-            send:'always',
-            ajaxOptions: {
-            dataType: 'json'
-            }
+                error: function (jqXHR, textStatus, errorThrown){
+                    // codehere
+                }
+            });
         });
-
-        $('#telephone').editable({
-            validate: function(value) {
-                if($.trim(value) == '') 
-                    return 'Value is required.';
-                },
-            type: "text",
-            url:'',  
-            send:'always',
-            ajaxOptions: {
-            dataType: 'json'
-            }
-        });
-
-        $('#address').editable({
-            validate: function(value) {
-                if($.trim(value) == '') 
-                    return 'Value is required.';
-                },
-            type: "text",
-            url:'',  
-            send:'always',
-            ajaxOptions: {
-            dataType: 'json'
-            }
-        });
-    } );     
-
     </script>
     {{template "lastfooter"}}
 {{end}}

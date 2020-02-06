@@ -7,6 +7,8 @@ type SettingUser struct {
 	Full_name   string `json:"full_name"`
 	Username 	string `json:"username"`
 	Email 		string `json:"email"`
+	Telephone 	string `json:"telephone"`
+	Address 	string `json:"address"`
 	Password 	string `json:"password"`
 	Gender 		string `json:"gender"`
 	Salt        string `json:"salt"`
