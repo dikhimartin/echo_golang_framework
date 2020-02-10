@@ -257,7 +257,8 @@
                                         <p style="margin-top: 25px;"></p>
 
                                         <input type="hidden" name="type_check" value="2">
-
+                                        <input type="hidden" name="remove_image">
+                                        
                                         <div class="form-group" id="username">
                                             <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12" style="margin-bottom: 5px;">Username &nbsp;<span class="required">*</span></label>
                                             <div class="col-lg-11 col-md-11 col-sm-11 col-xs-12">
@@ -757,6 +758,34 @@
                 }
             });
         });
+
+        // image profile
+        function showPreview(objFileInput) {
+            hideUploadOption();
+            if (objFileInput.files[0]) {
+                var fileReader = new FileReader();
+                fileReader.onload = function (e) {
+                    $("#targetLayer").html('<img src="'+e.target.result+'" width="200px" height="200px" class="upload-preview" />');
+                    $("#targetLayer").css('opacity','0.7');
+                    $(".icon-choose-image").css('opacity','0.5');
+                    $("input[name=remove_image]").val('');
+                }
+                fileReader.readAsDataURL(objFileInput.files[0]);
+            }
+        }
+        function showUploadOption(){
+            $("#profile-upload-option").css('display','block');
+        }
+        function hideUploadOption(){
+            $("#profile-upload-option").css('display','none');
+        }
+        function removeProfilePhoto(){
+            hideUploadOption();
+            $("#userImage").val('');
+            $("input[name=remove_image]").val('1');
+            $("#targetLayer").html('');
+        }
+
     </script>
     {{template "lastfooter"}}
 {{end}}

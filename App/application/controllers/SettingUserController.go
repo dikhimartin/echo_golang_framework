@@ -652,8 +652,6 @@ func UpdateSettingUser(c echo.Context) error {
 			logs.Println(err)
 			return c.Render(http.StatusInternalServerError, "error_500", nil)			
 		}
-
-
 		// Update Data User
 		if password_val == "" && confirm_password_val == ""{
 
@@ -709,7 +707,6 @@ func UpdateSettingUser(c echo.Context) error {
 			}
 		}
 
-
 		// Lokasi File
 		dst, err := os.Create("upload/profile_user/" + FileNamePost)
 		if err != nil {
@@ -721,7 +718,8 @@ func UpdateSettingUser(c echo.Context) error {
 		// Eksekusi File
 		if _, err = io.Copy(dst, src); err != nil {
 			logs.Println(err)
-			return c.Render(http.StatusInternalServerError, "error_500", nil)		}
+			return c.Render(http.StatusInternalServerError, "error_500", nil)		
+		}
 
 		// Memotong Gambar
 		     // load original image

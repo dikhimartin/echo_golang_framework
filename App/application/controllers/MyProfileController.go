@@ -5,11 +5,16 @@ import (
 	"encoding/hex"
 	"net/http"
 	"time"
+	"fmt"
+	"io"
+	"os"
 	"strconv"
 	"../models"
-	data_user "../../api/data"
 	"../../database"
+	data_user "../../api/data"
+	"path/filepath"
 	"database/sql"
+    "github.com/disintegration/imaging"
 	"github.com/flosch/pongo2"
 	"github.com/labstack/echo"
 )
@@ -173,10 +178,10 @@ func ConfirmUpdateProfile(c echo.Context) error{
 	formusername 	:= string(usernames);
 
 	// //start cek database
-	var salt, password, username string
-	sqlStatement := `SELECT salt, password, username FROM v_get_user WHERE username = ?`
+	var salt, password, username, image, extension string
+	sqlStatement := `SELECT salt, password, username, image, extension  FROM v_get_user WHERE username = ?`
 	row := db.QueryRow(sqlStatement, formusername)
-	errCheck := row.Scan(&salt, &password, &username)
+	errCheck := row.Scan(&salt, &password, &username, &image, &extension)
 	if errCheck != nil {
 		if errCheck == sql.ErrNoRows {
 			logs.Println("username_false")
@@ -207,8 +212,101 @@ func ConfirmUpdateProfile(c echo.Context) error{
 	}
 	//end validasi password
 
+
+	// Proses Simpan gambar
+	file, image_check := c.FormFile("image")
+	remove_image      := c.FormValue("remove_image")
+	// remove image
+	if remove_image == "1"{
+		// remove_file
+		err = os.Remove("upload/profile_user/" + string(image) + string(extension))
+		if err != nil {
+			logs.Println(err)
+		}
+		// update_data
+		Update_image, err := db.Prepare("UPDATE tb_setting_user SET image=?, additional=? WHERE id=?")
+		if err != nil{
+			return c.Render(http.StatusInternalServerError, "error_500", nil)
+		}
+		Update_image.Exec(nil, nil, id_users)
+		defer Update_image.Close()
+	}
+
+	// if file null
+	if image_check != nil {
+		fmt.Println("Image Empty")
+	// if file not null
+	}else{
+		fmt.Println("Image Not Empty")
+
+		src, err := file.Open()
+		if err != nil {
+			logs.Println(err)
+		}
+		defer src.Close()
+
+		// md5_image
+		var FileNamePost string
+		var defaultname = "martin_profile_"
+		var extension_update 	= filepath.Ext(file.Filename)
+
+		hasher := md5.New()
+		hasher.Write([]byte(defaultname + id_users))
+		EncryptName := hex.EncodeToString(hasher.Sum(nil))
+		FileNamePost = EncryptName + extension_update
+
+
+		//remove file before update
+		if string(image) != ""{
+			err = os.Remove("upload/profile_user/" + string(image) + string(extension))
+			if err != nil {
+				logs.Println(err)
+			}
+		}
+
+		// Lokasi File
+		dst, err := os.Create("upload/profile_user/" + FileNamePost)
+		if err != nil {
+			logs.Println(err)
+		}
+		defer dst.Close()
+
+		// Eksekusi File
+		if _, err = io.Copy(dst, src); err != nil {
+			logs.Println(err)
+		}
+
+		// Memotong Gambar
+		     // load original image
+		     img, err := imaging.Open("./upload/profile_user/"+FileNamePost)
+		     if err != nil {
+					 logs.Println(err)
+		             os.Exit(1)
+		     }
+
+		     // crop from center
+		     centercropimg := imaging.CropCenter(img, 300, 300)
+
+		     // save cropped image
+		     err = imaging.Save(centercropimg, "./upload/profile_user/"+FileNamePost)
+		     if err != nil {
+				logs.Println(err)
+				os.Exit(1)
+		     }
+		// Memotong Gambar
+
+		// Simpan nama file ke database
+		insert_nama_image, err2 := db.Prepare("UPDATE tb_setting_user SET image = ?, additional = ? WHERE id = ?")
+		if err2 != nil {
+			logs.Println(err)
+		}
+		defer insert_nama_image.Close()
+		insert_nama_image.Exec(EncryptName, extension_update, id_users)
+	}
+
 	// Proses Update Data Users
 	if type_submit == "profile"{
+
 
 		full_name := c.FormValue("full_name")
 		gender 	  := c.FormValue("gender")
@@ -222,7 +320,6 @@ func ConfirmUpdateProfile(c echo.Context) error{
 		}
 		defer Update.Close()
 		Update.Exec(full_name, gender, email, telephone, address, current_time,  id_users)
-
 	}else if type_submit == "account"{
 
 		username 	 		 := c.FormValue("username")
@@ -263,7 +360,7 @@ func ConfirmUpdateProfile(c echo.Context) error{
 				logs.Println(err)
 				return c.Render(http.StatusInternalServerError, "error_500", nil)			
 			}
-			UpdateUser.Exec(username, id_users)
+			UpdateUser.Exec(username, current_time, id_users)
 			defer UpdateUser.Close()
 
 		}else if password_val != "" && confirm_password_val != "" {
@@ -278,7 +375,6 @@ func ConfirmUpdateProfile(c echo.Context) error{
 			defer UpdateUser.Close()
 
 		}
-
 	}
 
 	return c.JSON(200, "true")
