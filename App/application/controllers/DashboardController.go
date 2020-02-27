@@ -20,6 +20,7 @@ var (
 	data      = pongo2.Context{}
 )
 
+
 type dashboard map[string]interface{}
 
 func ListDashboard(c echo.Context) error {

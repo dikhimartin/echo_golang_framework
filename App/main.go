@@ -26,5 +26,5 @@ func main() {
 	logger := customlogger.GetInstance("SYSTEM")
 	logger.Println("Starting Application")
 
-	e.Logger.Fatal(e.Start(":4444"))
+	e.Logger.Fatal(e.Start(":2222"))
 }

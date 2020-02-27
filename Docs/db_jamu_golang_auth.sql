@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.4
+-- version 4.8.4
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 03 Feb 2020 pada 08.49
--- Versi Server: 10.1.28-MariaDB
--- PHP Version: 5.6.32
+-- Waktu pembuatan: 27 Feb 2020 pada 04.41
+-- Versi server: 10.1.37-MariaDB
+-- Versi PHP: 7.2.14
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -118,8 +118,8 @@ CREATE TABLE `tb_setting_grup_privilege` (
 
 INSERT INTO `tb_setting_grup_privilege` (`id`, `id_setting_grup`, `remarks`, `status`, `created_at`, `updated_at`, `additional`) VALUES
 (1, 1, 'Superadmin', 'Y', '2019-11-11 11:58:30', '2020-01-26 20:29:38', NULL),
-(2, 2, 'Administrator', 'Y', '2019-11-11 12:00:05', '2020-02-02 16:53:21', NULL),
-(3, 6, 'User', 'Y', '2020-02-03 12:34:02', '2020-02-03 14:46:29', NULL);
+(2, 2, 'Administrator', 'Y', '2019-11-11 12:00:05', '2020-02-08 08:48:25', NULL),
+(3, 6, 'User', 'Y', '2020-02-03 12:34:02', '2020-02-06 05:12:52', NULL);
 
 -- --------------------------------------------------------
 
@@ -160,17 +160,22 @@ INSERT INTO `tb_setting_grup_privilege_detail` (`id`, `id_setting_grup_privilege
 (38, 1, 'setting.user.user_2', '2020-01-26 13:29:38', NULL),
 (39, 1, 'setting.user.user_3', '2020-01-26 13:29:38', NULL),
 (40, 1, 'setting.user.user_4', '2020-01-26 13:29:38', NULL),
-(76, 2, 'samplecrud_1', '2020-02-02 09:53:21', NULL),
-(77, 2, 'samplecrud_2', '2020-02-02 09:53:21', NULL),
-(78, 2, 'samplecrud_3', '2020-02-02 09:53:21', NULL),
-(79, 2, 'samplecrud_4', '2020-02-02 09:53:21', NULL),
-(80, 2, 'setting.user.grupprivilege_2', '2020-02-02 09:53:21', NULL),
-(81, 2, 'setting.user.grup_2', '2020-02-02 09:53:21', NULL),
-(82, 2, 'setting.user.user_2', '2020-02-02 09:53:21', NULL),
-(128, 3, 'samplecrud_1', '2020-02-03 07:46:29', NULL),
-(129, 3, 'samplecrud_2', '2020-02-03 07:46:29', NULL),
-(130, 3, 'samplecrud_3', '2020-02-03 07:46:29', NULL),
-(131, 3, 'samplecrud_4', '2020-02-03 07:46:29', NULL);
+(139, 3, 'samplecrud_1', '2020-02-05 22:12:52', NULL),
+(140, 3, 'samplecrud_2', '2020-02-05 22:12:52', NULL),
+(141, 3, 'samplecrud_3', '2020-02-05 22:12:52', NULL),
+(142, 3, 'samplecrud_4', '2020-02-05 22:12:52', NULL),
+(143, 2, 'samplecrud_1', '2020-02-08 01:48:25', NULL),
+(144, 2, 'samplecrud_2', '2020-02-08 01:48:25', NULL),
+(145, 2, 'samplecrud_3', '2020-02-08 01:48:25', NULL),
+(146, 2, 'samplecrud_4', '2020-02-08 01:48:25', NULL),
+(147, 2, 'setting.user.grupprivilege_1', '2020-02-08 01:48:25', NULL),
+(148, 2, 'setting.user.grupprivilege_2', '2020-02-08 01:48:25', NULL),
+(149, 2, 'setting.user.grupprivilege_3', '2020-02-08 01:48:25', NULL),
+(150, 2, 'setting.user.grup_2', '2020-02-08 01:48:25', NULL),
+(151, 2, 'setting.user.grup_3', '2020-02-08 01:48:25', NULL),
+(152, 2, 'setting.user.user_1', '2020-02-08 01:48:25', NULL),
+(153, 2, 'setting.user.user_2', '2020-02-08 01:48:25', NULL),
+(154, 2, 'setting.user.user_3', '2020-02-08 01:48:25', NULL);
 
 -- --------------------------------------------------------
 
@@ -231,10 +236,10 @@ INSERT INTO `tb_setting_privilege_detail` (`id`, `id_setting_privilege`, `permis
 (258, 29, '2'),
 (259, 29, '3'),
 (260, 29, '4'),
-(253, 40, '1'),
-(254, 40, '2'),
-(255, 40, '3'),
-(256, 40, '4');
+(262, 40, '1'),
+(263, 40, '2'),
+(264, 40, '3'),
+(265, 40, '4');
 
 -- --------------------------------------------------------
 
@@ -247,6 +252,8 @@ CREATE TABLE `tb_setting_user` (
   `full_name` varchar(50) DEFAULT NULL,
   `username` varchar(50) DEFAULT NULL,
   `email` varchar(50) DEFAULT NULL,
+  `telephone` varchar(50) DEFAULT NULL,
+  `address` varchar(50) DEFAULT NULL,
   `gender` enum('L','P') DEFAULT NULL,
   `password` varchar(50) DEFAULT NULL,
   `salt` varchar(50) DEFAULT NULL,
@@ -261,10 +268,10 @@ CREATE TABLE `tb_setting_user` (
 -- Dumping data untuk tabel `tb_setting_user`
 --
 
-INSERT INTO `tb_setting_user` (`id`, `full_name`, `username`, `email`, `gender`, `password`, `salt`, `add_date`, `update_date`, `status`, `image`, `additional`) VALUES
-(1, 'Dikhi Martin', 'superadmin', 'dikhi.martin@gmail.com', 'L', '1d5c16ef6797717252b5d161a9958ce2', '4ec051ac2d933468de837eab4c6cacfa', '2019-11-11', '2020-02-03', 'Y', '8936ccd137d75e5721614562f54f3ced', '.jpg'),
-(2, 'Admin', 'admin', 'admin@gmail.com', 'L', '430f0a65a72899a4fd537630c95cbe43', 'a81d5a36f960977694589733e2ded569', '2020-02-03', NULL, 'Y', NULL, NULL),
-(3, 'User', 'username', 'user@gmail.com', 'L', '430f0a65a72899a4fd537630c95cbe43', 'a81d5a36f960977694589733e2ded569', '2020-02-03', NULL, 'Y', NULL, NULL);
+INSERT INTO `tb_setting_user` (`id`, `full_name`, `username`, `email`, `telephone`, `address`, `gender`, `password`, `salt`, `add_date`, `update_date`, `status`, `image`, `additional`) VALUES
+(1, 'Dikhi Martin', 'superadmin', 'dikhi.martin@gmail.com', '081748334800', 'Bekasi', 'L', '3b25a81682c8eff54bbaf12b2d96ee74', '1033643601585552d7258cb66bd0741d', '2019-11-11', '2020-02-27', 'Y', NULL, NULL),
+(2, 'Admin', 'admin', 'admin@gmail.com', '081748334801', 'Bekasi', 'P', 'c295405ea70aa9ae0bc449f84914ea0a', 'faf4f425b2a9cb18502d4755534807ce', '2020-02-03', '2020-02-27', 'Y', NULL, NULL),
+(3, 'Users Name', 'user', 'user@gmail.com', '08174833480', 'Sragen', 'L', '8c8acefbe6bca73125c75aac0b6afa8c', 'faf4f425b2a9cb18502d4755534807ce', '2020-02-03', '2020-02-08', 'Y', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -286,9 +293,9 @@ CREATE TABLE `tb_setting_user_grup` (
 --
 
 INSERT INTO `tb_setting_user_grup` (`id`, `id_setting_user`, `id_setting_grup`, `status`, `add_date`, `update_date`) VALUES
-(2, 1, 1, 'Y', '2019-11-11', '2020-02-03'),
-(3, 2, 2, 'Y', '2020-02-03', NULL),
-(4, 3, 6, 'Y', '2020-02-03', NULL);
+(2, 1, 1, 'Y', '2019-11-11', '2020-02-06'),
+(3, 2, 2, 'Y', '2020-02-03', '2020-02-27'),
+(4, 3, 6, 'Y', '2020-02-03', '2020-02-06');
 
 -- --------------------------------------------------------
 
@@ -310,7 +317,7 @@ CREATE TABLE `t_log` (
 -- --------------------------------------------------------
 
 --
--- Stand-in structure for view `v_get_grup_privilege`
+-- Stand-in struktur untuk tampilan `v_get_grup_privilege`
 -- (Lihat di bawah untuk tampilan aktual)
 --
 CREATE TABLE `v_get_grup_privilege` (
@@ -326,7 +333,7 @@ CREATE TABLE `v_get_grup_privilege` (
 -- --------------------------------------------------------
 
 --
--- Stand-in structure for view `v_get_grup_privilege_detail`
+-- Stand-in struktur untuk tampilan `v_get_grup_privilege_detail`
 -- (Lihat di bawah untuk tampilan aktual)
 --
 CREATE TABLE `v_get_grup_privilege_detail` (
@@ -340,7 +347,7 @@ CREATE TABLE `v_get_grup_privilege_detail` (
 -- --------------------------------------------------------
 
 --
--- Stand-in structure for view `v_get_privilege`
+-- Stand-in struktur untuk tampilan `v_get_privilege`
 -- (Lihat di bawah untuk tampilan aktual)
 --
 CREATE TABLE `v_get_privilege` (
@@ -356,7 +363,7 @@ CREATE TABLE `v_get_privilege` (
 -- --------------------------------------------------------
 
 --
--- Stand-in structure for view `v_get_setting_grup`
+-- Stand-in struktur untuk tampilan `v_get_setting_grup`
 -- (Lihat di bawah untuk tampilan aktual)
 --
 CREATE TABLE `v_get_setting_grup` (
@@ -369,7 +376,7 @@ CREATE TABLE `v_get_setting_grup` (
 -- --------------------------------------------------------
 
 --
--- Stand-in structure for view `v_get_user`
+-- Stand-in struktur untuk tampilan `v_get_user`
 -- (Lihat di bawah untuk tampilan aktual)
 --
 CREATE TABLE `v_get_user` (
@@ -378,6 +385,8 @@ CREATE TABLE `v_get_user` (
 ,`full_name` varchar(50)
 ,`gender` enum('L','P')
 ,`email` varchar(50)
+,`telephone` varchar(50)
+,`address` varchar(50)
 ,`username` varchar(50)
 ,`name_grup` varchar(50)
 ,`status` enum('Y','N')
@@ -390,7 +399,7 @@ CREATE TABLE `v_get_user` (
 -- --------------------------------------------------------
 
 --
--- Stand-in structure for view `v_get_user_grup`
+-- Stand-in struktur untuk tampilan `v_get_user_grup`
 -- (Lihat di bawah untuk tampilan aktual)
 --
 CREATE TABLE `v_get_user_grup` (
@@ -451,7 +460,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `v_get_user`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_get_user`  AS  select `tb_setting_user`.`id` AS `id`,`tb_setting_user_grup`.`id_setting_grup` AS `id_setting_grup`,`tb_setting_user`.`full_name` AS `full_name`,`tb_setting_user`.`gender` AS `gender`,`tb_setting_user`.`email` AS `email`,`tb_setting_user`.`username` AS `username`,`tb_setting_grup`.`name_grup` AS `name_grup`,`tb_setting_user`.`status` AS `status`,`tb_setting_user`.`password` AS `password`,`tb_setting_user`.`salt` AS `salt`,`tb_setting_user`.`image` AS `image`,`tb_setting_user`.`additional` AS `extension` from ((`tb_setting_user` join `tb_setting_user_grup` on((`tb_setting_user`.`id` = `tb_setting_user_grup`.`id_setting_user`))) join `tb_setting_grup` on((`tb_setting_user_grup`.`id_setting_grup` = `tb_setting_grup`.`id`))) ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_get_user`  AS  select `tb_setting_user`.`id` AS `id`,`tb_setting_user_grup`.`id_setting_grup` AS `id_setting_grup`,`tb_setting_user`.`full_name` AS `full_name`,`tb_setting_user`.`gender` AS `gender`,`tb_setting_user`.`email` AS `email`,`tb_setting_user`.`telephone` AS `telephone`,`tb_setting_user`.`address` AS `address`,`tb_setting_user`.`username` AS `username`,`tb_setting_grup`.`name_grup` AS `name_grup`,`tb_setting_user`.`status` AS `status`,`tb_setting_user`.`password` AS `password`,`tb_setting_user`.`salt` AS `salt`,`tb_setting_user`.`image` AS `image`,`tb_setting_user`.`additional` AS `extension` from ((`tb_setting_user` join `tb_setting_user_grup` on((`tb_setting_user`.`id` = `tb_setting_user_grup`.`id_setting_user`))) join `tb_setting_grup` on((`tb_setting_user_grup`.`id_setting_grup` = `tb_setting_grup`.`id`))) ;
 
 -- --------------------------------------------------------
 
@@ -467,66 +476,66 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 
 --
--- Indexes for table `attribute`
+-- Indeks untuk tabel `attribute`
 --
 ALTER TABLE `attribute`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `tb_master_permission`
+-- Indeks untuk tabel `tb_master_permission`
 --
 ALTER TABLE `tb_master_permission`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `tb_sample_crud`
+-- Indeks untuk tabel `tb_sample_crud`
 --
 ALTER TABLE `tb_sample_crud`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `tb_setting_grup`
+-- Indeks untuk tabel `tb_setting_grup`
 --
 ALTER TABLE `tb_setting_grup`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `tb_setting_grup_privilege`
+-- Indeks untuk tabel `tb_setting_grup_privilege`
 --
 ALTER TABLE `tb_setting_grup_privilege`
   ADD PRIMARY KEY (`id`),
   ADD KEY `FK_tb_setting_grup_privilege_tb_setting_grup` (`id_setting_grup`);
 
 --
--- Indexes for table `tb_setting_grup_privilege_detail`
+-- Indeks untuk tabel `tb_setting_grup_privilege_detail`
 --
 ALTER TABLE `tb_setting_grup_privilege_detail`
   ADD PRIMARY KEY (`id`),
   ADD KEY `FK_tb_setting_grup_privilege_detail_tb_setting_grup_privilege` (`id_setting_grup_privilege`);
 
 --
--- Indexes for table `tb_setting_privilege`
+-- Indeks untuk tabel `tb_setting_privilege`
 --
 ALTER TABLE `tb_setting_privilege`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `kode_privilege` (`kode_privilege`);
 
 --
--- Indexes for table `tb_setting_privilege_detail`
+-- Indeks untuk tabel `tb_setting_privilege_detail`
 --
 ALTER TABLE `tb_setting_privilege_detail`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `id_setting_privilege_permissions` (`id_setting_privilege`,`permissions`);
 
 --
--- Indexes for table `tb_setting_user`
+-- Indeks untuk tabel `tb_setting_user`
 --
 ALTER TABLE `tb_setting_user`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `username` (`username`);
 
 --
--- Indexes for table `tb_setting_user_grup`
+-- Indeks untuk tabel `tb_setting_user_grup`
 --
 ALTER TABLE `tb_setting_user_grup`
   ADD PRIMARY KEY (`id`),
@@ -534,59 +543,59 @@ ALTER TABLE `tb_setting_user_grup`
   ADD KEY `FK_tb_setting_user_grup_tb_setting_grup` (`id_setting_grup`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT untuk tabel yang dibuang
 --
 
 --
--- AUTO_INCREMENT for table `tb_master_permission`
+-- AUTO_INCREMENT untuk tabel `tb_master_permission`
 --
 ALTER TABLE `tb_master_permission`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT for table `tb_sample_crud`
+-- AUTO_INCREMENT untuk tabel `tb_sample_crud`
 --
 ALTER TABLE `tb_sample_crud`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `tb_setting_grup`
+-- AUTO_INCREMENT untuk tabel `tb_setting_grup`
 --
 ALTER TABLE `tb_setting_grup`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
--- AUTO_INCREMENT for table `tb_setting_grup_privilege`
+-- AUTO_INCREMENT untuk tabel `tb_setting_grup_privilege`
 --
 ALTER TABLE `tb_setting_grup_privilege`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT for table `tb_setting_grup_privilege_detail`
+-- AUTO_INCREMENT untuk tabel `tb_setting_grup_privilege_detail`
 --
 ALTER TABLE `tb_setting_grup_privilege_detail`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=132;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=155;
 
 --
--- AUTO_INCREMENT for table `tb_setting_privilege`
+-- AUTO_INCREMENT untuk tabel `tb_setting_privilege`
 --
 ALTER TABLE `tb_setting_privilege`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
--- AUTO_INCREMENT for table `tb_setting_privilege_detail`
+-- AUTO_INCREMENT untuk tabel `tb_setting_privilege_detail`
 --
 ALTER TABLE `tb_setting_privilege_detail`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=261;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=266;
 
 --
--- AUTO_INCREMENT for table `tb_setting_user`
+-- AUTO_INCREMENT untuk tabel `tb_setting_user`
 --
 ALTER TABLE `tb_setting_user`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT for table `tb_setting_user_grup`
+-- AUTO_INCREMENT untuk tabel `tb_setting_user_grup`
 --
 ALTER TABLE `tb_setting_user_grup`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;

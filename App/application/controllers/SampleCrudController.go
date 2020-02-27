@@ -304,7 +304,7 @@ func UpdateSampleCrudController(c echo.Context) error {
 	status 		     := c.FormValue("status")
 
 
-	update_ex_cost, err := db.Prepare("UPDATE tb_sample_crud SET text_input=?, text_area=?, updated_by=?,  updated_at = ?, status=? WHERE md5(id)=?")
+	update_ex_cost, err := db.Prepare("UPDATE products SET sku=? WHERE id=?")
 	defer update_ex_cost.Close()
 	if err != nil {
 		return c.Render(http.StatusInternalServerError, "error_500", nil)
