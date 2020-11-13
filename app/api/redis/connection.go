@@ -2,8 +2,7 @@ package redis
 
 import (
 	"fmt"
-
-	"github.com/go-redis/redis"
+	"github.com/dikhimartin/redis"
 )
 
 func Connection() *redis.Client {

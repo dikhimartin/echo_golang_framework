@@ -8,9 +8,9 @@ import (
 
 const (
     DB_HOST = "tcp(127.0.0.1:3306)"
-    DB_NAME = "db_jamu_golang_auth"
+    DB_NAME = "db_receipt_golang_crud"
     DB_USER = "root"
-    DB_PASS = ""
+    DB_PASS = "root"
 )
 
 /*Create mysql connection*/
