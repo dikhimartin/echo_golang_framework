@@ -1,0 +1,154 @@
+package routes
+
+import (
+	"html/template"
+	"io"
+	lib "../lib"
+	// "../routes/dashboard"
+	"github.com/labstack/echo"
+	"github.com/labstack/echo/middleware"
+)
+
+
+// TemplateRenderer is a custom html/template renderer for Echo framework
+type TemplateRenderer struct {
+	templates *template.Template
+}
+
+// Render renders a template document
+func (t *TemplateRenderer) Render(w io.Writer, name string, data interface{}, c echo.Context) error {
+	return t.templates.ExecuteTemplate(w, name, data)
+}
+
+func Index() *echo.Echo {
+	e := echo.New()
+
+	// handling error_not_found
+	e.HTTPErrorHandler = func(err error, c echo.Context) {
+		c.Render(404, "error_404", nil)
+	}
+
+	// Middleware
+	e.Pre(middleware.AddTrailingSlash())
+    e.Use(middleware.Recover())
+    e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
+        AllowOrigins: []string{"*"},
+        AllowHeaders: []string{"*"},
+        AllowMethods: []string{"*"},
+    }))
+
+	// this logs the server interaction
+	e.Use(middleware.LoggerWithConfig(middleware.LoggerConfig{
+		Format: `[${time_rfc3339}]  ${status}  ${method} ${host}${path} ${latency_human}` + "\n",
+	}))
+
+	// Custom Middleware
+	lib.LogMiddleware(e)
+	e.Use(lib.ServerHeader)
+
+	cookieGroup := e.Group("/lib")
+
+	// auth
+	RouteAuthorzation(e)
+	RouteHandlerRedisWithCookie(cookieGroup)
+
+	Map := template.FuncMap{
+		"inc": func(i int) int {
+			return i + 1
+		},
+	}
+
+	renderer := &TemplateRenderer{
+		templates: template.Must(template.ParseFiles(
+			"template/dashboard.html",
+			"template/header.html",
+			"template/layout.html",
+			"template/sidebar_layout.html",
+			"template/sidebar_privilege.html",
+			"template/top-nav.html",
+			"template/footer.html",
+			"template/lastfooter.html",
+
+			// View Error
+			"view/error/500.html",
+			"view/error/403.html",
+			"view/error/404.html",
+
+			/*
+			 |--------------------------------------------------------------------------
+			 | MODUL SAMPLE CRUD
+			 |--------------------------------------------------------------------------
+			*/
+			"view/sample_crud/list.html",
+			"view/sample_crud/add-form.html",
+			"view/sample_crud/edit-form.html",
+
+
+			/*
+			 |--------------------------------------------------------------------------
+			 | MODUL SETTING
+			 |--------------------------------------------------------------------------
+			*/
+
+			// GROUP
+			"view/setting/grup/list.html",
+			"view/setting/grup/add-form.html",
+			"view/setting/grup/edit-form.html",
+
+			// PRIVILEGE
+			"view/setting/privilege/list.html",
+			"view/setting/privilege/add-form.html",
+			"view/setting/privilege/edit-form.html",
+
+			// USER
+			"view/setting/user/list.html",
+			"view/setting/user/add-form.html",
+			"view/setting/user/edit-form.html",
+			
+			// GRUP PRIVILEGE
+			"view/setting/grup_privilege/list.html",
+			"view/setting/grup_privilege/add-form.html",
+			"view/setting/grup_privilege/edit-form.html",
+			"view/setting/grup_privilege/show-permissions.html",
+
+
+			//PROFILE
+			"view/profile/my-profile.html",
+
+
+			//LOGIN
+			"view/auth/login.html",
+			
+		)).Funcs(Map),
+	}
+	e.Renderer = renderer
+
+
+	// define_path
+	e.Static("static", "assets")
+	e.Static("upload", "upload")
+
+	//Auth 
+	// AuthRoute(e.Group("login"))
+	
+	//routeuser
+	// UserRoute(e.Group("/users"))
+
+	//Dashbord
+	// dashboard.MyDashboardRoute(cookieGroup)
+
+	// Modul Sample Crud
+	// SampleCrud(cookieGroup)
+
+	// Modul Setting
+	// SettingGrup(cookieGroup)
+	// SettingPrivilege(cookieGroup)
+	// SettingUser(cookieGroup)
+	// SettingGrupPrivilege(cookieGroup)
+
+	//Profile 
+	// MyProfile(cookieGroup)
+	
+
+	return e
+}
