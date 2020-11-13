@@ -1,22 +1,21 @@
 package controllers
 
 import (
-	"fmt"
 	"net/http"
 	"../../database"
 	"github.com/labstack/echo"
 )
 
 func FormLogin(c echo.Context) error {
+	db := database.CreateCon()
+	defer db.Close()
+
 	return c.Render(200, "form_login", nil)
 }
 
 func AuthorizationSignIn(c echo.Context) error {
 	formusername := c.FormValue("username")
 	formpassword := c.FormValue("password")
-
-	fmt.Println("formusername = ", formusername)
-	fmt.Println("formpassword = ", formpassword)
 
 	// check_authentification
 	check_authentification := CheckPassword(formusername, formpassword)
@@ -26,10 +25,9 @@ func AuthorizationSignIn(c echo.Context) error {
 		return c.Redirect(http.StatusTemporaryRedirect, "/?login_verification=password_false")
 	}
 
-	// return c.JSON(200, check_authentification)
-
 	return c.Redirect(http.StatusTemporaryRedirect, "/lib/sign/redirect/")
 }
+
 
 func CheckPassword(formusername, formpassword string) string{
 	db := database.CreateCon()

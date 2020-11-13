@@ -23,7 +23,7 @@ func init() {
 	// RemoveIndex()
 	// ModifyColumn()
 	// AddForeignKey()
-	// DataSeeder()
+	DataSeeder()
 }
 
 func CreateCon() *gorm.DB{

@@ -1,10 +1,10 @@
 package routes
 
 import (
+	"net/http"
 	"html/template"
 	"io"
 	lib "../lib"
-	// "../routes/dashboard"
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
 )
@@ -25,32 +25,28 @@ func Index() *echo.Echo {
 
 	// handling error_not_found
 	e.HTTPErrorHandler = func(err error, c echo.Context) {
-		c.Render(404, "error_404", nil)
+		c.Render(http.StatusInternalServerError, "error_404", nil)
 	}
 
-	// Middleware
+	// Adds a trailing slash to the request URI
 	e.Pre(middleware.AddTrailingSlash())
-    e.Use(middleware.Recover())
-    e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
-        AllowOrigins: []string{"*"},
-        AllowHeaders: []string{"*"},
-        AllowMethods: []string{"*"},
-    }))
-
-	// this logs the server interaction
-	e.Use(middleware.LoggerWithConfig(middleware.LoggerConfig{
-		Format: `[${time_rfc3339}]  ${status}  ${method} ${host}${path} ${latency_human}` + "\n",
-	}))
-
-	// Custom Middleware
-	lib.LogMiddleware(e)
+	e.Use(middleware.Recover())
 	e.Use(lib.ServerHeader)
 
+	// start log middleware
+	lib.LogMiddleware(e)
+
+	//set group name cookie
 	cookieGroup := e.Group("/lib")
 
-	// auth
-	RouteAuthorzation(e)
+	//handler check redis with cookie
 	RouteHandlerRedisWithCookie(cookieGroup)
+
+	//start redirect sigin
+	RedirectSignInFunc(cookieGroup)
+
+	//start authorization
+	RouteAuthorzation(e)
 
 	Map := template.FuncMap{
 		"inc": func(i int) int {
@@ -128,9 +124,6 @@ func Index() *echo.Echo {
 	e.Static("static", "assets")
 	e.Static("upload", "upload")
 
-	//Auth 
-	// AuthRoute(e.Group("login"))
-	
 	//routeuser
 	// UserRoute(e.Group("/users"))
 

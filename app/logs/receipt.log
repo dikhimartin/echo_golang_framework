@@ -1,74 +1,33 @@
-2020-11-10T14:55:18+07:00 SYSTEMS - main.go:17: Starting Application Receipt Go (v.2.0.0)
-2020-11-10T14:55:18+07:00 SYSTEMS - logger.go:46: Login Page
-2020-11-10T14:55:18+07:00 SYSTEMS - logger.go:46: Login Page
-2020-11-10T14:56:01+07:00 SYSTEMS - main.go:17: Starting Application Receipt Go (v.2.0.0)
-2020-11-10T14:56:45+07:00 SYSTEMS - main.go:17: Starting Application Receipt Go (v.2.0.0)
-2020-11-10T14:57:17+07:00 SYSTEMS - main.go:17: Starting Application Receipt Go (v.2.0.0)
-2020-11-10T14:57:25+07:00 SYSTEMS - main.go:17: Starting Application Receipt Go (v.2.0.0)
-2020-11-10T14:57:25+07:00 SYSTEMS - logger.go:46: Login Page
-2020-11-10T14:57:25+07:00 SYSTEMS - logger.go:46: Login Page
-2020-11-10T14:57:25+07:00 SYSTEMS - logger.go:46: Login Page
-2020-11-10T14:57:25+07:00 SYSTEMS - logger.go:46: Login Page
-2020-11-10T15:00:53+07:00 SYSTEMS - main.go:17: Starting Application Receipt Go (v.2.0.0)
-2020-11-10T15:01:24+07:00 SYSTEMS - main.go:17: Starting Application Receipt Go (v.2.0.0)
-2020-11-10T15:01:24+07:00 SYSTEMS - redis.go:38: err contains
-2020-11-10T15:01:24+07:00 SYSTEMS - redis.go:39: http: named cookie not present
-2020-11-10T15:01:24+07:00 SYSTEMS - redis.go:38: err contains
-2020-11-10T15:01:24+07:00 SYSTEMS - redis.go:39: http: named cookie not present
-2020-11-10T15:01:24+07:00 SYSTEMS - redis.go:38: err contains
-2020-11-10T15:01:24+07:00 SYSTEMS - redis.go:39: http: named cookie not present
-2020-11-10T15:01:24+07:00 SYSTEMS - redis.go:38: err contains
-2020-11-10T15:01:24+07:00 SYSTEMS - redis.go:39: http: named cookie not present
-2020-11-10T15:01:24+07:00 SYSTEMS - redis.go:38: err contains
-2020-11-10T15:01:24+07:00 SYSTEMS - redis.go:39: http: named cookie not present
-2020-11-10T15:01:24+07:00 SYSTEMS - redis.go:38: err contains
-2020-11-10T15:01:24+07:00 SYSTEMS - redis.go:39: http: named cookie not present
-2020-11-10T15:35:09+07:00 SYSTEMS - main.go:17: Starting Application Receipt Go (v.2.0.0)
-2020-11-10T15:35:09+07:00 SYSTEMS - redis.go:38: err contains
-2020-11-10T15:35:09+07:00 SYSTEMS - redis.go:39: http: named cookie not present
-2020-11-10T15:35:09+07:00 SYSTEMS - redis.go:38: err contains
-2020-11-10T15:35:09+07:00 SYSTEMS - redis.go:39: http: named cookie not present
-2020-11-10T15:35:09+07:00 SYSTEMS - redis.go:38: err contains
-2020-11-10T15:35:09+07:00 SYSTEMS - redis.go:39: http: named cookie not present
-2020-11-10T15:35:09+07:00 SYSTEMS - redis.go:38: err contains
-2020-11-10T15:35:09+07:00 SYSTEMS - redis.go:39: http: named cookie not present
-2020-11-10T15:35:09+07:00 SYSTEMS - AuthController.go:54: users = superadmin Has Failed Loged in by password false
-2020-11-10T15:35:09+07:00 SYSTEMS - redis.go:38: err contains
-2020-11-10T15:35:09+07:00 SYSTEMS - redis.go:39: http: named cookie not present
-2020-11-10T15:35:09+07:00 SYSTEMS - redis.go:38: err contains
-2020-11-10T15:35:09+07:00 SYSTEMS - redis.go:39: http: named cookie not present
-2020-11-10T15:35:09+07:00 SYSTEMS - redis.go:38: err contains
-2020-11-10T15:35:09+07:00 SYSTEMS - redis.go:39: http: named cookie not present
-2020-11-10T16:23:03+07:00 SYSTEMS - main.go:17: Starting Application Receipt Go (v.2.0.0)
-2020-11-10T16:23:03+07:00 SYSTEMS - AuthController.go:53: users = superadmin Has Failed Loged in by password false
-2020-11-10T16:23:03+07:00 SYSTEMS - redis.go:38: err contains
-2020-11-10T16:23:03+07:00 SYSTEMS - redis.go:39: http: named cookie not present
-2020-11-10T16:23:03+07:00 SYSTEMS - redis.go:38: err contains
-2020-11-10T16:23:03+07:00 SYSTEMS - redis.go:39: http: named cookie not present
-2020-11-13T11:05:16+07:00 SYSTEMS - main.go:17: Starting Application Receipt Go (v.2.0.0)
-2020-11-13T11:05:16+07:00 SYSTEMS - redis.go:38: err contains
-2020-11-13T11:05:16+07:00 SYSTEMS - redis.go:39: http: named cookie not present
-2020-11-13T11:05:16+07:00 SYSTEMS - AuthController.go:53: users = superadmin Has Failed Loged in by password false
-2020-11-13T11:05:16+07:00 SYSTEMS - redis.go:38: err contains
-2020-11-13T11:05:16+07:00 SYSTEMS - redis.go:39: http: named cookie not present
-2020-11-13T11:05:16+07:00 SYSTEMS - redis.go:38: err contains
-2020-11-13T11:05:16+07:00 SYSTEMS - redis.go:39: http: named cookie not present
-2020-11-13T11:05:16+07:00 SYSTEMS - redis.go:38: err contains
-2020-11-13T11:05:16+07:00 SYSTEMS - redis.go:39: http: named cookie not present
-2020-11-13T11:05:16+07:00 SYSTEMS - AuthController.go:53: users = superadmin Has Failed Loged in by password false
-2020-11-13T11:05:16+07:00 SYSTEMS - redis.go:38: err contains
-2020-11-13T11:05:16+07:00 SYSTEMS - redis.go:39: http: named cookie not present
-2020-11-13T11:05:16+07:00 SYSTEMS - redis.go:38: err contains
-2020-11-13T11:05:16+07:00 SYSTEMS - redis.go:39: http: named cookie not present
-2020-11-13T11:05:16+07:00 SYSTEMS - redis.go:38: err contains
-2020-11-13T11:05:16+07:00 SYSTEMS - redis.go:39: http: named cookie not present
-2020-11-13T11:05:16+07:00 SYSTEMS - redis.go:38: err contains
-2020-11-13T11:05:16+07:00 SYSTEMS - redis.go:39: http: named cookie not present
-2020-11-13T11:05:16+07:00 SYSTEMS - redis.go:38: err contains
-2020-11-13T11:05:16+07:00 SYSTEMS - redis.go:39: http: named cookie not present
-2020-11-13T11:05:16+07:00 SYSTEMS - redis.go:38: err contains
-2020-11-13T11:05:16+07:00 SYSTEMS - redis.go:39: http: named cookie not present
-2020-11-13T11:05:16+07:00 SYSTEMS - redis.go:38: err contains
-2020-11-13T11:05:16+07:00 SYSTEMS - redis.go:39: http: named cookie not present
-2020-11-13T11:05:16+07:00 SYSTEMS - redis.go:38: err contains
-2020-11-13T11:05:16+07:00 SYSTEMS - redis.go:39: http: named cookie not present
+2020-11-13T15:49:57+07:00 SYSTEMS - main.go:17: Starting Application Receipt Go (v.2.0.0)
+2020-11-13T15:52:34+07:00 SYSTEMS - main.go:17: Starting Application Receipt Go (v.2.0.0)
+2020-11-13T15:57:35+07:00 SYSTEMS - main.go:17: Starting Application Receipt Go (v.2.0.0)
+2020-11-13T15:57:50+07:00 SYSTEMS - main.go:17: Starting Application Receipt Go (v.2.0.0)
+2020-11-13T15:57:50+07:00 SYSTEMS - AuthController.go:49: users = superadmin Has Loged in Succesfully
+2020-11-13T15:57:50+07:00 SYSTEMS - logger.go:46: Login Page
+2020-11-13T15:57:50+07:00 SYSTEMS - AuthController.go:49: users = superadmin Has Loged in Succesfully
+2020-11-13T15:57:50+07:00 SYSTEMS - redis.go:38: err contains
+2020-11-13T15:57:50+07:00 SYSTEMS - redis.go:39: http: named cookie not present
+2020-11-13T15:57:50+07:00 SYSTEMS - redis.go:38: err contains
+2020-11-13T15:57:50+07:00 SYSTEMS - redis.go:39: http: named cookie not present
+2020-11-13T15:57:50+07:00 SYSTEMS - redis.go:38: err contains
+2020-11-13T15:57:50+07:00 SYSTEMS - redis.go:39: http: named cookie not present
+2020-11-13T15:57:50+07:00 SYSTEMS - logger.go:46: Login Page
+2020-11-13T15:57:50+07:00 SYSTEMS - redis.go:38: err contains
+2020-11-13T15:57:50+07:00 SYSTEMS - redis.go:39: http: named cookie not present
+2020-11-13T15:57:50+07:00 SYSTEMS - redis.go:38: err contains
+2020-11-13T15:57:50+07:00 SYSTEMS - redis.go:39: http: named cookie not present
+2020-11-13T15:57:50+07:00 SYSTEMS - logger.go:46: Login Page
+2020-11-13T15:57:50+07:00 SYSTEMS - logger.go:46: Login Page
+2020-11-13T15:57:50+07:00 SYSTEMS - logger.go:46: Login Page
+2020-11-13T15:57:50+07:00 SYSTEMS - AuthController.go:49: users = superadmin Has Loged in Succesfully
+2020-11-13T15:57:50+07:00 SYSTEMS - redis.go:38: err contains
+2020-11-13T15:57:50+07:00 SYSTEMS - redis.go:39: http: named cookie not present
+2020-11-13T15:57:50+07:00 SYSTEMS - redis.go:38: err contains
+2020-11-13T15:57:50+07:00 SYSTEMS - redis.go:39: http: named cookie not present
+2020-11-13T15:57:50+07:00 SYSTEMS - redis.go:38: err contains
+2020-11-13T15:57:50+07:00 SYSTEMS - redis.go:39: http: named cookie not present
+2020-11-13T15:57:50+07:00 SYSTEMS - logger.go:46: Login Page
+2020-11-13T15:57:50+07:00 SYSTEMS - logger.go:46: Login Page
+2020-11-13T15:57:50+07:00 SYSTEMS - logger.go:46: Login Page
+2020-11-13T15:57:50+07:00 SYSTEMS - logger.go:46: Login Page
+2020-11-13T15:57:50+07:00 SYSTEMS - AuthController.go:51: users = superadmin Has Failed Loged in by password false
