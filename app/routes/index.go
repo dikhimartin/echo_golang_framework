@@ -11,7 +11,7 @@ import (
 	api_middleware "../api/mymiddleware"
 	red "../api/redis"
 	"../routes/dashboard"
-	"github.com/go-redis/redis"
+	"github.com/dikhimartin/redis"
 	"github.com/labstack/echo/middleware"
 	"gopkg.in/go-playground/validator.v9"	
 )
