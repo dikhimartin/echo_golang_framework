@@ -13,7 +13,7 @@ import (
 	"../../database"
 	"../models"
 	"github.com/labstack/echo"
-	"github.com/astaxie/beego/utils/pagination"
+	"github.com/dikhimartin/beego-v1.12.0/utils/pagination"
     "github.com/disintegration/imaging"
 	"github.com/flosch/pongo2"
 )

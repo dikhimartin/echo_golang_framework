@@ -5,7 +5,7 @@ import (
 	"time"
 	"github.com/flosch/pongo2"
 	"github.com/labstack/echo"
-	"github.com/astaxie/beego/utils/pagination"
+	"github.com/dikhimartin/beego-v1.12.0/utils/pagination"
 )
 
 var errorEntryData string

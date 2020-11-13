@@ -14,7 +14,7 @@ import (
 	"fmt"
 	"../../database"
 	"../models"
-	"github.com/astaxie/beego/utils/pagination"
+	"github.com/dikhimartin/beego-v1.12.0/utils/pagination"
 	"github.com/labstack/echo"
 	"github.com/flosch/pongo2"
 )

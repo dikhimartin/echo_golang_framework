@@ -9,8 +9,8 @@ import (
 	"strings"
 	"../models"
 	"../../database"
+	"github.com/dikhimartin/beego-v1.12.0/utils/pagination"
 	"github.com/labstack/echo"
-	"github.com/astaxie/beego/utils/pagination"
 	"github.com/flosch/pongo2"
 )
 
