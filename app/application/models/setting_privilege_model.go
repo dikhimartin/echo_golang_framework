@@ -23,6 +23,7 @@ type ModelPrivilege struct {
     Name_menu          string   `json:"name_menu"`
     Remarks            string   `json:"remarks"`
     Status             string   `json:"status"`
+    Additional         string   `json:"additional"`
 }
 
 

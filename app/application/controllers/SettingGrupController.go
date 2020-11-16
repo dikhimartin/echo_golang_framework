@@ -8,38 +8,21 @@ import (
 )
 
 // == Custom Function
-func GetDataGrupById(id_grup int) (models.ModelGrup){
-	db := database.CreateCon()
-	defer db.Close()
-
-	var id, name_grup, status []byte
-	row := db.Table("tb_setting_grup").Where("md5(id) = ?", id_grup).Select("id, name_grup, status").Row() // (*sql.Row)
-	err := row.Scan(&id, &name_grup, &status)
-	if err != nil{
-		logs.Println(err)
-	}
-	data := models.ModelGrup{
-		ID        : string(id_grup),
-		Name_Grup : string(name_grup),
-		Status    : string(status),
-	}
-	return data
-}
-
-func GetDataGrupByIdMd5(id_grup string) (models.ModelGrup){
+func GetDataGrupById(id_grup string /*convert_to_md5*/) (models.ModelGrup){
 	db := database.CreateCon()
 	defer db.Close()
 
 	var name_grup, status []byte
-	row := db.Table("tb_setting_grup").Where("md5(id) = ?", id_grup).Select("name_grup, status").Row() // (*sql.Row)
+	row := db.Table("tb_setting_grup").Where("md5(id) = ?", id_grup).Select("name_grup, status").Row() 
 	err := row.Scan(&name_grup, &status)
 	if err != nil{
 		logs.Println(err)
 	}
 	data := models.ModelGrup{
-		ID        : string(id_grup),
-		Name_Grup : string(name_grup),
-		Status    : string(status),
+		ID        	  : string(id_grup),
+		Name_Grup 	  : string(name_grup),
+		Status    	  : string(status),
+		Additional    : ConvertToMD5(string(id_grup)),
 	}
 	return data
 }
@@ -148,8 +131,8 @@ func EditSettingGrup(c echo.Context) error {
 		return c.Render(403, "error_403", nil)
 	}
 
-	requested_id := c.Param("id")
-	data 		 := GetDataGrupByIdMd5(requested_id)
+	requested_id  := c.Param("id")
+	data 		  := GetDataGrupById(requested_id)
 
 	response := response_json{
 		"data"  : data,

@@ -17,6 +17,89 @@
 		</div>
 		<!-- End Bread crumb and right sidebar toggle -->
 
+		<div class="container-fluid">
+			<div class="row ">
+				<!-- Data -->
+				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+					<div class="card">
+						<div class="card-header bg-info text-white">
+							<h4 class="card-title m-b-0 text-white">Edit Data</h4>
+						</div>
+						<div class="card-body">
+							<form action="/lib/setting/privilege/editform/{{.data.Additional}}/" enctype="multipart/form-data"  method="post" onsubmit="return validasi_input(this)">
+								<div class="form-horizontal row ">
+									<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+										<div class="form-group row" id="code_privilege">
+											<label class="col-lg-2 col-md-2 col-sm-2 col-xs-12">Code Privilege <span class="required">*</span></label>
+											<div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
+												<input type="text" class="form-control" name="code_privilege" value="{{.data.Code_privilege}}"/>
+												<small class='form-control-feedback' id='alert-kode-privilege'></small>
+											</div>
+										</div>
+										<div class="form-group row" id="name_menu">
+											<label class="col-lg-2 col-md-2 col-sm-2 col-xs-12">Name Menu <span class="required">*</span></label>
+											<div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
+												<input type="text" class="form-control" name="name_menu" value="{{.data.Name_menu}}" />
+												<small class='form-control-feedback' id='alert-name-menu'></small>
+											</div>
+										</div>
+
+
+										<div class="form-group row" id="permissions">
+											<label class="col-lg-2 col-md-2 col-sm-2 col-xs-12">Permissions <span class="required">*</span></label>
+											<div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
+												{{range .permission}}
+												<label class="custom-control custom-checkbox">
+													<input name="permissions[]" type="checkbox" class="custom-control-input" value="{{.ID}}" id="check-permissions" {{if eq .Additional ("checked")}} checked="" {{end}}>
+													<span class="custom-control-label"></span>
+													{{.Name}}
+												</label>
+												{{end}}
+												<small class='form-control-feedback' id='alert-permissions' style="margin-top: 4px;"></small>
+											</div>
+										</div>
+
+										<div class="form-group row">
+											<label class="col-lg-2 col-md-2 col-sm-2 col-xs-12">Status</label>
+											<div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
+	                                            <label class="custom-control custom-radio">
+	                                                <input id="radio1" name="status" type="radio" class="custom-control-input" value="Y" {{if eq (.data.Status) ("Y")}} checked="" {{end}}>
+	                                                <span class="custom-control-label">Active</span>
+	                                            </label>
+	                                            <label class="custom-control custom-radio">
+	                                                <input id="radio2" name="status" type="radio" class="custom-control-input" value="N" {{if eq (.data.Status) ("N")}} checked="" {{end}}>
+	                                                <span class="custom-control-label">Non Active</span>
+	                                            </label>
+											</div>
+										</div>
+
+										<div class="form-group row">
+											<label class="col-lg-2 col-md-2 col-sm-2 col-xs-12">Remarks</label>
+											<div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
+												<textarea name="remarks" class="form-control" data-autosize>{{.data.Remarks}}</textarea>
+											</div>
+										</div>
+
+										<div class="form-group row">
+											<div class="col-lg-8 col-md-8 col-sm-8 col-xs-12 offset-lg-2">
+												<button class="btn btn-sm btn-info" type="submit">
+													<i class="fa fa-paper-plane"></i>&nbsp;&nbsp;Update
+												</button>
+												<a href="/lib/setting/privilege/" class="btn-sm btn waves-effect waves-light btn-secondary">
+													<i class="fa fa-reply"></i>&nbsp;&nbsp;Back
+												</a>
+											</div>
+										</div>
+
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
 
 	{{template "footer"}}
@@ -31,10 +114,10 @@
 
 
             // validasi
-            if (form.kode_privilege.value == "") {
-                $("#kode_privilege").addClass("form-group has-danger");
+            if (form.code_privilege.value == "") {
+                $("#code_privilege").addClass("form-group has-danger");
                 $("#alert-kode-privilege").text("Please fill in Code Privilege");
-                form.kode_privilege.focus();
+                form.code_privilege.focus();
                 return (false);
             }
             if (form.name_menu.value == "") {

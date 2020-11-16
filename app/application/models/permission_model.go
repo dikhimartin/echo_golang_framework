@@ -10,11 +10,19 @@ func (Permission) TableName() string {
   return "tb_permission"
 }
 
+// its use for call model from controllers
+type ModelPermission struct {
+  	ID                string   `json:"id"` 
+  	Name        	  string   `json:"name"`
+  	Additional        string   `json:"additional"`
+}
+
 // == its use for migration view_schema
 type SchemePermission struct {
   	ID                string   `json:"id"` 
   	Name        	  string   `json:"name"`
   	Additional        string   `json:"additional"`
 }
+
 
 

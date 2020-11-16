@@ -19,7 +19,7 @@ var dsn = fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8mb4",
 func init() {
 	// DropColumn()
 	AutoMigrate()
-	// ViewMigrate()
+	ViewMigrate()
 	// RemoveIndex()
 	// ModifyColumn()
 	// AddForeignKey()

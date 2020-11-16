@@ -18,6 +18,7 @@ type ModelGrup struct {
     ID              string   `json:"id"` 
     Name_Grup       string   `json:"name_grup"`
     Status          string   `json:"status"`
+    Additional      string   `json:"additional"`
 }
 
 // == its use for migration view_schema

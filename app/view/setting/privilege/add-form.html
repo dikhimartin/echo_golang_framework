@@ -30,10 +30,10 @@
 							<div class="form-horizontal row ">
 								<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 
-									<div class="form-group row" id="kode_privilege">
+									<div class="form-group row" id="code_privilege">
 										<label class="col-lg-2 col-md-2 col-sm-2 col-xs-12">Code Privilege <span class="required">*</span></label>
 										<div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
-											<input type="text" class="form-control" name="kode_privilege" placeholder="name_menu.sub_menu" />
+											<input type="text" class="form-control" name="code_privilege" placeholder="name_menu.sub_menu" />
 											<small class='form-control-feedback' id='alert-kode-privilege'></small>
 										</div>
 									</div>
@@ -77,7 +77,7 @@
 									<div class="form-group row">
 										<label class="col-lg-2 col-md-2 col-sm-2 col-xs-12">Remarks</label>
 										<div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
-											<textarea name="keterangan" class="form-control" data-autosize></textarea>
+											<textarea name="remarks" class="form-control" data-autosize></textarea>
 										</div>
 									</div>
 
@@ -115,10 +115,10 @@
 
             // // validasi
 
-            if (form.kode_privilege.value == "") {
-                $("#kode_privilege").addClass("form-group has-danger");
+            if (form.code_privilege.value == "") {
+                $("#code_privilege").addClass("form-group has-danger");
                 $("#alert-kode-privilege").text("Please fill in Code Privilege");
-                form.kode_privilege.focus();
+                form.code_privilege.focus();
                 return (false);
             }
 
