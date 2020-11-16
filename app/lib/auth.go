@@ -72,7 +72,6 @@ func AuthorizationSignOut(c echo.Context) error {
 			HttpOnly: true,
 		}
 		c.SetCookie(expCookie)
-		//end set expire cookie
 	}
 	return c.Redirect(http.StatusTemporaryRedirect, "/logout/redirect/")
 }

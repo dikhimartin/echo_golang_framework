@@ -36,17 +36,18 @@ func Index() *echo.Echo {
 	// start log middleware
 	lib.LogMiddleware(e)
 
-	//set group name cookie
-	cookieGroup := e.Group("/lib")
+	//set group_auth
+	AuthGroup := e.Group("/lib")
 
-	//handler check redis with cookie
-	RouteHandlerRedisWithCookie(cookieGroup)
+	//check cookie & Cookie
+	RouteHandlerRedisWithCookie(AuthGroup)
 
-	//start redirect sigin
-	RedirectSignInFunc(cookieGroup)
-
-	//start authorization
+	//authorization
 	RouteAuthorzation(e)
+
+	//redirect sigin
+	RedirectSignIn(AuthGroup)
+
 
 	Map := template.FuncMap{
 		"inc": func(i int) int {
@@ -124,24 +125,24 @@ func Index() *echo.Echo {
 	e.Static("static", "assets")
 	e.Static("upload", "upload")
 
-	//routeuser
-	// UserRoute(e.Group("/users"))
+	
 
 	//Dashbord
-	// dashboard.MyDashboardRoute(cookieGroup)
+	DashboardRoute(AuthGroup)
 
 	// Modul Sample Crud
 	// SampleCrud(cookieGroup)
 
 	// Modul Setting
-	// SettingGrup(cookieGroup)
-	// SettingPrivilege(cookieGroup)
+	SettingGrup(AuthGroup)
+	SettingPrivilege(AuthGroup)
 	// SettingUser(cookieGroup)
 	// SettingGrupPrivilege(cookieGroup)
 
 	//Profile 
 	// MyProfile(cookieGroup)
 	
+	ApiRoute(AuthGroup)
 
 	return e
 }

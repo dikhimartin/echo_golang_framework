@@ -1,5 +1,6 @@
 package models
 
+// its use for definition database GORM
 type SettingGrupPrivilege struct {
   ID                int      `gorm:"AUTO_INCREMENT;PRIMARY_KEY"`
   Id_setting_grup   int      `gorm:"type:int(10); index; NOT NULL"` 
@@ -11,6 +12,14 @@ type SettingGrupPrivilege struct {
 }
 func (SettingGrupPrivilege) TableName() string {
   return "tb_setting_grup_privilege"
+}
+
+// == its use for migration view_schema
+type SchemeGrupPrivilege struct {
+  	ID              	  string   `json:"id"` 
+  	Id_setting_grup       string   `json:"id_setting_grup"`
+  	Remarks       		  string   `json:"remarks"`
+  	Status        		  string   `json:"status"`
 }
 
 

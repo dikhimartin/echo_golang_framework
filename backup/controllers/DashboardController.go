@@ -24,7 +24,6 @@ var (
 type dashboard map[string]interface{}
 
 func ListDashboard(c echo.Context) error {
-
 	cc := &MyCustomContext{c}
 	data_users	:= cc.getDataLogin()
 
@@ -40,6 +39,3 @@ func ListDashboard(c echo.Context) error {
 
 	return c.Render(http.StatusOK, "dashboard", data)
 }
-
-
-

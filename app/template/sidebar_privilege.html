@@ -2,14 +2,10 @@
     <script type="text/javascript">
         // get sidebar 
         $(document).ready(function() {
-            var master_data_product = "";
-            var type_finishing = ""
             $.ajax({
-                url : "/lib/dashboard/getsidebarprivilege/",
+                url : "/lib/api/getsidebarprivilege/",
                 type: "GET",
                 success: function(get_sidebar){
-
-                    // Ini kodingan  agak puyeng memaahaminya ye, dibuat dengan terburu - buru jadi sementara random gini duls :v
                     var menu         = get_sidebar;
                     var curents_url  = window.location.href;
 
@@ -93,13 +89,10 @@
                          }
                             $("#setting_user_grup_privilege").html(setting_user_grup_privilege);
                     }
-                    
 
                 },
-                error: function (jqXHR, textStatus, errorThrown)
-                    // error here
-                {
-                   
+                error: function (jqXHR, textStatus, errorThrown){
+                    alert(errorThrown);
                 }
             });
         });

@@ -10,8 +10,8 @@ import (
 )
 
 func RedisConnection() *redis.Client {
-	redisHost := GetEnv("REDIS_HOST")
-	redisPort := GetEnv("REDIS_PORT")
+	redisHost  := GetEnv("REDIS_HOST")
+	redisPort  := GetEnv("REDIS_PORT")
 	redisDB, _ := strconv.Atoi(GetEnv("REDIS_DB"))
 
 	client := redis.NewClient(&redis.Options{
@@ -20,15 +20,23 @@ func RedisConnection() *redis.Client {
 		DB 			: redisDB,
 	})
 
-	pong, err := client.Ping().Result()
+	_, err := client.Ping().Result()
 	if err != nil {
 		fmt.Println(err)
 		logs.Println(err)
 	}
-	fmt.Println(pong)
 
 	return client
 }
+
+func GetTokenRedis(key string)string{
+	redis_token, err := RedisConnection().Get(key).Result()
+	if err != nil {
+		logs.Println(err)
+	}
+	return redis_token
+}
+
 
 func CheckRedisWithCookie(next echo.HandlerFunc) echo.HandlerFunc {
 	return func(c echo.Context) error {

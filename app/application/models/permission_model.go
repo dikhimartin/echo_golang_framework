@@ -1,5 +1,6 @@
 package models
 
+// its use for definition database GORM
 type Permission struct {
   	ID                int      `gorm:"AUTO_INCREMENT;PRIMARY_KEY"` 
   	Name        	  string   `gorm:"type:varchar(50)"`
@@ -9,6 +10,7 @@ func (Permission) TableName() string {
   return "tb_permission"
 }
 
+// == its use for migration view_schema
 type SchemePermission struct {
   	ID                string   `json:"id"` 
   	Name        	  string   `json:"name"`

@@ -17,6 +17,14 @@ type JwtClaims struct {
 	jwt.StandardClaims
 }
 
+func GetKeyJwt(c echo.Context) string{
+	jwt, err := GetDataJWT(c)
+	if err != nil{
+		logs.Println(err)
+	}
+	return jwt["jti"]
+}
+
 func GetDataJWT(c echo.Context) (map[string]string, error) {
 	cookie, err := c.Cookie(COOKIE_NAME)
 	var errs error

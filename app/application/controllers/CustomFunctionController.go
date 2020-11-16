@@ -9,13 +9,17 @@ import (
 	"time"
 	"encoding/hex"
 	"encoding/json"
+	"github.com/dikhimartin/beego-v1.12.0/utils/pagination"
 	lib      "../../lib"
 )
 
-
 // ## Define Config Variable Global
-var logs 		  			= lib.RecordLog("SYSTEMS -")
-var redis_connect 			= lib.RedisConnection()
+var (
+	logs 	  			= lib.RecordLog("SYSTEMS -")
+	paginator 			= &pagination.Paginator{}
+	redis_connect 	    = lib.RedisConnection()
+)
+
 
 // ## Define Type Global
 type response_json map[string]interface{}

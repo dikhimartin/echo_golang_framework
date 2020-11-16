@@ -350,7 +350,8 @@ func EditSettingPrivilege(c echo.Context) error {
 		Kode_Privilege: kode_privilege,
 		Name_Menu:      name_menu,
 		Status:         status,
-		Keterangan:     keterangan}
+		Keterangan:     keterangan
+	}
 
 
 	//get hak aksess
@@ -364,7 +365,6 @@ func EditSettingPrivilege(c echo.Context) error {
 	resultHakAkses := []models.MasterPermissions{}
 
 	for rows.Next() {
-
 		var id_master_permissions,
 			value []byte
 

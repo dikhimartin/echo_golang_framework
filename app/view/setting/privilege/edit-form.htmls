@@ -1,4 +1,4 @@
-{{define "add_setting_privilege"}}
+{{define "edit_setting_privilege"}}
 	{{template "layout"}}
 
 	<div class="page-wrapper">
@@ -23,75 +23,68 @@
 				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 					<div class="card">
 						<div class="card-header bg-info text-white">
-							<h4 class="card-title m-b-0 text-white">Add new data</h4>
+							<h4 class="card-title m-b-0 text-white">Edit Data</h4>
 						</div>
 						<div class="card-body">
-							<form action="/lib/setting/privilege/addform/"  enctype="multipart/form-data"  method="post" onsubmit="return validasi_input(this)">
+							<form action="/lib/setting/privilege/editform/{{.setting_privilege.Id}}/" enctype="multipart/form-data"  method="post" onsubmit="return validasi_input(this)">
 							<div class="form-horizontal row ">
 								<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-
 									<div class="form-group row" id="kode_privilege">
-										<label class="col-lg-2 col-md-2 col-sm-2 col-xs-12">Code Privilege <span class="required">*</span></label>
+										<label class="col-lg-2 col-md-2 col-sm-2 col-xs-12">Kode Privilege <span class="required">*</span></label>
 										<div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
-											<input type="text" class="form-control" name="kode_privilege" placeholder="name_menu.sub_menu" />
+											<input type="text" class="form-control" name="kode_privilege" value="{{.setting_privilege.Kode_Privilege}}"/>
 											<small class='form-control-feedback' id='alert-kode-privilege'></small>
 										</div>
 									</div>
-
 									<div class="form-group row" id="name_menu">
 										<label class="col-lg-2 col-md-2 col-sm-2 col-xs-12">Name Menu <span class="required">*</span></label>
 										<div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
-											<input type="text" class="form-control" name="name_menu"/>
+											<input type="text" class="form-control" name="name_menu" value="{{.setting_privilege.Name_Menu}}" />
 											<small class='form-control-feedback' id='alert-name-menu'></small>
 										</div>
 									</div>
-
 									<div class="form-group row" id="permissions">
 										<label class="col-lg-2 col-md-2 col-sm-2 col-xs-12">Permissions <span class="required">*</span></label>
 										<div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
-											{{range .permission}}
+											{{range .resultHakAkses}}
 											<label class="custom-control custom-checkbox">
-												<input name="permissions[]" type="checkbox" class="custom-control-input" value="{{.ID}}" id="check-permissions">
+												<input name="permissions[]" type="checkbox" class="custom-control-input" value="{{.Key}}" id="check-permissions" {{if eq .Additional ("checked")}} checked="" {{end}}>
 												<span class="custom-control-label"></span>
-												{{.Name}}
+												{{.Value}}
 											</label>
 											{{end}}
 											<small class='form-control-feedback' id='alert-permissions' style="margin-top: 4px;"></small>
 										</div>
 									</div>
-
 									<div class="form-group row">
 										<label class="col-lg-2 col-md-2 col-sm-2 col-xs-12">Status</label>
 										<div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
                                             <label class="custom-control custom-radio">
-                                                <input id="radio1" name="status" type="radio" class="custom-control-input" value="Y" checked="">
+                                                <input id="radio1" name="status" type="radio" class="custom-control-input" value="Y" {{if eq (.setting_privilege.Status) ("Y")}} checked="" {{end}}>
                                                 <span class="custom-control-label">Active</span>
                                             </label>
                                             <label class="custom-control custom-radio">
-                                                <input id="radio2" name="status" type="radio" class="custom-control-input" value="N">
+                                                <input id="radio2" name="status" type="radio" class="custom-control-input" value="N" {{if eq (.setting_privilege.Status) ("N")}} checked="" {{end}}>
                                                 <span class="custom-control-label">Non Active</span>
                                             </label>
 										</div>
 									</div>
-
 									<div class="form-group row">
 										<label class="col-lg-2 col-md-2 col-sm-2 col-xs-12">Remarks</label>
 										<div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
-											<textarea name="keterangan" class="form-control" data-autosize></textarea>
+											<textarea name="keterangan" class="form-control" data-autosize>{{.setting_privilege.Keterangan}}</textarea>
 										</div>
 									</div>
-
 									<div class="form-group row">
 										<div class="col-lg-8 col-md-8 col-sm-8 col-xs-12 offset-lg-2">
 											<button class="btn btn-sm btn-info" type="submit">
-												<i class="fa fa-paper-plane"></i>&nbsp;&nbsp;Save
+												<i class="fa fa-paper-plane"></i>&nbsp;&nbsp;Update
 											</button>
 											<a href="/lib/setting/privilege/" class="btn-sm btn waves-effect waves-light btn-secondary">
 												<i class="fa fa-reply"></i>&nbsp;&nbsp;Back
 											</a>
 										</div>
 									</div>
-
 								</div>
 							</div>
 						</form>
@@ -111,17 +104,14 @@
             $('.has-danger').removeClass( "has-danger");
             $('.form-control-feedback').text("");
 
-			var permissions = $('#check-permissions:checked').val();
 
-            // // validasi
-
+            // validasi
             if (form.kode_privilege.value == "") {
                 $("#kode_privilege").addClass("form-group has-danger");
                 $("#alert-kode-privilege").text("Please fill in Code Privilege");
                 form.kode_privilege.focus();
                 return (false);
             }
-
             if (form.name_menu.value == "") {
                 $("#name_menu").addClass("form-group has-danger");
                 $("#alert-name-menu").text("Please fill in Name Menu");
@@ -129,14 +119,9 @@
                 return (false);
             }
 
-		   if (permissions == undefined) {
-            $("#permissions").addClass("form-group has-danger");
-            $("#alert-permissions").text("Please Select Permissions");
-		   	 return(false)
-		   }
-
             return (true);
         }
-	</script>
+
+    </script>
 	{{template "lastfooter"}}
 {{end}}

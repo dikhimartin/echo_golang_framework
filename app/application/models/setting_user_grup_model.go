@@ -1,5 +1,7 @@
 package models
 
+
+// its use for definition database GORM
 type SettingUserGrup struct {
   ID                int      `gorm:"AUTO_INCREMENT;PRIMARY_KEY"` 
   Id_setting_user   int      `gorm:"type:int(10); index; NOT NULL"` 

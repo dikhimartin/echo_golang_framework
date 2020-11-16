@@ -55,10 +55,8 @@
             getaccountinfo();
             autosize($('textarea[data-autosize]'));
         });
-
-
         var dt   = new Date();
-        var data = ''+dt.getFullYear()+' &copy; GOLANG | Echo Framework v.1 | '+
+        var data = ''+dt.getFullYear()+' &copy; GOLANG | Echo Framework v.2 | '+
                     '<a href="http://dikhimartin.com/" class="m-link">'+
                         'Dikhi Martin'+
                     '</a>';
@@ -67,30 +65,27 @@
 
         function getaccountinfo(){
             $.ajax({
-                url : "/lib/dashboard/getinfologin/",
+                url : "/lib/api/getinfologin/",
                 type: "POST",
                 dataType: "JSON",
-                success: function(data)
-                {
+                success: function(data){
                     var users = data.data_users;
-                    
-                    $("#account_name").text(users.name_users);
-                    $("#account_group").text(users.name_group);
-
-                    if (users.Image  != "") {
-                        $(".profile-img").html('<img src="/upload/profile_user/'+users.Image+users.Extension+'?='+data.time+'" alt="'+ users.name_users +'" />');
-                    }else if (users.Image == "") {
-                        $(".profile-img").html('<img src="/static/images/users/anonymous.png" alt="'+ users.name_users +'"/>');
+                    $("#account_name").text(users.full_name);
+                    // $("#account_group").text(users.name_group);
+                    if (users.image  != "") {
+                        $(".profile-img").html('<img src="/upload/profile_user/'+users.image+users.Extension+'?='+data.time+'" alt="'+ users.full_name +'" />');
+                    }else if (users.image == "") {
+                        $(".profile-img").html('<img src="/static/images/users/anonymous.png" alt="'+ users.full_name +'"/>');
+                    }else{
+                        $(".profile-img").html('<img src="/static/images/users/anonymous.png" alt="'+ users.full_name +'"/>');
                     }
-
                 },
-                error: function (jqXHR, textStatus, errorThrown)
-                {
-                    // belum login
-                    // alert('Error');
+                error: function (jqXHR, textStatus, errorThrown){
+                    alert("internal_server_error");
                 }
             });
         }
+
         // create date realtime
         function startTime() {
             var today = new Date();
@@ -175,8 +170,6 @@
             }
         }
     </script>
-
-
 {{template "sidebar_privilege"}}
 
 {{end}}
