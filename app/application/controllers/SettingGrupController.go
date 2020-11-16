@@ -33,7 +33,6 @@ func ListSettingGrup(c echo.Context) error {
 	defer db.Close()
 
 	data_users	:= GetDataLogin(c)
-
 	if CheckPrivileges(data_users.Id_group, "setting.user.grup_2") == false{
 		return c.Render(403, "error_403", nil)
 	}

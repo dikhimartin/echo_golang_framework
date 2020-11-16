@@ -14,10 +14,21 @@ func (SettingGrupPrivilege) TableName() string {
   return "tb_setting_grup_privilege"
 }
 
+// its use for call model from controllers
+type ModelGrupPrivilege struct {
+    ID                  string   `json:"id"` 
+    Id_setting_grup     string   `json:"id_setting_grup"`
+    Name_grup           string   `json:"name_grup"`
+    Remarks             string   `json:"remarks"`
+    Status              string   `json:"status"`
+    CreatedAt           string   `json:"created_at"`
+    UpdatedAt           string   `json:"updated_at"`
+}
+
 // == its use for migration view_schema
 type SchemeGrupPrivilege struct {
   	ID              	  string   `json:"id"` 
-  	Id_setting_grup       string   `json:"id_setting_grup"`
+  	Id_setting_grup     string   `json:"id_setting_grup"`
   	Remarks       		  string   `json:"remarks"`
   	Status        		  string   `json:"status"`
 }

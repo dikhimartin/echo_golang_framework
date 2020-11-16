@@ -78,3 +78,10 @@ func current_time(format string) string{
 	current_time := time.Now().Format(format)
 	return current_time
 }
+
+func FormatDate(rec, format string) string{
+	date,_       := time.Parse("2006-01-02 15:04:05", rec)
+	conv_date    := date.Format(format)
+	return conv_date
+}
+

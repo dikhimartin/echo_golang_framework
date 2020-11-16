@@ -9,7 +9,7 @@ import (
 	"github.com/labstack/echo/middleware"
 )
 
-var COOKIE_NAME string     = "LBSDA5"
+var COOKIE_NAME string     = "SESSION"
 var JWT_KEY     string 	   = "MYSECRET"
 
 //struct jwt
