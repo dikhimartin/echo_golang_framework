@@ -39,9 +39,9 @@
 												<div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
 													<select name="id_setting_grup" class="form-control" required>
 														<option value="">Choose Name Grup : </option>
-														{{range .user_grup}}
+														<!-- {{range .user_grup}}
 														<option value="{{.Id}}">{{.Id_setting_grup}}</option>
-														{{end}}
+														{{end}} -->
 													</select>
 												</div>
 											</div>
@@ -87,12 +87,12 @@
 												{{range .resultPrivilege}}
 									            <div class="col-sm-3" style="min-height: 175px;">
 									                <fieldset class="scheduler-border">
-									                    <legend class="scheduler-border">{{.Name_Menu}}</legend>
+									                    <legend class="scheduler-border">{{.Name_menu}}</legend>
 														{{range .Permissions}}
 														<label class="custom-control custom-checkbox">
 															<input name="hak_akses[]" type="checkbox" class="custom-control-input" value="{{.Additional}}">
 															<span class="custom-control-label"></span>
-															{{.Value}}
+															{{.Name}}
 														</label>
 														{{end}}
 									                </fieldset>

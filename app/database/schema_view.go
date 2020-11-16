@@ -62,7 +62,7 @@ func v_get_privilege() string{
 				tb_setting_privilege.id AS id_setting_privilege,
 				tb_setting_privilege.name_menu AS name_menu,
 				tb_setting_privilege.code_privilege AS code_privilege,
-				concat( concat( tb_setting_privilege.code_privilege, '_', tb_setting_privilege_detail.permissions ) ) AS kode_permissions,
+				concat( concat( tb_setting_privilege.code_privilege, '_', tb_setting_privilege_detail.permissions ) ) AS code_permissions,
 				tb_setting_privilege.STATUS AS STATUS,
 				tb_setting_privilege_detail.permissions AS permissions 
 			FROM

@@ -18,12 +18,14 @@ func (SettingPrivilege) TableName() string {
 
 // its use for call model from controllers
 type ModelPrivilege struct {
-    ID                 string   `json:"id"` 
-    Code_privilege     string   `json:"code_privilege"`
-    Name_menu          string   `json:"name_menu"`
-    Remarks            string   `json:"remarks"`
-    Status             string   `json:"status"`
-    Additional         string   `json:"additional"`
+    ID                 string        `json:"id"` 
+    Code_privilege     string        `json:"code_privilege"`
+    Code_permission    string        `json:"code_permission"`
+    Name_menu          string        `json:"name_menu"`
+    Remarks            string        `json:"remarks"`
+    Status             string        `json:"status"`
+    Permissions        interface{}   `json:"permissions"`
+    Additional         string        `json:"additional"`
 }
 
 

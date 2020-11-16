@@ -7,6 +7,7 @@ import (
 	"github.com/dikhimartin/beego-v1.12.0/utils/pagination"
 )
 
+// == View
 func ListSettingGrupPrivilege(c echo.Context) error {
 	db := database.CreateCon()
 	defer db.Close()
@@ -96,4 +97,89 @@ func ListSettingGrupPrivilege(c echo.Context) error {
 	return c.Render(200, "list_setting_grup_privilege", data)
 }
 
+func AddSettingGrupPrivilege(c echo.Context) error {
+	db := database.CreateCon()
+	defer db.Close()
 
+
+	data_users	:= GetDataLogin(c)
+	if CheckPrivileges(data_users.Id_group, "setting.user.grupprivilege_2") == false{
+		return c.Render(403, "error_403", nil)
+	}
+
+	rowsPrivilege, errPrivilege := db.Raw("SELECT id_setting_privilege, name_menu,  code_privilege, code_permissions, permissions FROM v_get_privilege GROUP BY id_setting_privilege ORDER BY code_permissions ASC").Rows()
+	if errPrivilege != nil {
+		logs.Println(errPrivilege)
+		return c.Render(500, "error_500", nil)
+	}
+	defer rowsPrivilege.Close()
+
+	eachPrivilege   := models.ModelPrivilege{}
+	resultPrivilege := []models.ModelPrivilege{}
+	for rowsPrivilege.Next() {
+		var id_setting_privilege, 
+			name_menu, 
+			code_privilege,
+			code_permissions,
+			permissions []byte
+
+			var err = rowsPrivilege.Scan(&id_setting_privilege, &name_menu, &code_privilege, &code_permissions, &permissions)
+			if err != nil {
+				logs.Println(errPrivilege)
+				return c.Render(500, "error_500", nil)
+			}
+
+			// get_permission
+			rows, err := db.Raw("SELECT permissions, code_permissions FROM v_get_privilege WHERE id_setting_privilege = ?", string(id_setting_privilege)).Rows()
+			if err != nil {
+				logs.Println(err)
+				return c.Render(500, "error_500", nil)
+			}
+			defer rows.Close()
+
+			eachPermission   := models.ModelPermission{}
+			resultPermission := []models.ModelPermission{}
+
+			for rows.Next() {
+				var permissions, code_permissions []byte
+				err = rows.Scan(&permissions, &code_permissions)
+				if err != nil {
+					logs.Println(err)
+					return c.Render(500, "error_500", nil)
+				}
+
+				permission := ""
+				if string(code_permissions) == string(code_privilege)+"_1"{
+					permission = "Create"
+				}else if string(code_permissions) == string(code_privilege)+"_2"{
+					permission = "Read/View"
+				}else if string(code_permissions) == string(code_privilege)+"_3"{
+					permission = "Edit"
+				}else if string(code_permissions) == string(code_privilege)+"_4"{
+					permission = "Delete"
+				}
+
+				eachPermission.ID 		   = string(permissions)
+				eachPermission.Name  	   = permission
+				eachPermission.Additional  = string(code_permissions)
+
+				resultPermission = append(resultPermission, eachPermission)
+			}
+
+		eachPrivilege.ID 	 			= string(id_setting_privilege)
+		eachPrivilege.Name_menu  		= string(name_menu)
+		eachPrivilege.Code_privilege 	= string(code_privilege)
+		eachPrivilege.Code_permission 	= string(code_permissions)
+		eachPrivilege.Permissions 		= resultPermission
+
+		resultPrivilege = append(resultPrivilege, eachPrivilege)
+	}
+
+
+	data := response_json{
+		// "user_grup"		  : resultUserGrup,
+		"resultPrivilege" : resultPrivilege,
+	}	
+
+	return c.Render(200, "add_setting_grup_privilege", data)
+}

@@ -13,7 +13,7 @@ func (Permission) TableName() string {
 // its use for call model from controllers
 type ModelPermission struct {
   	ID                string   `json:"id"` 
-  	Name        	  string   `json:"name"`
+  	Name        	    string     `json:"name"`
   	Additional        string   `json:"additional"`
 }
 

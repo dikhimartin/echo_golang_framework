@@ -12,17 +12,17 @@ func GetDataGrupById(id_grup string /*convert_to_md5*/) (models.ModelGrup){
 	db := database.CreateCon()
 	defer db.Close()
 
-	var name_grup, status []byte
-	row := db.Table("tb_setting_grup").Where("md5(id) = ?", id_grup).Select("name_grup, status").Row() 
-	err := row.Scan(&name_grup, &status)
+	var id, name_grup, status []byte
+	row := db.Table("tb_setting_grup").Where("md5(id) = ?", id_grup).Select("id, name_grup, status").Row() 
+	err := row.Scan(&id, &name_grup, &status)
 	if err != nil{
 		logs.Println(err)
 	}
 	data := models.ModelGrup{
-		ID        	  : string(id_grup),
+		ID        	  : string(id),
 		Name_Grup 	  : string(name_grup),
 		Status    	  : string(status),
-		Additional    : ConvertToMD5(string(id_grup)),
+		Additional    : id_grup,
 	}
 	return data
 }
@@ -178,12 +178,15 @@ func UpdateSettingGrup(c echo.Context) error {
 	}
 
 	requested_id := c.Param("id")
+
 	name_grup     := c.FormValue("name_grup")
 	status  	  := c.FormValue("status")
 
+	logs.Println(requested_id)
+
 	// update_data
 	var update models.SettingGrup
-	update_data := db.Model(&update).Where("md5(id) = ?", requested_id).Updates(map[string]interface{}{
+	update_data := db.Model(&update).Where("md5(id) = ?", "c81e728d9d4c2f636f067f89cc14862c").Updates(map[string]interface{}{
 		"name_grup"    :    name_grup,
 		"status"       :    status,
 		"updated_at"   :    current_time("2006-01-02 15:04:05"),

@@ -14,3 +14,11 @@ type SettingUserGrup struct {
 func (SettingUserGrup) TableName() string {
   return "tb_setting_user_grup"
 }
+
+// == its use for migration view_schema
+type SchemeUserGroup struct {
+	ID            		string      `json:"id"`
+	Id_setting_user 	string      `json:"id_setting_user"`
+	Id_setting_grup 	string      `json:"id_setting_grup"`
+	Status        		string      `json:"status"`
+}
