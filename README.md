@@ -1,3 +1,4 @@
+# GOLANG | Echo Framework v.2
 <a href="https://echo.labstack.com"><img height="80" src="https://cdn.labstack.com/images/echo-logo.svg"></a>
 
 [![Sourcegraph](https://sourcegraph.com/github.com/labstack/echo/-/badge.svg?style=flat-square)](https://sourcegraph.com/github.com/labstack/echo?badge)
@@ -10,39 +11,39 @@
 [![Twitter](https://img.shields.io/badge/twitter-@labstack-55acee.svg?style=flat-square)](https://twitter.com/labstack)
 [![License](http://img.shields.io/badge/license-mit-blue.svg?style=flat-square)](https://raw.githubusercontent.com/labstack/echo/master/LICENSE)
 
-## Versi Go yang didukung
-Pada versi 4.0.0, Echo tersedia sebagai modul [Go module](https://github.com/golang/go/wiki/Modules). Oleh karena itu diperlukan versi Go :
-- 1.9.7+
-- 1.10.3+
-- 1.11+
-
-Ini adalah repository sample kerangka projek (Bahan ), dengan menggunakan teknologi Bahasa Pemrogrman Go.  framework yang saya buat sudah dilengkapi dengan fitur otentifikasi dan Priviledges. Mohon di bantu dan evaluasi apabila masih ada kekurangan dalam kerangka projek ini.  Say yes to code :)
-
-## Requirement
-- Redis Server Cache - https://redis.io/
-- Go - https://golang.org/doc/install
-- Mysql - https://www.mysql.com/downloads/
-
+<!-- 
+## Requirement Server
+- GO => go1.13.12
+- Redis Server (4.0.9)
+- Mysql (mysql  Ver 14.14 Distrib 5.7.30, for Linux)
+ -->
 
 ## Cara Menjalankan
-- Import database mysql dengan keterangan sebagai berikut
-```go
-const (
-    DB_HOST = "tcp(127.0.0.1:3306)"
-    DB_NAME = "db_jamu_golang_auth"
-    DB_USER = "root"
-    DB_PASS = ""
-)
-
+``` shell
+cp app/.env.example app/.env
+cd app/
+docker-compose up -d
+docker-compose exec go bash
 ```
-- Run Redis Service
-- Run Mysql Service
-- Masuk ke .App/ kemudiankan jalankan melalui CLI ( go run main.go )
-- Go Framework already serve
 
+Note : Apabila package belum terinstall 
+```shell
+go get -v
+```
 
-## Author Owner
-- [Dikhi Martin](https://www.linkedin.com/in/dikhi-martin/)
+```shell
+go run main.go
+```
 
-## License
-[MIT](https://github.com/labstack/echo/blob/master/LICENSE)
+## Manage Redis Cache
+```shell
+docker-compose exec redis redis-cli
+```
+
+## Manage Mysql Database
+```shell
+docker-compose exec mysql sh 
+mysql -u user -p
+Enter password: user
+```
+
