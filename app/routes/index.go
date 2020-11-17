@@ -124,7 +124,6 @@ func Index() *echo.Echo {
 	// define_path
 	e.Static("static", "assets")
 	e.Static("upload", "upload")
-
 	
 
 	//Dashbord

@@ -73,7 +73,7 @@
                     $("#account_name").text(users.full_name);
                     // $("#account_group").text(users.name_group);
                     if (users.image  != "") {
-                        $(".profile-img").html('<img src="/upload/profile_user/'+users.image+users.Extension+'?='+data.time+'" alt="'+ users.full_name +'" />');
+                        $(".profile-img").html('<img src="/upload/profile_user/'+ users.image +'?='+data.time+'" alt="'+ users.full_name +'" />');
                     }else if (users.image == "") {
                         $(".profile-img").html('<img src="/static/images/users/anonymous.png" alt="'+ users.full_name +'"/>');
                     }else{

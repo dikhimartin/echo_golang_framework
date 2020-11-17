@@ -123,7 +123,7 @@
 
 
 		<div class="container-fluid">
-            <form action="/lib/setting/user/editform/{{.setting_user.Id}}" method="POST" enctype="multipart/form-data" onsubmit="return validasi_input(this)">
+            <form action="/lib/setting/user/editform/{{.data_user.Additional}}" method="POST" enctype="multipart/form-data" onsubmit="return validasi_input(this)">
     			<div class="row ">
                     <input type="hidden" name="remove_image">
                     <!-- Image Session -->
@@ -184,13 +184,13 @@
                                         <div class="form-group" id="full_name">
                                             <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12" style="margin-bottom: 5px;">Full Name &nbsp;<span class="required">*</span></label>
                                             <div class="col-lg-11 col-md-11 col-sm-11 col-xs-12">
-                                                <input type="text" class="form-control" name="full_name" placeholder="Full Name" value="{{.setting_user.Full_name}}" />
+                                                <input type="text" class="form-control" name="full_name" placeholder="Full Name" value="{{.data_user.Full_name}}" />
                                                 <small class='form-control-feedback' id="alert-full-name"></small>
                                             </div>
                                         </div>
 
                                         <div class="form-group">
-                                            {{$Gender := .setting_user.Gender}}
+                                            {{$Gender := .data_user.Gender}}
                                             <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12" style="margin-bottom: 5px;">Gender &nbsp;<span class="required">*</span></label>
                                             <div class="col-lg-11 col-md-11 col-sm-11 col-xs-12">
                                                 <label class="custom-control custom-radio">
@@ -207,7 +207,7 @@
                                         <div class="form-group" id="email_verif">
                                             <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12" style="margin-bottom: 5px;">Email &nbsp;<span class="required">*</span></label>
                                             <div class="col-lg-11 col-md-11 col-sm-11 col-xs-12">
-                                                <input name="email" type="email" class="form-control" placeholder="Email" value="{{.setting_user.Email}}" >
+                                                <input name="email" type="email" class="form-control" placeholder="Email" value="{{.data_user.Email}}" >
                                                 <small class='form-control-feedback msg error'>Not a valid email address</small>
                                                 <small class='form-control-feedback msg success'>Valid email address!</small>
                                                 <small class='form-control-feedback' id="alert-email"></small>
@@ -218,7 +218,7 @@
                                             <div class="form-group">
                                                 <label class="control-label col-md-5" style="margin-bottom: 5px;">Telephone</label>
                                                 <div class=" controls col-md-9">
-                                                    <input type="telephone" name="telephone" class="form-control" minlength="12" maxlength="20" placeholder="Telephone" value="{{.setting_user.Telephone}}"> 
+                                                    <input type="telephone" name="telephone" class="form-control" minlength="12" maxlength="20" placeholder="Telephone" value="{{.data_user.Telephone}}"> 
                                                     <small class="form-control-feedback"></small>
                                                 </div>
                                             </div>
@@ -228,7 +228,7 @@
                                             <div class="form-group">
                                                 <label class="control-label col-md-5" style="margin-bottom: 5px;">Address</label>
                                                 <div class="col-md-9">
-                                                   <textarea name="address" class="form-control" placeholder="Address" data-autosize="" style="overflow: hidden visible; overflow-wrap: break-word;">{{.setting_user.Address}}</textarea>
+                                                   <textarea name="address" class="form-control" placeholder="Address" data-autosize="" style="overflow: hidden visible; overflow-wrap: break-word;">{{.data_user.Address}}</textarea>
                                                     <small class="form-control-feedback"></small>
                                                 </div>
                                             </div>
@@ -240,14 +240,14 @@
                                 <div class="tab-pane" id="account" role="tabpanel">
                                     <p style="margin-top: 25px;"></p>
                                      <div class="card-body">
-                                        <div class="form-group" id="id_grup">
+                                        <div class="form-group" id="id_setting_grup">
                                             <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12" style="margin-bottom: 5px;">Select Group &nbsp;<span class="required">*</span></label>
                                             <div class="col-lg-11 col-md-11 col-sm-11 col-xs-12">
-                                                <select name="id_group" class="form-control">
-                                                    {{$id_setting_group := .setting_user.Id_group}}
+                                                <select name="id_setting_grup" class="form-control">
+                                                    {{$id_setting_group := .data_user.Id_setting_grup}}
                                                     <option selected="" disabled="">-- choose --</option>
-                                                    {{range .resultGrup}}
-                                                        <option value="{{.Id}}" {{if eq $id_setting_group .Id}} selected="" {{end}}>{{.Name_Grup}}</option>
+                                                    {{range .data_grup}}
+                                                        <option value="{{.ID}}" {{if eq $id_setting_group .ID}} selected="" {{end}}>{{.Name_Grup}}</option>
                                                     {{end}}
                                                 </select>
                                                 <small class='form-control-feedback' id='alert-id-grup'></small>
@@ -257,8 +257,8 @@
                                         <div class="form-group" id="username">
                                             <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12" style="margin-bottom: 5px;">Username &nbsp;<span class="required">*</span></label>
                                             <div class="col-lg-11 col-md-11 col-sm-11 col-xs-12">
-                                                <input type="hidden" name="username_old" value="{{.setting_user.Username}}" autocomplete="off" />
-                                                <input type="text" class="form-control" name="username" value="{{.setting_user.Username}}" autocomplete="off" />
+                                                <input type="hidden" name="username_old" value="{{.data_user.Username}}" autocomplete="off" />
+                                                <input type="text" class="form-control" name="username" value="{{.data_user.Username}}" autocomplete="off" />
                                                 <small class='form-control-feedback' id='alert-username'></small>
                                             </div>
                                         </div>
@@ -291,11 +291,11 @@
                                             <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12" style="margin-bottom: 5px;">Status &nbsp;<span class="required">*</span></label>
                                             <div class="col-lg-11 col-md-11 col-sm-11 col-xs-12">
                                                 <label class="custom-control custom-radio">
-                                                    <input id="radio1" name="status" type="radio" class="custom-control-input" value="Y" {{if eq .setting_user.Status ("Y")}} checked="" {{end}}>
+                                                    <input id="radio1" name="status" type="radio" class="custom-control-input" value="Y" {{if eq .data_user.Status ("Y")}} checked="" {{end}}>
                                                     <span class="custom-control-label">Active</span>
                                                 </label>
                                                 <label class="custom-control custom-radio">
-                                                    <input id="radio2" name="status" type="radio" class="custom-control-input" value="N" {{if eq .setting_user.Status ("N")}} checked="" {{end}}>
+                                                    <input id="radio2" name="status" type="radio" class="custom-control-input" value="N" {{if eq .data_user.Status ("N")}} checked="" {{end}}>
                                                     <span class="custom-control-label">Non Active</span>
                                                 </label>
                                             </div>
@@ -376,11 +376,11 @@
                 form.email.focus();
                 return (false);
             }
-            var id_grup   = $("select[name='id_group']").select().val();
-            if (id_grup == null){
-                $("#id_grup").addClass("form-group has-danger");
+            var id_setting_grup   = $("select[name='id_setting_grup']").select().val();
+            if (id_setting_grup == null){
+                $("#id_setting_grup").addClass("form-group has-danger");
                 $("#alert-id-grup").text("Please fill in Group");
-                form.id_group.focus();
+                form.id_setting_grup.focus();
                 return (false);
             }
             if (form.username.value == ""){
@@ -610,7 +610,7 @@
         }
 
         // Get Image Profile
-         $("#targetLayer").html('<img src="{{.Path_image_profile}}" width="200px" height="200px" class="upload-preview" />');
+         $("#targetLayer").html('<img src="{{.path_image_profile}}" width="200px" height="200px" class="upload-preview" />');
          $("#targetLayer").css('opacity','0.7');
          $(".icon-choose-image").css('opacity','0.5');
 	</script>
