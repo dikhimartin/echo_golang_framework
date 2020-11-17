@@ -112,9 +112,9 @@ func GetDataLogin(c echo.Context) (models.GetDataLogin) {
 	db := database.CreateCon()
 	defer db.Close()
 
-	var id, id_grup, full_name, username, email, telephone, address, gender, status, image []byte
-	row := db.Table("tb_setting_user user").Joins("LEFT JOIN tb_setting_user_grup user_grup ON user.id = user_grup.id_setting_user").Where("auth_token = ?", lib.GetTokenRedis(lib.GetKeyJwt(c))).Select("user.id, user_grup.id_setting_grup,  user.full_name, user.username, user.email, user.telephone, user.address, user.gender, user.status, user.image").Row() 
-	err := row.Scan(&id, &id_grup, &full_name, &username, &email, &telephone, &address, &gender, &status, &image)
+	var id, id_grup, name_grup, full_name, username, email, telephone, address, gender, status, image []byte
+	row := db.Table("tb_setting_user user").Joins("LEFT JOIN tb_setting_user_grup user_grup ON user.id = user_grup.id_setting_user").Joins("LEFT JOIN tb_setting_grup grup ON user_grup.id_setting_grup = grup.id").Where("auth_token = ?", lib.GetTokenRedis(lib.GetKeyJwt(c))).Select("user.id, user_grup.id_setting_grup,  grup.name_grup, user.full_name, user.username, user.email, user.telephone, user.address, user.gender, user.status, user.image").Row() 
+	err := row.Scan(&id, &id_grup, &name_grup, &full_name, &username, &email, &telephone, &address, &gender, &status, &image)
 	if err != nil {
 		logs.Println(err)
 	}
@@ -122,6 +122,7 @@ func GetDataLogin(c echo.Context) (models.GetDataLogin) {
 	data_users 			:= models.GetDataLogin{
 		Id_user  	: 	ConvertStringToInt(string(id)),
 		Id_group  	: 	ConvertStringToInt(string(id_grup)),
+		Name_grup  	: 	string(name_grup),
 		Full_name  	: 	string(full_name),
 		Username  	: 	string(username),
 		Email  		: 	string(email),

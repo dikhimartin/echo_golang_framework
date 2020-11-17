@@ -199,13 +199,13 @@
                                             <div class="form-group" id="full_name">
                                                 <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12" style="margin-bottom: 5px;">Full Name &nbsp;<span class="required">*</span></label>
                                                 <div class="col-lg-11 col-md-11 col-sm-11 col-xs-12">
-                                                    <input type="text" class="form-control" name="full_name" placeholder="Full Name" value="{{.setting_user.Full_name}}" />
+                                                    <input type="text" class="form-control" name="full_name" placeholder="Full Name" value="{{.data_user.Full_name}}" />
                                                     <small class='form-control-feedback' id="alert-full-name"></small>
                                                 </div>
                                             </div>
 
                                             <div class="form-group">
-                                                {{$Gender := .setting_user.Gender}}
+                                                {{$Gender := .data_user.Gender}}
                                                 <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12" style="margin-bottom: 5px;">Gender &nbsp;<span class="required">*</span></label>
                                                 <div class="col-lg-11 col-md-11 col-sm-11 col-xs-12">
                                                     <label class="custom-control custom-radio">
@@ -222,7 +222,7 @@
                                             <div class="form-group" id="email_verif">
                                                 <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12" style="margin-bottom: 5px;">Email &nbsp;<span class="required">*</span></label>
                                                 <div class="col-lg-11 col-md-11 col-sm-11 col-xs-12">
-                                                    <input name="email" type="email" class="form-control" placeholder="Email" value="{{.setting_user.Email}}" >
+                                                    <input name="email" type="email" class="form-control" placeholder="Email" value="{{.data_user.Email}}" >
                                                     <small class='form-control-feedback msg error'>Not a valid email address</small>
                                                     <small class='form-control-feedback msg success'>Valid email address!</small>
                                                     <small class='form-control-feedback' id="alert-email"></small>
@@ -233,7 +233,7 @@
                                                 <div class="form-group">
                                                     <label class="control-label col-md-5" style="margin-bottom: 5px;">Telephone</label>
                                                     <div class=" controls col-md-9">
-                                                        <input type="telephone" name="telephone" class="form-control" minlength="12" maxlength="20" placeholder="Telephone" value="{{.setting_user.Telephone}}"> 
+                                                        <input type="telephone" name="telephone" class="form-control" minlength="12" maxlength="20" placeholder="Telephone" value="{{.data_user.Telephone}}"> 
                                                         <small class="form-control-feedback"></small>
                                                     </div>
                                                 </div>
@@ -243,7 +243,7 @@
                                                 <div class="form-group">
                                                     <label class="control-label col-md-5" style="margin-bottom: 5px;">Address</label>
                                                     <div class="col-md-9">
-                                                       <textarea name="address" class="form-control" placeholder="Address" data-autosize="" style="overflow: hidden visible; overflow-wrap: break-word;">{{.setting_user.Address}}</textarea>
+                                                       <textarea name="address" class="form-control" placeholder="Address" data-autosize="" style="overflow: hidden visible; overflow-wrap: break-word;">{{.data_user.Address}}</textarea>
                                                         <small class="form-control-feedback"></small>
                                                     </div>
                                                 </div>
@@ -262,8 +262,8 @@
                                         <div class="form-group" id="username">
                                             <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12" style="margin-bottom: 5px;">Username &nbsp;<span class="required">*</span></label>
                                             <div class="col-lg-11 col-md-11 col-sm-11 col-xs-12">
-                                                <input type="hidden" name="username_old" value="{{.setting_user.Username}}" autocomplete="off" />
-                                                <input type="text" class="form-control" name="username" value="{{.setting_user.Username}}" autocomplete="off" />
+                                                <input type="hidden" name="username_old" value="{{.data_user.Username}}" autocomplete="off" />
+                                                <input type="text" class="form-control" name="username" value="{{.data_user.Username}}" autocomplete="off" />
                                                 <small class='form-control-feedback' id='alert-username'></small>
                                             </div>
                                         </div>
@@ -726,35 +726,32 @@
         // get_data
         $(document).ready(function() {
             $.ajax({
-                url : "/lib/my_profile/get_data/",
+                url : "/lib/api/getinfologin/",
                 type: "POST",
                 dataType: "JSON",
                 success: function(data){
-                    dt_users = data.data_users;
-                    $("#account_names").text(dt_users.name_users);
-                    $("#account_groups").text(dt_users.name_group);
-                    $("#email").text(dt_users.email);
-                    $("#telephone").text(dt_users.telephone);
-                    $("#address").text(dt_users.address);
+                    var users = data.data_users;
+                    $("#account_names").text(users.full_name);
+                    $("#account_groups").text(users.name_grup);
+                    $("#email").text(users.email);
+                    $("#telephone").text(users.telephone);
+                    $("#address").text(users.address);
 
-                    if (dt_users.Image  != "") {
-
-                        // Get Image Profile
-                         $("#targetLayer").html('<img src="/upload/profile_user/'+dt_users.Image+dt_users.Extension+'?='+data.time+'" alt="'+ dt_users.name_users +'" width="200px" height="200px" class="upload-preview " />');
+                    // Get Image Profile
+                    if (users.image  != "") {
+                         $("#targetLayer").html('<img src="/upload/profile_user/'+ users.image +'?='+data.time+'" alt="'+ users.full_name +'" width="200px" height="200px" class="upload-preview " />');
                          $("#targetLayer").css('opacity','0.7');
                          $(".icon-choose-image").css('opacity','0.5');
 
-                    }else if (dt_users.Image == "") {
-                        // Get Image Profile
-                         $("#targetLayer").html('<img src="/static/images/users/anonymous.png" alt="'+ dt_users.name_users +'" width="200px" height="200px" class="upload-preview " />');
+                    }else if (users.image == "") {
+                         $("#targetLayer").html('<img src="/static/images/users/anonymous.png" alt="'+ users.full_name +'" width="200px" height="200px" class="upload-preview " />');
                          $("#targetLayer").css('opacity','0.7');
                          $(".icon-choose-image").css('opacity','0.5');
                     }
 
-
                 },
                 error: function (jqXHR, textStatus, errorThrown){
-                    // codehere
+                    alert(errorThrown);
                 }
             });
         });

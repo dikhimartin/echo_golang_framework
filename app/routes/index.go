@@ -139,7 +139,9 @@ func Index() *echo.Echo {
 	SettingGrupPrivilege(AuthGroup)
 
 	//Profile 
-	// MyProfile(cookieGroup)
+	MyProfile(AuthGroup)
+	
+
 	
 	ApiRoute(AuthGroup)
 
