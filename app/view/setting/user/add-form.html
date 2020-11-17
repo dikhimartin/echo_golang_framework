@@ -240,13 +240,13 @@
                                 <div class="tab-pane" id="account" role="tabpanel">
                                     <p style="margin-top: 25px;"></p>
                                      <div class="card-body">
-                                        <div class="form-group" id="id_grup">
+                                        <div class="form-group" id="id_setting_grup">
                                             <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12" style="margin-bottom: 5px;">Select Group &nbsp;<span class="required">*</span></label>
                                             <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
-                                                <select name="id_group" class="form-control">
+                                                <select name="id_setting_grup" class="form-control">
                                                     <option selected="" disabled="">-- choose --</option>
-                                                    {{range .resultGrup}}
-                                                        <option value="{{.Id}}">{{.Name_Grup}}</option>
+                                                    {{range .data_grup}}
+                                                        <option value="{{.ID}}">{{.Name_Grup}}</option>
                                                     {{end}}
                                                 </select>
                                                 <small class='form-control-feedback' id='alert-id-grup'></small>
@@ -341,11 +341,11 @@
                 form.email.focus();
                 return (false);
             }
-            var id_grup   = $("select[name='id_group']").select().val();
-            if (id_grup == null){
-                $("#id_grup").addClass("form-group has-danger");
+            var id_setting_grup   = $("select[name='id_setting_grup']").select().val();
+            if (id_setting_grup == null){
+                $("#id_setting_grup").addClass("form-group has-danger");
                 $("#alert-id-grup").text("Please fill in Group");
-                form.id_group.focus();
+                form.id_setting_grup.focus();
                 return (false);
             }
 

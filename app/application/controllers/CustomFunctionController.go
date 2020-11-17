@@ -2,6 +2,8 @@ package controllers
 
 import (
 	"fmt"
+	"os"
+	"unicode"
 	"crypto/md5"
 	"crypto/sha1"
 	"golang.org/x/crypto/bcrypt"
@@ -9,6 +11,7 @@ import (
 	"time"
 	"encoding/hex"
 	"encoding/json"
+	"github.com/labstack/echo"
 	"github.com/dikhimartin/beego-v1.12.0/utils/pagination"
 	lib      "../../lib"
 )
@@ -37,6 +40,11 @@ func NewSlice(start, count, step int) []int {
 func CheckPasswordHash(password, hash string) bool {
     err := bcrypt.CompareHashAndPassword([]byte(hash), []byte(password))
     return err == nil
+}
+
+func HashPassword(password string) string {
+    bytes, _ := bcrypt.GenerateFromPassword([]byte(password), 14)
+    return string(bytes)
 }
 
 func ConvertToMD5(value string) string{
@@ -85,3 +93,61 @@ func FormatDate(rec, format string) string{
 	return conv_date
 }
 
+
+func RemoveFile(c echo.Context, path_file string) int{
+	err := os.Remove(path_file)
+	if err != nil {
+		logs.Println(err)
+		return 0
+	}
+	return 1
+}
+
+func removeSpace(s string) string {
+	rr := make([]rune, 0, len(s))
+	for _, r := range s {
+		if !unicode.IsSpace(r) {
+			rr = append(rr, r)
+		}
+	}
+	return string(rr)
+}
+
+func FormFile(c echo.Context, value string) string{
+	form, err := c.MultipartForm()
+	if err != nil {
+		logs.Println(err)
+		return "nil"
+	}
+	files := form.File[value]
+	if files == nil{
+		return "nil"
+	}
+
+	file, _ 	   := c.FormFile(value)
+	file_image, _  := file.Open()
+	defer file_image.Close()
+
+	timestamp 	   := time.Now().Unix()
+	unix_timestamp := strconv.FormatInt(timestamp, 10)
+	name_file 	   := file.Filename
+	FileNamePost   := removeSpace(unix_timestamp + "_" + name_file)
+
+	return FileNamePost
+}
+
+func MakeDirectory(folderPath string) string{
+	// check_directory
+    _, erot := os.Stat(folderPath)
+    if os.IsExist(erot) {
+    	logs.Println(erot)
+        return folderPath
+    }else{
+	 	err := os.MkdirAll(folderPath, 0777)
+	 	if err != nil{
+	 		logs.Println(err)
+	 		return "0"
+	 	}
+    }
+	return folderPath
+}

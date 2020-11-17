@@ -110,34 +110,32 @@
 											</tr>
 										</thead>
 										<tbody>
-											{{if .setting_user}}
-												{{range .setting_user}}
+											{{if .data}}
+												{{range .data}}
 												<tr>
 													<td>{{ .Full_name }}</td>
 													<td>{{ .Username }}</td>
 													<td>{{ .Email }}</td>
-													<td>{{ .Name_grup }}</td>
+													<td>{{ .Name_Grup }}</td>
 													<td>
 														{{if (eq .Status "Y") }}
-														<label class="label label-success">Active</label>
+															<label class="label label-success">Active</label>
 														{{else if (eq .Status "N") }}
-														<label class="label label-danger">Non-Active</label>
-														{{else}}
-														<label class="label label-danger">Empty</label>
+															<label class="label label-danger">Non-Active</label>
 														{{end}}
 													</td>
 													<td class="text-nowrap">
-														<a href="/lib/setting/user/editform/{{.Id}}/" class="btn btn-sm btn-info" data-toggle="tooltip" data-placement="top" title="Edit data!">
+														<a href="/lib/setting/user/editform/{{.ID}}/" class="btn btn-sm btn-info" data-toggle="tooltip" data-placement="top" title="Edit data!">
 															<i class="fa fa-pencil"></i>
 														</a>
 													</td>
 												</tr>
 												{{end}}
-												{{else}}
+											{{else}}
 												<tr>
 													<td colspan="6" class="text-center alert-danger">Data is empty</td>
 												</tr>
-												{{end}}
+											{{end}}
 										</tbody>
 									</table>
 						        </div>

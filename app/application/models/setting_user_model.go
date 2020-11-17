@@ -21,6 +21,25 @@ func (SettingUser) TableName() string {
   return "tb_setting_user"
 }
 
+// its use for call model from controllers
+type ModelUser struct {
+    ID                       string      `json:"id"`
+    Id_setting_grup          string      `json:"id_setting_grup"`
+    Name_Grup                string      `json:"name_grup"`
+    Full_name                string      `json:"full_name"`
+    Username                 string      `json:"username"`
+    Email                    string      `json:"email"`
+    Telephone                string      `json:"telephone"`
+    Address                  string      `json:"address"`
+    Gender                   string      `json:"gender"`
+    Password                 string      `json:"password"`
+    Status                   string      `json:"status"`
+    Image                    string      `json:"image"`
+    Auth_token               string      `json:"auth_token"`
+    CreatedAt                string      `json:"created_at"`
+    Additional               string      `json:"additional"`
+}
+
 // == its use for migration view_schema
 type SchemeUser struct {
   ID          string      `json:"id"`

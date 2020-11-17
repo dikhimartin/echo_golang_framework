@@ -136,7 +136,7 @@ func Index() *echo.Echo {
 	// Modul Setting
 	SettingGrup(AuthGroup)
 	SettingPrivilege(AuthGroup)
-	// SettingUser(cookieGroup)
+	SettingUser(AuthGroup)
 	SettingGrupPrivilege(AuthGroup)
 
 	//Profile 

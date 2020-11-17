@@ -10,4 +10,5 @@ func ApiRoute(g *echo.Group) {
 
 	g.POST(DEFINE_URL +"/getinfologin/", api.Getinfologin)
 	g.GET(DEFINE_URL  +"/getsidebarprivilege/", api.GetSidebarPrivilege)
+
 }
