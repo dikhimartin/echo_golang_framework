@@ -39,9 +39,9 @@
 												<div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
 													<select name="id_setting_grup" class="form-control" required>
 														<option value="">Choose Name Grup : </option>
-														<!-- {{range .user_grup}}
-														<option value="{{.Id}}">{{.Id_setting_grup}}</option>
-														{{end}} -->
+														{{range .user_grup}}
+														<option value="{{.ID}}">{{.Name_Grup}}</option>
+														{{end}}
 													</select>
 												</div>
 											</div>
@@ -90,7 +90,7 @@
 									                    <legend class="scheduler-border">{{.Name_menu}}</legend>
 														{{range .Permissions}}
 														<label class="custom-control custom-checkbox">
-															<input name="hak_akses[]" type="checkbox" class="custom-control-input" value="{{.Additional}}">
+															<input name="permission[]" type="checkbox" class="custom-control-input" value="{{.Additional}}">
 															<span class="custom-control-label"></span>
 															{{.Name}}
 														</label>
@@ -128,14 +128,11 @@
 	{{template "footer"}}
 	<script>
 		$(function(){
-			$("select[name='id_grup']").selectize();
-			$("select[name='kode_privilege']").selectize();
-			$("select[name='status']").selectize();
-
+			$("select[name='id_setting_grup']").selectize();
 		});
 		// ceklis_data
 		function toggle(source) {
-		  checkboxes = document.getElementsByName('hak_akses[]');
+		  checkboxes = document.getElementsByName('permission[]');
 		  for(var i=0, n=checkboxes.length;i<n;i++) {
 		    checkboxes[i].checked = source.checked;
 		  }

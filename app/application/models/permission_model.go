@@ -15,6 +15,7 @@ type ModelPermission struct {
   	ID                string   `json:"id"` 
   	Name        	    string     `json:"name"`
   	Additional        string   `json:"additional"`
+    CheckOrUncheck    string   `json:"check_or_uncheck"`
 }
 
 // == its use for migration view_schema

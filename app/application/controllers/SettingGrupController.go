@@ -27,6 +27,37 @@ func GetDataGrupById(id_grup string /*convert_to_md5*/) (models.ModelGrup){
 	return data
 }
 
+func GetDataGrup() ([]models.ModelGrup) {
+	db := database.CreateCon()
+	defer db.Close()
+
+	rows, err := db.Raw("SELECT id, name_grup, status FROM v_get_grup WHERE status = 'Y' ORDER BY name_grup").Rows();
+	if err != nil {
+		logs.Println(err)
+	}
+	defer rows.Close()
+	each   := models.ModelGrup{}
+	result := []models.ModelGrup{}
+
+	for rows.Next() {
+		var id, name_grup, status []byte
+		err = rows.Scan(&id, &name_grup, &status)
+		if err != nil {
+			logs.Println(err)
+		}
+
+		each.ID 			 = string(id)
+		each.Name_Grup 		 = string(name_grup)
+		each.Status  		 = string(status)
+
+		result = append(result, each)
+	}
+
+	return result
+}
+
+
+
 // == View
 func ListSettingGrup(c echo.Context) error {
 	db := database.CreateCon()
@@ -182,11 +213,9 @@ func UpdateSettingGrup(c echo.Context) error {
 	name_grup     := c.FormValue("name_grup")
 	status  	  := c.FormValue("status")
 
-	logs.Println(requested_id)
-
 	// update_data
 	var update models.SettingGrup
-	update_data := db.Model(&update).Where("md5(id) = ?", "c81e728d9d4c2f636f067f89cc14862c").Updates(map[string]interface{}{
+	update_data := db.Model(&update).Where("md5(id) = ?", requested_id).Updates(map[string]interface{}{
 		"name_grup"    :    name_grup,
 		"status"       :    status,
 		"updated_at"   :    current_time("2006-01-02 15:04:05"),

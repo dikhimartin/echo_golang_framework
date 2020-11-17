@@ -23,6 +23,7 @@ type ModelGrupPrivilege struct {
     Status              string   `json:"status"`
     CreatedAt           string   `json:"created_at"`
     UpdatedAt           string   `json:"updated_at"`
+    Additional          string   `json:"additional"`
 }
 
 // == its use for migration view_schema

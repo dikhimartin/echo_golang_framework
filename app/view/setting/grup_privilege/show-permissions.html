@@ -42,16 +42,16 @@
 				                            <tr>
 				                                <th style="width: 170px;">Name Group</th>
 				                                <th style="width: 23px;">:</th>
-				                                <th style="width: 389px;">&nbsp;{{.setting_grup_privilege.Name_grup}}</th>
+				                                <th style="width: 389px;">&nbsp;{{.data_grup_privilege.Name_grup}}</th>
 				                            </tr>
 				                            <tr>
 				                                <th style="width: 170px;">Status</th>
 				                                <th style="width: 23px;">:</th>
 				                                <th style="width: 389px;">
 
-			                                    {{if eq .setting_grup_privilege.Status "Y"}}
+			                                    {{if eq .data_grup_privilege.Status "Y"}}
 			                                        <span class="label label-success">Active</span>
-			                                    {{else if eq .setting_grup_privilege.Status "N"}}
+			                                    {{else if eq .data_grup_privilege.Status "N"}}
 			                                        <span class="label label-danger">Non-Active</span>
 			                                    {{end}}
 				                                </th>
@@ -59,7 +59,7 @@
 				                            <tr>
 				                                <th style="width: 170px;">Remarks</th>
 				                                <th style="width: 23px;">:</th>
-				                                <th style="width: 389px;">&nbsp;{{.setting_grup_privilege.Keterangan}}</th>
+				                                <th style="width: 389px;">&nbsp;{{.data_grup_privilege.Remarks}}</th>
 				                            </tr>
 				                            </tbody>
 				                            </table>
@@ -82,18 +82,17 @@
 												{{range .resultPrivilege}}
 									            <div class="col-sm-3" style="min-height: 175px;">
 									                <fieldset class="scheduler-border">
-									                    <legend class="scheduler-border">{{.Name_Menu}}</legend>
+									                    <legend class="scheduler-border">{{.Name_menu}}</legend>
 														{{range .Permissions}}
 														<label class="custom-control custom-checkbox">
-															<input name="hak_akses[]" type="checkbox" class="custom-control-input" value="{{.Additional}}" {{if eq .CheckOrUncheck ("checked")}} checked=""  {{end}} disabled="">
+															<input name="permission[]" type="checkbox" class="custom-control-input" value="{{.Additional}}" {{if eq .CheckOrUncheck ("checked")}} checked=""  {{end}} disabled="">
 															<span class="custom-control-label"></span>
-															{{.Value}}
+															{{.Name}}
 														</label>
 														{{end}}
 									                </fieldset>
 									            </div>
 									            {{end}}
-
 									        </div>
 									        <p style="margin-bottom: 50px"></p>
 									    </div>
@@ -101,7 +100,7 @@
 
 									<div class="form-group">
 										<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-											<a href="/lib/setting/grup_privilege/editform/{{.setting_grup_privilege.Id}}" class="btn btn-sm btn-info">
+											<a href="/lib/setting/grup_privilege/editform/{{.data_grup_privilege.Additional}}" class="btn btn-sm btn-info">
 												<i class="fa fa-paper-plane"></i>&nbsp;&nbsp;Edit
 											</a>
 											<a href="/lib/setting/grup_privilege/" class="btn-sm btn waves-effect waves-light btn-secondary">
