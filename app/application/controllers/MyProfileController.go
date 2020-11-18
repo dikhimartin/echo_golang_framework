@@ -31,7 +31,7 @@ func UpdateProfileController(c echo.Context) error{
 
 	data_users	:= GetDataLogin(c)
 
-		fmt.Println(data_users)
+	fmt.Println(data_users)
 
 	return c.JSON(200, "true")
 }
