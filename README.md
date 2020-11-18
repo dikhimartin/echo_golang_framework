@@ -47,3 +47,10 @@ mysql -u user -p
 Enter password: user
 ```
 
+
+## Author Owner
+- [Dikhi Martin](https://www.linkedin.com/in/dikhi-martin/)
+
+## License
+[MIT](https://github.com/labstack/echo/blob/master/LICENSE)
+
