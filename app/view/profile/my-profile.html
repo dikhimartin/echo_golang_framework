@@ -436,7 +436,6 @@
         });
 
         function validasi_input(form){
-
             $('.has-success').removeClass( "has-success");
             $('.has-danger').removeClass( "has-danger");
             $('.form-control-feedback').text("");
@@ -661,28 +660,24 @@
 
         //text inline update
         $(document).ready(function() {
-
          $.fn.editable.defaults.mode = 'inline';
-
            $.fn.editable.defaults.params = function (params) 
            {
             params._token = $("#_token").data("token");
             return params;
            };
-
             $('#account_names').editable({
                     validate: function(value) {
                         if($.trim(value) == '') 
                             return 'Value is required.';
                         },
                     type: "text",
-                    url:'/lib/my_profile/update_inline/name/',  
+                    url:'/lib/my_profile/update_inline/full_name/',  
                     send:'always',
                     ajaxOptions: {
                     dataType: 'json'
                     }
             });
-
             $('#email').editable({
                     validate: function(value) {
                         if($.trim(value) == '') 
