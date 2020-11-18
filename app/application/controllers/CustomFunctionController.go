@@ -2,32 +2,19 @@ package controllers
 
 import (
 	"fmt"
-	"os"
-	"unicode"
-	"crypto/md5"
-	"crypto/sha1"
-	"golang.org/x/crypto/bcrypt"
-	"strconv"
+	"net/http"
+	"../../database"
+	"../models"
 	"time"
-	"encoding/hex"
-	"encoding/json"
+	logger    "../../customlogger"
+	data_user "../../api/data"
+	"github.com/flosch/pongo2"
 	"github.com/labstack/echo"
-	"github.com/dikhimartin/beego-v1.12.0/utils/pagination"
-	lib      "../../lib"
 )
 
-// ## Define Config Variable Global
-var (
-	logs 	  			= lib.RecordLog("SYSTEMS -")
-	paginator 			= &pagination.Paginator{}
-	redis_connect 	    = lib.RedisConnection()
-)
+var logs = logger.GetInstance("SYSTEMS -")
 
-
-// ## Define Type Global
-type response_json map[string]interface{}
-
-// function
+//generator
 func NewSlice(start, count, step int) []int {
 	s := make([]int, count)
 	for i := range s {
@@ -36,118 +23,138 @@ func NewSlice(start, count, step int) []int {
 	}
 	return s
 }
-
-func CheckPasswordHash(password, hash string) bool {
-    err := bcrypt.CompareHashAndPassword([]byte(hash), []byte(password))
-    return err == nil
-}
-
-func HashPassword(password string) string {
-    bytes, _ := bcrypt.GenerateFromPassword([]byte(password), 14)
-    return string(bytes)
-}
-
-func ConvertToMD5(value string) string{
-	var str string = value
-	hasher := md5.New()
-	hasher.Write([]byte(str))
-	converId := hex.EncodeToString(hasher.Sum(nil))
-
-	return converId
-}
-
-func ConvertToSHA1(value string) string{
-    sha := sha1.New()
-    sha.Write([]byte(value))
-    encrypted       := sha.Sum(nil)
-    encryptedString := fmt.Sprintf("%x", encrypted)
-	return encryptedString
-}
-
-func ConvertStringToInt(value string) int{
-	value_int, _  	:= strconv.Atoi(value)
-	return value_int
-}
-
-func ConvertStringToFloat(value string) float64{
-	value_float, _ 	:= strconv.ParseFloat(value, 8)
-	return value_float
-}
-
-func ConvertJsonToString(payload interface{}) string{
-	jsonData, err := json.Marshal(payload)
-	if err != nil {
-		logs.Println(err)
-	}
-	return string(jsonData)
-}
-
-func current_time(format string) string{
-	current_time := time.Now().Format(format)
-	return current_time
-}
-
-func FormatDate(rec, format string) string{
-	date,_       := time.Parse("2006-01-02 15:04:05", rec)
-	conv_date    := date.Format(format)
-	return conv_date
-}
+// get data login
+func (c *MyCustomContext) getDataLogin() (models.GetDataLogin) {
 
 
-func RemoveFile(c echo.Context, path_file string) int{
-	err := os.Remove(path_file)
-	if err != nil {
-		logs.Println(err)
-		return 0
-	}
-	return 1
-}
-
-func removeSpace(s string) string {
-	rr := make([]rune, 0, len(s))
-	for _, r := range s {
-		if !unicode.IsSpace(r) {
-			rr = append(rr, r)
+	// get data login
+		dt_user, err   := data_user.GetDataJWT(c)
+		if err != nil{
+			fmt.Println(err)
 		}
-	}
-	return string(rr)
+		id_users 	   := dt_user["id_users"]
+		id_group 	   := dt_user["id_group"]
+		name_users 	   := dt_user["name_users"]
+		name_group 	   := dt_user["name_group"]
+		jti 		   := dt_user["jti"]
+		exp 		   := dt_user["exp"]
+
+		image 		:= ""
+		extension 	:= ""
+
+		data_users := models.GetDataLogin{
+		    Id_users 			:    id_users,
+		    Id_group 			:    id_group,
+		    Name_users 			:    name_users,
+		    Name_group 			:    name_group,
+		    Jti					:    jti,
+		    Exp					:    exp,
+		    Image				:    image,
+		    Extension			:    extension,
+		}
+	// end
+
+	return data_users
 }
 
-func FormFile(c echo.Context, value string) string{
-	form, err := c.MultipartForm()
-	if err != nil {
-		logs.Println(err)
-		return "nil"
+func Getinfologin(c echo.Context) error{
+
+	// get data login
+		dt_user, err   := data_user.GetDataJWT(c)
+		if err != nil{
+			fmt.Println(err)
+		}
+		id_users 	   := dt_user["id_users"]
+		id_group 	   := dt_user["id_group"]
+		name_users 	   := dt_user["name_users"]
+		name_group 	   := dt_user["name_group"]
+		image 	   	   := dt_user["image"]
+		extension 	   := dt_user["extension"]
+		jti 		   := dt_user["jti"]
+		exp 		   := dt_user["exp"]
+
+		data_users := models.GetDataLogin{
+		    Id_users 			:    id_users,
+		    Id_group 			:    id_group,
+		    Name_users 			:    name_users,
+		    Name_group 			:    name_group,
+		    Jti					:    jti,
+		    Exp					:    exp,
+		    Image				:    image,
+		    Extension			:    extension,
+		}
+	// end
+
+	data = pongo2.Context{
+		"data_users"				:   data_users,
+		"time"						:   time.Now().UnixNano(),
 	}
-	files := form.File[value]
-	if files == nil{
-		return "nil"
-	}
 
-	file, _ 	   := c.FormFile(value)
-	file_image, _  := file.Open()
-	defer file_image.Close()
-
-	timestamp 	   := time.Now().Unix()
-	unix_timestamp := strconv.FormatInt(timestamp, 10)
-	name_file 	   := file.Filename
-	FileNamePost   := removeSpace(unix_timestamp + "_" + name_file)
-
-	return FileNamePost
+	return c.JSON(200, data)
 }
 
-func MakeDirectory(folderPath string) string{
-	// check_directory
-    _, erot := os.Stat(folderPath)
-    if os.IsExist(erot) {
-    	logs.Println(erot)
-        return folderPath
-    }else{
-	 	err := os.MkdirAll(folderPath, 0777)
-	 	if err != nil{
-	 		logs.Println(err)
-	 		return "0"
-	 	}
-    }
-	return folderPath
+func GetSidebarPrivilege(c echo.Context) error{
+
+	db := database.CreateCon()
+	defer db.Close()
+
+	// get data login
+		dt_user, err   := data_user.GetDataJWT(c)
+		if err != nil{
+			fmt.Println(err)
+		}
+		id_group 	   := dt_user["id_group"]
+	// end
+
+	sample_crud      		:= ""
+	setting_grup      		:= ""
+	setting_privilege 		:= ""
+	setting_user      		:= ""
+	setting_grup_privilege  := ""
+
+	// Get Permission User
+	permision_user, errMen := db.Query("SELECT kode_permissions FROM v_get_grup_privilege_detail WHERE id_setting_grup = ? AND kode_permissions LIKE '%_2%' ORDER BY kode_permissions DESC", id_group)
+	if errMen != nil {
+		return c.Render(http.StatusInternalServerError, "error_500", nil)
+	}
+	defer permision_user.Close()
+
+	for permision_user.Next() {
+		var  permision []byte
+		var err = permision_user.Scan(&permision)
+		if err != nil {
+			fmt.Println(err)
+		}
+		// SAMPLE CRUD
+		if string(permision) == "samplecrud_2"{
+			sample_crud = string(permision)
+		}
+		
+		// SETTING
+		if string(permision) == "setting.user.grup_2"{
+			setting_grup = string(permision)
+		}
+		if string(permision) == "setting.user.privilege_2"{
+			setting_privilege = string(permision)
+		}
+		if string(permision) == "setting.user.user_2"{
+			setting_user = string(permision)
+		}
+		if string(permision) 	   == "setting.user.grupprivilege_2"{
+			setting_grup_privilege = string(permision)
+		}
+
+	}
+
+	data_menus := models.SidebarMenu{
+		Setting_grup 			:    string(setting_grup), 
+		Setting_privilege 		:    string(setting_privilege), 
+		Setting_user 			:    string(setting_user), 
+		Setting_grup_privilege 	:    string(setting_grup_privilege),	
+		Sample_crud 			: 	 string(sample_crud), 
+	}
+
+
+	return c.JSON(200, data_menus)
 }
+

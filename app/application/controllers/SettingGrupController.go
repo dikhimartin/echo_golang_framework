@@ -1,54 +1,45 @@
 package controllers
 
 import (
+	"crypto/md5"
+	"encoding/hex"
+	"net/http"
 	"../models"
-	"../../database"
 	"github.com/labstack/echo"
+	_ "database/sql"
+	"fmt"
+	"../../database"
 	"github.com/dikhimartin/beego-v1.12.0/utils/pagination"
+	"github.com/flosch/pongo2"
 )
 
-// == Custom Function
-func GetDataGrupById(id_grup string /*convert_to_md5*/) (models.ModelGrup){
+
+func (c *MyCustomContext) getDataGrup() ([]models.SettingGrup) {
+
 	db := database.CreateCon()
 	defer db.Close()
 
-	var id, name_grup, status []byte
-	row := db.Table("tb_setting_grup").Where("md5(id) = ?", id_grup).Select("id, name_grup, status").Row() 
-	err := row.Scan(&id, &name_grup, &status)
-	if err != nil{
-		logs.Println(err)
-	}
-	data := models.ModelGrup{
-		ID        	  : string(id),
-		Name_Grup 	  : string(name_grup),
-		Status    	  : string(status),
-		Additional    : id_grup,
-	}
-	return data
-}
-
-func GetDataGrup() ([]models.ModelGrup) {
-	db := database.CreateCon()
-	defer db.Close()
-
-	rows, err := db.Raw("SELECT id, name_grup, status FROM v_get_grup WHERE status = 'Y' ORDER BY name_grup").Rows();
+	//get data grup
+	rows, err := db.Query("SELECT id, name_grup FROM tb_setting_grup ORDER BY name_grup")
 	if err != nil {
-		logs.Println(err)
+		fmt.Println(err)
 	}
 	defer rows.Close()
-	each   := models.ModelGrup{}
-	result := []models.ModelGrup{}
+
+	each := models.SettingGrup{}
+	result := []models.SettingGrup{}
 
 	for rows.Next() {
-		var id, name_grup, status []byte
-		err = rows.Scan(&id, &name_grup, &status)
+		var id,
+			name_grup []byte
+
+		err := rows.Scan(&id, &name_grup)
 		if err != nil {
-			logs.Println(err)
+			fmt.Println(err)
 		}
 
-		each.ID 			 = string(id)
-		each.Name_Grup 		 = string(name_grup)
-		each.Status  		 = string(status)
+		each.Id = string(id)
+		each.Name_Grup = string(name_grup)
 
 		result = append(result, each)
 	}
@@ -56,17 +47,26 @@ func GetDataGrup() ([]models.ModelGrup) {
 	return result
 }
 
-
-
-// == View
 func ListSettingGrup(c echo.Context) error {
+
 	db := database.CreateCon()
 	defer db.Close()
 
-	data_users	:= GetDataLogin(c)
-	if CheckPrivileges(data_users.Id_group, "setting.user.grup_2") == false{
-		return c.Render(403, "error_403", nil)
+	cc := &MyCustomContext{c}
+	data_users			:= cc.getDataLogin()
+
+	// check_privilege
+	var check_privilege []byte
+	check_privileges, errPriv := db.Prepare("SELECT kode_permissions FROM v_get_grup_privilege_detail WHERE id_setting_grup = ? AND kode_permissions = 'setting.user.grup_2'")
+	if errPriv != nil {
+		fmt.Printf("%s", errPriv)
 	}
+	errPriv = check_privileges.QueryRow(data_users.Id_group).Scan(&check_privilege)	
+	defer check_privileges.Close()
+	if string(check_privilege) != "setting.user.grup_2"{
+		return c.Render(http.StatusInternalServerError, "error_403", nil)
+	}
+	//end check_privilege
 
 	var selected string
 	var whrs string
@@ -82,6 +82,7 @@ func ListSettingGrup(c echo.Context) error {
 	}
 
 	selected = "SELECT id, name_grup, status"
+	// search biasa
 	if search != "" {
 		ors := " FROM tb_setting_grup WHERE name_grup LIKE '%" + search + "%' "
 		whrs += ors
@@ -95,136 +96,214 @@ func ListSettingGrup(c echo.Context) error {
 		whrs = " FROM tb_setting_grup"
 	}
 
-	rows, err := db.Raw(selected + whrs + " ORDER BY id ASC").Rows()
+	rows, err := db.Query(selected + whrs + " ORDER BY id ASC")
 	if err != nil {
-		logs.Println(err)
-		return c.Render(500, "error_500", nil)
+		return c.Render(http.StatusInternalServerError, "error_500", nil)
 	}
+
 	defer rows.Close()
 
-	each := models.ModelGrup{}
-	result := []models.ModelGrup{}
+	each := models.SettingGrup{}
+	result := []models.SettingGrup{}
 
 	for rows.Next() {
-		var id, name_grup, status []byte
+		var id string
+		var name_grup, status []byte
 
 		var err = rows.Scan(&id, &name_grup, &status)
+
 		if err != nil {
-			logs.Println(err)
-			return c.Render(500, "error_500", nil)
+			return c.Render(http.StatusInternalServerError, "error_500", nil)
 		}
 
-		each.ID 	   = ConvertToMD5(string(id))
+		var str string = id
+
+		hasher := md5.New()
+		hasher.Write([]byte(str))
+		converId := hex.EncodeToString(hasher.Sum(nil))
+
+		each.Id = converId
 		each.Name_Grup = string(name_grup)
-		each.Status    = string(status)
+		each.Status = string(status)
 
 		result = append(result, each)
 	}
 
-	postsPerPage := 10
-	paginator 	 = pagination.NewPaginator(c.Request(), postsPerPage, len(result))
+	// Lets use the Forbes top 7.
+	mydata := result
 
+	// sets paginator with the current offset (from the url query param)
+	postsPerPage := 10
+	paginator = pagination.NewPaginator(c.Request(), postsPerPage, len(mydata))
+
+	// fmt.Println(paginator.Offset())
 	// fetch the next posts "postsPerPage"
 	idrange := NewSlice(paginator.Offset(), postsPerPage, 1)
-	mydatas := []models.ModelGrup{}
+	//create a new page list that shows up on html
+	mydatas := []models.SettingGrup{}
 	for _, num := range idrange {
-		if num <= len(result)-1 {
-			numdata := result[num]
+		//Prevent index out of range errors
+		if num <= len(mydata)-1 {
+			numdata := mydata[num]
 			mydatas = append(mydatas, numdata)
 		}
 	}
 
-	data := response_json{
-		"paginator" 	: paginator,
-		"data"  		: mydatas,
-		"search" 		: search,
-		"searchStatus"  : searchStatus,
-	}
+	// set the paginator in context
+	// also set the page list in context
+	// if you also have more data, set it context
+	data = pongo2.Context{
+		"paginator":    paginator,
+		"setting_grup": mydatas,
+		"search":       search,
+		"searchStatus": searchStatus}
 
-	return c.Render(200, "list_setting_grup", data)
+	return c.Render(http.StatusOK, "list_setting_grup", data)
 }
 
 func AddSettingGrup(c echo.Context) error {
-	data_users	:= GetDataLogin(c)
-	if CheckPrivileges(data_users.Id_group, "setting.user.grup_1") == false{
-		return c.Render(403, "error_403", nil)
+	db := database.CreateCon()
+	defer db.Close()
+
+	cc := &MyCustomContext{c}
+	data_users			:= cc.getDataLogin()
+
+	// check_privilege
+	var check_privilege []byte
+	check_privileges, errPriv := db.Prepare("SELECT kode_permissions FROM v_get_grup_privilege_detail WHERE id_setting_grup = ? AND kode_permissions = 'setting.user.grup_1'")
+	if errPriv != nil {
+		fmt.Printf("%s", errPriv)
 	}
-	return c.Render(200, "add_setting_grup", nil)
+	errPriv = check_privileges.QueryRow(data_users.Id_group).Scan(&check_privilege)	
+	defer check_privileges.Close()
+	if string(check_privilege) != "setting.user.grup_1"{
+		return c.Render(http.StatusInternalServerError, "error_403", nil)
+	}
+	//end check_privilege
+
+
+	return c.Render(http.StatusOK, "add_setting_grup", nil)
+}
+
+func StoreSettingGrup(c echo.Context) error {
+	db := database.CreateCon()
+	defer db.Close()
+
+	cc := &MyCustomContext{c}
+	data_users			:= cc.getDataLogin()
+
+	// check_privilege
+	var check_privilege []byte
+	check_privileges, errPriv := db.Prepare("SELECT kode_permissions FROM v_get_grup_privilege_detail WHERE id_setting_grup = ? AND kode_permissions = 'setting.user.grup_1'")
+	if errPriv != nil {
+		fmt.Printf("%s", errPriv)
+	}
+	errPriv = check_privileges.QueryRow(data_users.Id_group).Scan(&check_privilege)	
+	defer check_privileges.Close()
+	if string(check_privilege) != "setting.user.grup_1"{
+		return c.Render(http.StatusInternalServerError, "error_403", nil)
+	}
+	//end check_privilege
+
+	emp := new(models.SettingGrup)
+	if err := c.Bind(emp); err != nil {
+		return err
+	}
+
+	// Insert
+	sql := "INSERT INTO tb_setting_grup(name_grup, status) VALUES(?, ?)"
+	stmt, err := db.Prepare(sql)
+	if err != nil {
+		fmt.Print(err.Error())
+	}
+	defer stmt.Close()
+
+	_, err2 := stmt.Exec(emp.Name_Grup, emp.Status)
+	if err2 != nil {
+		return c.Render(http.StatusInternalServerError, "error_500", nil)
+	}
+
+	return c.Redirect(301, "/lib/setting/grup/")
 }
 
 func EditSettingGrup(c echo.Context) error {
 	db := database.CreateCon()
 	defer db.Close()
 
-	data_users	:= GetDataLogin(c)
-	if CheckPrivileges(data_users.Id_group, "setting.user.grup_3") == false{
-		return c.Render(403, "error_403", nil)
+	cc := &MyCustomContext{c}
+	data_users			:= cc.getDataLogin()
+
+	// check_privilege
+	var check_privilege []byte
+	check_privileges, errPriv := db.Prepare("SELECT kode_permissions FROM v_get_grup_privilege_detail WHERE id_setting_grup = ? AND kode_permissions = 'setting.user.grup_3'")
+	if errPriv != nil {
+		fmt.Printf("%s", errPriv)
+	}
+	errPriv = check_privileges.QueryRow(data_users.Id_group).Scan(&check_privilege)	
+	defer check_privileges.Close()
+	if string(check_privilege) != "setting.user.grup_3"{
+		return c.Render(http.StatusInternalServerError, "error_403", nil)
+	}
+	//end check_privilege
+
+	requested_id := c.Param("id")
+	var name_grup string
+	var status string
+	err := db.QueryRow("SELECT name_grup, status FROM tb_setting_grup WHERE md5(id) = ?", requested_id).Scan(&name_grup, &status)
+
+	if err != nil {
+		return c.Render(http.StatusInternalServerError, "error_500", nil)
 	}
 
-	requested_id  := c.Param("id")
-	data 		  := GetDataGrupById(requested_id)
+	response := models.SettingGrup{
+		Id:        requested_id,
+		Name_Grup: name_grup,
+		Status:    status}
 
-	response := response_json{
-		"data"  : data,
-	}
+	data = pongo2.Context{
+		"setting_grup": response}
 
-	return c.Render(200, "edit_setting_grup", response)
-}
-
-// == Manipulate
-func StoreSettingGrup(c echo.Context) error {
-	db := database.CreateCon()
-	defer db.Close()
-
-	data_users	:= GetDataLogin(c)
-	if CheckPrivileges(data_users.Id_group, "setting.user.grup_3") == false{
-		return c.Render(403, "error_403", nil)
-	}
-
-	name_grup     := c.FormValue("name_grup")
-	status  	  := c.FormValue("status")
-
-	// insert_data
-	insert := models.SettingGrup{
-		Name_Grup 			: name_grup,
-		Status 				: status,
-		CreatedAt 			: current_time("2006-01-02 15:04:05"),
-	}
-	if error_insert := db.Create(&insert); error_insert.Error != nil {
-		logs.Println(error_insert)
-		return c.Render(500, "error_500", nil)
-	}
-	db.NewRecord(insert)
-
-	return c.Redirect(301, "/lib/setting/grup/")
+	return c.Render(http.StatusOK, "edit_setting_grup", data)
 }
 
 func UpdateSettingGrup(c echo.Context) error {
 	db := database.CreateCon()
 	defer db.Close()
 
-	data_users	:= GetDataLogin(c)
-	if CheckPrivileges(data_users.Id_group, "setting.user.grup_3") == false{
-		return c.Render(403, "error_403", nil)
+	cc := &MyCustomContext{c}
+	data_users			:= cc.getDataLogin()
+
+	// check_privilege
+	var check_privilege []byte
+	check_privileges, errPriv := db.Prepare("SELECT kode_permissions FROM v_get_grup_privilege_detail WHERE id_setting_grup = ? AND kode_permissions = 'setting.user.grup_3'")
+	if errPriv != nil {
+		fmt.Printf("%s", errPriv)
+	}
+	errPriv = check_privileges.QueryRow(data_users.Id_group).Scan(&check_privilege)	
+	defer check_privileges.Close()
+	if string(check_privilege) != "setting.user.grup_3"{
+		return c.Render(http.StatusInternalServerError, "error_403", nil)
+	}
+	//end check_privilege
+	
+	emp := new(models.SettingGrup)
+	if err := c.Bind(emp); err != nil {
+		return err
 	}
 
-	requested_id := c.Param("id")
+	id := c.Param("id")
+	name_grup := c.FormValue("name_grup")
+	status := c.FormValue("status")
 
-	name_grup     := c.FormValue("name_grup")
-	status  	  := c.FormValue("status")
+	selDB, err2 := db.Prepare("UPDATE tb_setting_grup SET name_grup=?, status=? WHERE md5(id)=?")
 
-	// update_data
-	var update models.SettingGrup
-	update_data := db.Model(&update).Where("md5(id) = ?", requested_id).Updates(map[string]interface{}{
-		"name_grup"    :    name_grup,
-		"status"       :    status,
-		"updated_at"   :    current_time("2006-01-02 15:04:05"),
-	})
-	if update_data.Error != nil {
-		logs.Println(update_data.Error)
-		return c.Render(500, "error_500", nil)
+	if err2 != nil {
+		return c.Render(http.StatusInternalServerError, "error_500", nil)
 	}
+
+	defer selDB.Close()
+
+	selDB.Exec(name_grup, status, id)
 
 	return c.Redirect(301, "/lib/setting/grup/")
 }
-

@@ -1,36 +1,30 @@
 package database
 
 import (
+	"database/sql"
 	"fmt"
-	lib   "../lib"
-     _"github.com/jinzhu/gorm/dialects/mysql"
-    "github.com/jinzhu/gorm"
+	_ "github.com/go-sql-driver/mysql"
 )
 
-var logs  	 = lib.RecordLog("SYSTEMS -")
-var dsn = fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8mb4",
-	lib.GetEnv("DB_USER"),
-	lib.GetEnv("DB_PASS"),
-	lib.GetEnv("DB_HOST"),
-	lib.GetEnv("DB_PORT"),
-	lib.GetEnv("DB_NAME"),
+const (
+    DB_HOST = "tcp(127.0.0.1:3306)"
+    DB_NAME = "db_receipt_golang_crud"
+    DB_USER = "root"
+    DB_PASS = "root"
 )
 
-func init() {
-	// DropColumn()
-	AutoMigrate()
-	ViewMigrate()
-	// RemoveIndex()
-	// ModifyColumn()
-	// AddForeignKey()
-	DataSeeder()
-}
-
-func CreateCon() *gorm.DB{
-	db, err := gorm.Open("mysql", dsn)
+/*Create mysql connection*/
+func CreateCon() *sql.DB {
+    db, err := sql.Open("mysql", fmt.Sprintf("%s:%s@%s/%s", DB_USER, DB_PASS, DB_HOST, DB_NAME))
 	if err != nil {
-		logs.Println(err)
-		panic(err)
+		fmt.Println(err)
 	}
+
+	// make sure connection is available
+	err = db.Ping()
+	if err != nil {
+		fmt.Println("db is not connected")
+	}
+
 	return db
 }

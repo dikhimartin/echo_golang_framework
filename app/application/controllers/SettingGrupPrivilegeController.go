@@ -1,72 +1,103 @@
 package controllers
 
 import (
-	"../models"
+	"crypto/md5"
+	"encoding/hex"
+	// "html/template"
+	// "strings"
+	// "sort"
+	// "../helpers"
+	"strconv"
+	"time"
+	"net/http"
+	_ "database/sql"
+	"fmt"
 	"../../database"
-	"github.com/labstack/echo"
+	"../models"
 	"github.com/dikhimartin/beego-v1.12.0/utils/pagination"
+	"github.com/labstack/echo"
+	"github.com/flosch/pongo2"
 )
 
-// == Custom Function
-func GetDataGrupPrivilegeById(id_grup_privilege string /*convert_to_md5*/) (models.ModelGrupPrivilege){
+func GetGrupPrivilege() ([]models.SettingUserGrup, []models.SettingPrivilege) {
 	db := database.CreateCon()
 	defer db.Close()
 
-	var id, id_setting_grup, name_grup, status, remarks []byte
-	row := db.Table("v_get_grup_privilege").Where("md5(id) = ?", id_grup_privilege).Select("id, id_setting_grup, name_grup, status, remarks").Row() 
-	err := row.Scan(&id, &id_setting_grup, &name_grup, &status, &remarks)
-	if err != nil{
-		logs.Println(err)
+	rowsUserGrup, errUserGrup := db.Query(" SELECT id, name_grup, status FROM v_get_setting_grup WHERE status = 'Y' AND id_setting_grup_privilege IS NULL ORDER BY name_grup")
+	if errUserGrup != nil {
+		fmt.Println(errUserGrup)
 	}
-	data := models.ModelGrupPrivilege{
-		ID        	     : string(id),
-		Id_setting_grup  : string(id_setting_grup),
-		Name_grup  		 : string(name_grup),
-		Status    	     : string(status),
-		Remarks     	 : string(remarks),
-		Additional     	 : ConvertToMD5(string(id)),
-	}
-	return data
-}
 
-func CheckGrupPrivilege() ([]models.ModelGrup) {
-	db := database.CreateCon()
-	defer db.Close()
+	defer rowsUserGrup.Close()
 
-	rows, err := db.Raw("SELECT id, name_grup, status FROM v_get_grup WHERE status = 'Y' AND id_setting_grup_privilege IS NULL ORDER BY name_grup").Rows();
-	if err != nil {
-		logs.Println(err)
-	}
-	defer rows.Close()
-	each   := models.ModelGrup{}
-	result := []models.ModelGrup{}
+	eachUserGrup := models.SettingUserGrup{}
+	resultUserGrup := []models.SettingUserGrup{}
 
-	for rows.Next() {
+	for rowsUserGrup.Next() {
 		var id, name_grup, status []byte
-		err = rows.Scan(&id, &name_grup, &status)
+
+		var err = rowsUserGrup.Scan(&id, &name_grup, &status)
+
 		if err != nil {
-			logs.Println(err)
+			fmt.Println(errUserGrup)
 		}
 
-		each.ID 			 = string(id)
-		each.Name_Grup 		 = string(name_grup)
-		each.Status  		 = string(status)
+		eachUserGrup.Id = string(id)
+		eachUserGrup.Id_setting_grup = string(name_grup)
+		eachUserGrup.Status = string(status)
 
-		result = append(result, each)
+		resultUserGrup = append(resultUserGrup, eachUserGrup)
 	}
 
-	return result
+	rowsPrivilege, errPrivilege := db.Query(" SELECT kode_privilege, name_menu, status FROM tb_setting_privilege ORDER BY kode_privilege")
+	if errPrivilege != nil {
+		fmt.Println(errPrivilege)
+	}
+
+	defer rowsPrivilege.Close()
+
+	eachPrivilege := models.SettingPrivilege{}
+	resultPrivilege := []models.SettingPrivilege{}
+
+	for rowsPrivilege.Next() {
+		var kode_privilege, name_menu, status []byte
+
+		var err = rowsPrivilege.Scan(&kode_privilege, &name_menu, &status)
+
+		if err != nil {
+			fmt.Println(errPrivilege)
+		}
+
+		eachPrivilege.Kode_Privilege = string(kode_privilege)
+		eachPrivilege.Name_Menu = string(name_menu)
+		eachPrivilege.Status = string(status)
+
+		resultPrivilege = append(resultPrivilege, eachPrivilege)
+	}
+
+	return resultUserGrup, resultPrivilege
 }
 
-// == View
 func ListSettingGrupPrivilege(c echo.Context) error {
+
 	db := database.CreateCon()
 	defer db.Close()
 
-	data_users	:= GetDataLogin(c)
-	if CheckPrivileges(data_users.Id_group, "setting.user.grupprivilege_2") == false{
-		return c.Render(403, "error_403", nil)
+	cc := &MyCustomContext{c}
+	data_users			:= cc.getDataLogin()
+
+	// check_privilege
+	var check_privilege []byte
+	check_privileges, errPriv := db.Prepare("SELECT kode_permissions FROM v_get_grup_privilege_detail WHERE id_setting_grup = ? AND kode_permissions = 'setting.user.grupprivilege_2'")
+	if errPriv != nil {
+		fmt.Printf("%s", errPriv)
 	}
+	errPriv = check_privileges.QueryRow(data_users.Id_group).Scan(&check_privilege)	
+	defer check_privileges.Close()
+	if string(check_privilege) != "setting.user.grupprivilege_2"{
+		return c.Render(http.StatusInternalServerError, "error_403", nil)
+	}
+	//end check_privilege
 
 	var selected string
 	var whrs string
@@ -82,6 +113,7 @@ func ListSettingGrupPrivilege(c echo.Context) error {
 	}
 
 	selected = "SELECT id, id_setting_grup, name_grup, status, created_at, updated_at"
+	// search biasa
 	if search != "" {
 		ors := " FROM v_get_grup_privilege WHERE name_grup LIKE '%" + search + "%' "
 		whrs += ors
@@ -95,497 +127,662 @@ func ListSettingGrupPrivilege(c echo.Context) error {
 		whrs = " FROM v_get_grup_privilege"
 	}
 
-	rows, err := db.Raw(selected + whrs + " ORDER BY name_grup ASC").Rows()
+	rows, err := db.Query(selected + whrs + " ORDER BY name_grup ASC")
 	if err != nil {
-		logs.Println(err)
-		return c.Render(500, "error_500", nil)
+		return c.Render(http.StatusInternalServerError, "error_500", nil)
 	}
 
 	defer rows.Close()
 
-	each   := models.ModelGrupPrivilege{}
-	result := []models.ModelGrupPrivilege{}
+	each := models.SettingGrupPrivilege{}
+	result := []models.SettingGrupPrivilege{}
 
 	for rows.Next() {
-		var	id, id_setting_grup, name_grup, status, created_at, updated_at[]byte
+		var id string
+		var	id_setting_grup, 
+		    name_grup,
+			status,
+			created_at,
+			updated_at[]byte
 
 		var err = rows.Scan(&id, &id_setting_grup, &name_grup, &status, &created_at, &updated_at)
 		if err != nil {
-			logs.Println(err)
-			return c.Render(500, "error_500", nil)
+			return c.Render(http.StatusInternalServerError, "error_500", nil)
 		}
 
-		each.ID  			 = ConvertToMD5(string(id))
+		var str string = id
+		hasher := md5.New()
+		hasher.Write([]byte(str))
+		converId := hex.EncodeToString(hasher.Sum(nil))
+
+		dtstr1 := string(created_at)
+		dt,_ := time.Parse("2006-01-02 15:04:05", dtstr1)
+		date_create := dt.Format("02 Jan 2006 at 15:04 PM")
+
+		dtstr2 := string(updated_at)
+		dt2,_ := time.Parse("2006-01-02 15:04:05", dtstr2)
+		date_update := dt2.Format("02 Jan 2006 at 15:04 PM")
+
+		if date_create == "01 Jan 0001 at 00:00 AM"{
+			date_create = "-"
+		}
+		if date_update == "01 Jan 0001 at 00:00 AM"{
+			date_update = "-"
+		}
+
+		each.Id = converId
+		each.Name_grup = string(name_grup)
 		each.Id_setting_grup = string(id_setting_grup)
-		each.Name_grup  	 = string(name_grup)
-		each.Status  		 = string(status)
-		each.CreatedAt 	 	 = FormatDate(string(created_at), "02 January 2006 at 15:04 PM")
-		each.UpdatedAt 	 	 = FormatDate(string(updated_at), "02 January 2006 at 15:04 PM")
+		each.Status = string(status)
+		each.Created_at = date_create
+		each.Updated_at = date_update
 
 		result = append(result, each)
 	}
 
-	postsPerPage := 10
-	paginator 	 = pagination.NewPaginator(c.Request(), postsPerPage, len(result))
+	// Lets use the Forbes top 7.
+	mydata := result
 
+	// sets paginator with the current offset (from the url query param)
+	postsPerPage := 10
+	paginator = pagination.NewPaginator(c.Request(), postsPerPage, len(mydata))
+
+	// fmt.Println(paginator.Offset())
 	// fetch the next posts "postsPerPage"
 	idrange := NewSlice(paginator.Offset(), postsPerPage, 1)
-	mydatas := []models.ModelGrupPrivilege{}
+	//create a new page list that shows up on html
+	mydatas := []models.SettingGrupPrivilege{}
 	for _, num := range idrange {
-		if num <= len(result)-1 {
-			numdata := result[num]
+		//Prevent index out of range errors
+		if num <= len(mydata)-1 {
+			numdata := mydata[num]
 			mydatas = append(mydatas, numdata)
 		}
 	}
 
-	data := response_json{
-		"paginator"		: paginator,
-		"data"			: mydatas,
-		"search"		: search,
-		"searchStatus"	: searchStatus,
-	}
+	// set the paginator in context
+	// also set the page list in context
+	// if you also have more data, set it context
+	data = pongo2.Context{
+		"paginator"		:    paginator,
+		"posts"			: mydatas,
+		"search"		:       search,
+		"searchStatus"	: searchStatus}
 
-	return c.Render(200, "list_setting_grup_privilege", data)
+
+	return c.Render(http.StatusOK, "list_setting_grup_privilege", data)
 }
 
 func AddSettingGrupPrivilege(c echo.Context) error {
+
 	db := database.CreateCon()
 	defer db.Close()
 
-	data_users	:= GetDataLogin(c)
-	if CheckPrivileges(data_users.Id_group, "setting.user.grupprivilege_2") == false{
-		return c.Render(403, "error_403", nil)
+	cc := &MyCustomContext{c}
+	data_users			:= cc.getDataLogin()
+
+	// check_privilege
+	var check_privilege []byte
+	check_privileges, errPriv := db.Prepare("SELECT kode_permissions FROM v_get_grup_privilege_detail WHERE id_setting_grup = ? AND kode_permissions = 'setting.user.grupprivilege_1'")
+	if errPriv != nil {
+		fmt.Printf("%s", errPriv)
+	}
+	errPriv = check_privileges.QueryRow(data_users.Id_group).Scan(&check_privilege)	
+	defer check_privileges.Close()
+	if string(check_privilege) != "setting.user.grupprivilege_1"{
+		return c.Render(http.StatusInternalServerError, "error_403", nil)
+	}
+	//end check_privilege
+
+	rowsPrivilege, errPrivilege := db.Query("SELECT id_setting_privilege, name_menu,  kode_privilege, kode_permissions, permissions FROM v_get_privilege GROUP BY id_setting_privilege ORDER BY kode_permissions ASC")
+	if errPrivilege != nil {
+		fmt.Println(errPrivilege)
 	}
 
-	rowsPrivilege, errPrivilege := db.Raw("SELECT id_setting_privilege, name_menu,  code_privilege, code_permissions, permissions FROM v_get_privilege GROUP BY id_setting_privilege ORDER BY code_permissions ASC").Rows()
-	if errPrivilege != nil {
-		logs.Println(errPrivilege)
-		return c.Render(500, "error_500", nil)
-	}
 	defer rowsPrivilege.Close()
 
-	eachPrivilege   := models.ModelPrivilege{}
-	resultPrivilege := []models.ModelPrivilege{}
+	eachPrivilege   := models.SettingPrivilege{}
+	resultPrivilege := []models.SettingPrivilege{}
 
 	for rowsPrivilege.Next() {
 		var id_setting_privilege, 
 			name_menu, 
-			code_privilege,
-			code_permissions,
+			kode_privilege,
+			kode_permissions,
 			permissions []byte
 
-			var err = rowsPrivilege.Scan(&id_setting_privilege, &name_menu, &code_privilege, &code_permissions, &permissions)
-			if err != nil {
-				logs.Println(errPrivilege)
-				return c.Render(500, "error_500", nil)
-			}
+		var err = rowsPrivilege.Scan(&id_setting_privilege, &name_menu, &kode_privilege, &kode_permissions, &permissions)
+		if err != nil {
+			fmt.Println(errPrivilege)
+		}
 
-			// get_permission
-			rows, err := db.Raw("SELECT permissions, code_permissions FROM v_get_privilege WHERE id_setting_privilege = ?", string(id_setting_privilege)).Rows()
-			if err != nil {
-				logs.Println(err)
-				return c.Render(500, "error_500", nil)
-			}
-			defer rows.Close()
+				//get hak aksess
+				rows, err2 := db.Query("SELECT permissions, kode_permissions FROM v_get_privilege WHERE id_setting_privilege = ?", string(id_setting_privilege))
+				if err2 != nil {
+					fmt.Println(err2)
+				}
+				defer rows.Close()
 
-			eachPermission   := models.ModelPermission{}
-			resultPermission := []models.ModelPermission{}
+				eachHakAkses := models.MasterPermissions{}
+				resultHakAkses := []models.MasterPermissions{}
 
-			for rows.Next() {
-				var permissions, code_permissions []byte
-				err = rows.Scan(&permissions, &code_permissions)
-				if err != nil {
-					logs.Println(err)
-					return c.Render(500, "error_500", nil)
+				for rows.Next() {
+
+					var permissions,
+						kode_permissions []byte
+
+					err2 := rows.Scan(&permissions, &kode_permissions)
+					if err2 != nil {
+						fmt.Println(err2)
+					}
+
+					hak_akses := ""
+					if string(kode_permissions) == string(kode_privilege)+"_1"{
+						hak_akses = "Create"
+					}else if string(kode_permissions) == string(kode_privilege)+"_2"{
+						hak_akses = "Read/View"
+					}else if string(kode_permissions) == string(kode_privilege)+"_3"{
+						hak_akses = "Edit"
+					}else if string(kode_permissions) == string(kode_privilege)+"_4"{
+						hak_akses = "Delete"
+					}
+
+					eachHakAkses.Key 		 = string(permissions)
+					eachHakAkses.Value  	 = hak_akses
+					eachHakAkses.Additional  = string(kode_permissions)
+
+					resultHakAkses = append(resultHakAkses, eachHakAkses)
 				}
 
-				permission := ""
-				if string(code_permissions) == string(code_privilege)+"_1"{
-					permission = "Create"
-				}else if string(code_permissions) == string(code_privilege)+"_2"{
-					permission = "Read/View"
-				}else if string(code_permissions) == string(code_privilege)+"_3"{
-					permission = "Edit"
-				}else if string(code_permissions) == string(code_privilege)+"_4"{
-					permission = "Delete"
-				}
-
-				eachPermission.ID 		   = string(permissions)
-				eachPermission.Name  	   = permission
-				eachPermission.Additional  = string(code_permissions)
-
-				resultPermission = append(resultPermission, eachPermission)
-			}
-
-		eachPrivilege.ID 	 			= string(id_setting_privilege)
-		eachPrivilege.Name_menu  		= string(name_menu)
-		eachPrivilege.Code_privilege 	= string(code_privilege)
-		eachPrivilege.Code_permission 	= string(code_permissions)
-		eachPrivilege.Permissions 		= resultPermission
+		eachPrivilege.Id 	 			= string(id_setting_privilege)
+		eachPrivilege.Name_Menu  		= string(name_menu)
+		eachPrivilege.Kode_Privilege 	= string(kode_privilege)
+		eachPrivilege.Kode_Permissions 	= string(kode_permissions)
+		eachPrivilege.Permissions 		= resultHakAkses
 
 		resultPrivilege = append(resultPrivilege, eachPrivilege)
 	}
 
-	user_grup := CheckGrupPrivilege()
 
-	data := response_json{
-		"user_grup"		  : user_grup,
+	resultUserGrup, _ := GetGrupPrivilege()
+
+	data = pongo2.Context{
+		"user_grup"		  : resultUserGrup,
 		"resultPrivilege" : resultPrivilege,
-	}	
+	}
 
-	return c.Render(200, "add_setting_grup_privilege", data)
+	return c.Render(http.StatusOK, "add_setting_grup_privilege", data)
 }
 
-func EditSettingGrupPrivilege(c echo.Context) error {
-	db := database.CreateCon()
-	defer db.Close()
-
-	data_users	:= GetDataLogin(c)
-	if CheckPrivileges(data_users.Id_group, "setting.user.grupprivilege_3") == false{
-		return c.Render(403, "error_403", nil)
-	}
-
-	requested_id := c.Param("id")
-
-	// get_data_grup_privilege
-	data_grup_privilege := GetDataGrupPrivilegeById(requested_id)
-
-	// get_data_grup
-	data_grup := GetDataGrup()
-
-
-	// get permissions menu
-	rowsPrivilege, errPrivilege := db.Raw("SELECT id_setting_privilege, name_menu,  code_privilege, code_permissions, permissions FROM v_get_privilege GROUP BY id_setting_privilege ORDER BY code_permissions ASC").Rows()
-	if errPrivilege != nil {
-		logs.Println(errPrivilege)
-	}
-	defer rowsPrivilege.Close()
-
-	eachPrivilege   := models.ModelPrivilege{}
-	resultPrivilege := []models.ModelPrivilege{}
-	for rowsPrivilege.Next() {
-		var id_setting_privilege, 
-			name_menu, 
-			code_privilege,
-			code_permissions,
-			permissions []byte
-
-				var err = rowsPrivilege.Scan(&id_setting_privilege, &name_menu, &code_privilege, &code_permissions, &permissions)
-				if err != nil {
-					logs.Println(errPrivilege)
-				}
-
-				// get_permission
-				rows, err := db.Raw("SELECT permissions, code_permissions FROM v_get_privilege WHERE id_setting_privilege = ?", string(id_setting_privilege)).Rows()
-				if err != nil {
-					logs.Println(err)
-				}
-				defer rows.Close()
-
-				eachPermission   := models.ModelPermission{}
-				resultPermission := []models.ModelPermission{}
-
-				for rows.Next() {
-
-					var permissions, code_permissions []byte
-
-					err = rows.Scan(&permissions, &code_permissions)
-					if err != nil {
-						logs.Println(err)
-					}
-
-					// check or unchecked
-					var checked_or_unchecked []byte
-					row := db.Table("tb_setting_grup_privilege_detail").Where("md5(id_setting_grup_privilege) = ? AND code_permissions = ?", requested_id, string(code_permissions)).Select("code_permissions").Row() 
-					err := row.Scan(&checked_or_unchecked)
-					if err != nil{
-						logs.Println(err)
-					}
-
-					status_check := ""
-					if string(checked_or_unchecked) == ""{
-						status_check = "unchecked"
-					}else if string(checked_or_unchecked) != ""{
-						status_check = "checked"
-					}
-
-					permission := ""
-					if string(code_permissions) == string(code_privilege)+"_1"{
-						permission = "Create"
-					}else if string(code_permissions) == string(code_privilege)+"_2"{
-						permission = "Read/View"
-					}else if string(code_permissions) == string(code_privilege)+"_3"{
-						permission = "Edit"
-					}else if string(code_permissions) == string(code_privilege)+"_4"{
-						permission = "Delete"
-					}
-
-					eachPermission.ID 		       = string(permissions)
-					eachPermission.Name  	       = permission
-					eachPermission.Additional  	   = string(code_permissions)
-					eachPermission.CheckOrUncheck  = status_check
-
-					resultPermission = append(resultPermission, eachPermission)
-				}
-
-		eachPrivilege.ID 	 			= string(id_setting_privilege)
-		eachPrivilege.Name_menu  		= string(name_menu)
-		eachPrivilege.Code_privilege 	= string(code_privilege)
-		eachPrivilege.Code_permission 	= string(code_permissions)
-		eachPrivilege.Permissions 		= resultPermission
-
-		resultPrivilege = append(resultPrivilege, eachPrivilege)
-	}
-
-
-	data := response_json{
-		"data_grup"		  			: data_grup,
-		"data_grup_privilege"		: data_grup_privilege,
-		"resultPrivilege"			: resultPrivilege,
-	}
-
-	return c.Render(200, "edit_setting_grup_privilege", data)
-}
-
-func ShowSettingGrupPrivilege(c echo.Context) error {
-	db := database.CreateCon()
-	defer db.Close()
-
-	data_users	:= GetDataLogin(c)
-	if CheckPrivileges(data_users.Id_group, "setting.user.grupprivilege_2") == false{
-		return c.Render(403, "error_403", nil)
-	}
-
-	requested_id := c.Param("id")
-
-	// get_data_grup_privilege
-	data_grup_privilege := GetDataGrupPrivilegeById(requested_id)
-
-	// get_data_grup
-	data_grup := GetDataGrup()
-
-	// get permissions menu
-	rowsPrivilege, errPrivilege := db.Raw("SELECT id_setting_privilege, name_menu,  code_privilege, code_permissions, permissions FROM v_get_privilege GROUP BY id_setting_privilege ORDER BY code_permissions ASC").Rows()
-	if errPrivilege != nil {
-		logs.Println(errPrivilege)
-	}
-	defer rowsPrivilege.Close()
-	eachPrivilege   := models.ModelPrivilege{}
-	resultPrivilege := []models.ModelPrivilege{}
-	for rowsPrivilege.Next() {
-		var id_setting_privilege, 
-			name_menu, 
-			code_privilege,
-			code_permissions,
-			permissions []byte
-
-				var err = rowsPrivilege.Scan(&id_setting_privilege, &name_menu, &code_privilege, &code_permissions, &permissions)
-				if err != nil {
-					logs.Println(errPrivilege)
-				}
-
-				// get_permission
-				rows, err := db.Raw("SELECT permissions, code_permissions FROM v_get_privilege WHERE id_setting_privilege = ?", string(id_setting_privilege)).Rows()
-				if err != nil {
-					logs.Println(err)
-				}
-				defer rows.Close()
-
-				eachPermission   := models.ModelPermission{}
-				resultPermission := []models.ModelPermission{}
-
-				for rows.Next() {
-
-					var permissions, code_permissions []byte
-
-					err = rows.Scan(&permissions, &code_permissions)
-					if err != nil {
-						logs.Println(err)
-					}
-
-					// check or unchecked
-					var checked_or_unchecked []byte
-					row := db.Table("tb_setting_grup_privilege_detail").Where("md5(id_setting_grup_privilege) = ? AND code_permissions = ?", requested_id, string(code_permissions)).Select("code_permissions").Row() 
-					err := row.Scan(&checked_or_unchecked)
-					if err != nil{
-						logs.Println(err)
-					}
-
-					status_check := ""
-					if string(checked_or_unchecked) == ""{
-						status_check = "unchecked"
-					}else if string(checked_or_unchecked) != ""{
-						status_check = "checked"
-					}
-
-					permission := ""
-					if string(code_permissions) == string(code_privilege)+"_1"{
-						permission = "Create"
-					}else if string(code_permissions) == string(code_privilege)+"_2"{
-						permission = "Read/View"
-					}else if string(code_permissions) == string(code_privilege)+"_3"{
-						permission = "Edit"
-					}else if string(code_permissions) == string(code_privilege)+"_4"{
-						permission = "Delete"
-					}
-
-					eachPermission.ID 		       = string(permissions)
-					eachPermission.Name  	       = permission
-					eachPermission.Additional  	   = string(code_permissions)
-					eachPermission.CheckOrUncheck  = status_check
-
-					resultPermission = append(resultPermission, eachPermission)
-				}
-
-		eachPrivilege.ID 	 			= string(id_setting_privilege)
-		eachPrivilege.Name_menu  		= string(name_menu)
-		eachPrivilege.Code_privilege 	= string(code_privilege)
-		eachPrivilege.Code_permission 	= string(code_permissions)
-		eachPrivilege.Permissions 		= resultPermission
-
-		resultPrivilege = append(resultPrivilege, eachPrivilege)
-	}
-
-	data := response_json{
-		"data_grup"		  		: data_grup,
-		"data_grup_privilege"   : data_grup_privilege,
-		"resultPrivilege"		: resultPrivilege,
-	}
-	return c.Render(200, "show_setting_grup_privilege", data)
-}
-
-
-// == Manipulate
 func StoreSettingGrupPrivilege(c echo.Context) error {
 	db := database.CreateCon()
 	defer db.Close()
 
-	data_users	:= GetDataLogin(c)
-	if CheckPrivileges(data_users.Id_group, "setting.user.grupprivilege_2") == false{
-		return c.Render(403, "error_403", nil)
+	cc := &MyCustomContext{c}
+	data_users			:= cc.getDataLogin()
+
+	// check_privilege
+	var check_privilege []byte
+	check_privileges, errPriv := db.Prepare("SELECT kode_permissions FROM v_get_grup_privilege_detail WHERE id_setting_grup = ? AND kode_permissions = 'setting.user.grupprivilege_1'")
+	if errPriv != nil {
+		fmt.Printf("%s", errPriv)
 	}
+	errPriv = check_privileges.QueryRow(data_users.Id_group).Scan(&check_privilege)	
+	defer check_privileges.Close()
+	if string(check_privilege) != "setting.user.grupprivilege_1"{
+		return c.Render(http.StatusInternalServerError, "error_403", nil)
+	}
+	//end check_privilege
 
 
-	id_setting_grup := ConvertStringToInt(c.FormValue("id_setting_grup"))
+	id_setting_grup := c.FormValue("id_setting_grup")
 	remarks 		:= c.FormValue("remarks")
 	status 			:= c.FormValue("status")
 
-	// insert_grup_privilege
-	grup_privilege := models.SettingGrupPrivilege{
-		Id_setting_grup 	: id_setting_grup,
-		Remarks 			: remarks,
-		Status 				: status,
-		CreatedAt 			: current_time("2006-01-02 15:04:05"),
+	t := time.Now()
+	current_time := t.Format("2006-01-02 15:04:05")
+
+    // Insert ke db tb_purchase_order_out
+	sql := "INSERT INTO tb_setting_grup_privilege(id_setting_grup, remarks, status, created_at) VALUES(?, ?, ?, ?)"
+	stmt, err := db.Prepare(sql)
+
+	if err != nil {
+		fmt.Print(err.Error())
 	}
-	if error_insert := db.Create(&grup_privilege); error_insert.Error != nil {
-		logs.Println(error_insert)
-		return c.Render(500, "error_500", nil)
+	defer stmt.Close()
+	res, err2 := stmt.Exec(id_setting_grup, remarks, status, current_time)
+
+	if err2 != nil {
+		return c.Render(http.StatusInternalServerError, "error_500", nil)
 	}
-	db.NewRecord(grup_privilege)
+
+	sum_last_id, _ := res.LastInsertId()
+	get_last_id := strconv.FormatInt(int64(sum_last_id), 10)
 
 
 	// insert permissions
-	form, _ := c.MultipartForm()
-	permissions := form.Value["permission[]"]
+	form, err := c.MultipartForm()
+	if err != nil {
+		return c.Render(http.StatusInternalServerError, "error_500", nil)
+	}
+	permissions := form.Value["hak_akses[]"]
+
 	for _, value := range permissions {
-		// insert_grup_privilege_detail
-		grup_privilege_detail := models.SettingGrupPrivilegeDetail{
-			Id_setting_grup_privilege 	: grup_privilege.ID,
-			Code_permissions 			: value,
-			CreatedAt 					: current_time("2006-01-02 15:04:05"),
+		sql := "INSERT INTO tb_setting_grup_privilege_detail(id_setting_grup_privilege, kode_permissions, created_at) VALUES(?, ?, ?)"
+		insert, err := db.Prepare(sql)
+		if err != nil {
+			return c.Render(http.StatusInternalServerError, "error_500", nil)
 		}
-		if error_insert := db.Create(&grup_privilege_detail); error_insert.Error != nil {
-			logs.Println(error_insert)
-			return c.Render(500, "error_500", nil)
+		defer insert.Close()
+		_, err2 := insert.Exec(get_last_id, value,  current_time)
+		if err2 != nil {
+			return c.Render(http.StatusInternalServerError, "error_500", nil)
+		}		
+	}
+
+	return c.Redirect(301, "/lib/setting/grup_privilege/")
+}
+
+func EditSettingGrupPrivilege(c echo.Context) error {
+
+	db := database.CreateCon()
+	defer db.Close()
+
+	cc := &MyCustomContext{c}
+	data_users			:= cc.getDataLogin()
+
+	// check_privilege
+	var check_privilege []byte
+	check_privileges, errPriv := db.Prepare("SELECT kode_permissions FROM v_get_grup_privilege_detail WHERE id_setting_grup = ? AND kode_permissions = 'setting.user.grupprivilege_3'")
+	if errPriv != nil {
+		fmt.Printf("%s", errPriv)
+	}
+	errPriv = check_privileges.QueryRow(data_users.Id_group).Scan(&check_privilege)	
+	defer check_privileges.Close()
+	if string(check_privilege) != "setting.user.grupprivilege_3"{
+		return c.Render(http.StatusInternalServerError, "error_403", nil)
+	}
+	//end check_privilege
+
+
+	requested_id := c.Param("id")
+
+	var id_setting_grup, status, remarks []byte
+
+	err := db.QueryRow("SELECT id_setting_grup, status, remarks FROM tb_setting_grup_privilege WHERE md5(id) = ?", requested_id).Scan(&id_setting_grup, &status, &remarks)
+	if err != nil {
+		return c.Render(http.StatusInternalServerError, "error_500", nil)
+	}
+
+	response := models.SettingGrupPrivilege{
+		Id:             		requested_id,
+		Id_setting_grup:        string(id_setting_grup),
+		Status:       	  		string(status),
+		Keterangan:     		string(remarks)}
+
+
+	// get permissions menu
+	rowsPrivilege, errPrivilege := db.Query("SELECT id_setting_privilege, name_menu,  kode_privilege, kode_permissions, permissions FROM v_get_privilege GROUP BY id_setting_privilege ORDER BY kode_permissions ASC")
+	if errPrivilege != nil {
+		fmt.Println(errPrivilege)
+	}
+
+	defer rowsPrivilege.Close()
+
+	eachPrivilege   := models.SettingPrivilege{}
+	resultPrivilege := []models.SettingPrivilege{}
+
+	for rowsPrivilege.Next() {
+		var id_setting_privilege, 
+			name_menu, 
+			kode_privilege,
+			kode_permissions,
+			permissions []byte
+
+		var err = rowsPrivilege.Scan(&id_setting_privilege, &name_menu, &kode_privilege, &kode_permissions, &permissions)
+		if err != nil {
+			fmt.Println(errPrivilege)
 		}
-		db.NewRecord(grup_privilege_detail)
+
+				//get hak aksess
+				rows, err2 := db.Query("SELECT permissions, kode_permissions FROM v_get_privilege WHERE id_setting_privilege = ?", string(id_setting_privilege))
+				if err2 != nil {
+					fmt.Println(err2)
+				}
+				defer rows.Close()
+
+				eachHakAkses := models.MasterPermissions{}
+				resultHakAkses := []models.MasterPermissions{}
+
+				for rows.Next() {
+
+					var key,
+						kode_permissions []byte
+
+					err2 := rows.Scan(&key, &kode_permissions)
+					if err2 != nil {
+						fmt.Println(err2)
+					}
+					// check or unchecked
+					var checked_or_unchecked []byte
+					err := db.QueryRow("SELECT kode_permissions FROM tb_setting_grup_privilege_detail WHERE md5(id_setting_grup_privilege) = ? AND kode_permissions = ?", requested_id, string(kode_permissions)).Scan(&checked_or_unchecked)
+					if err != nil {
+						fmt.Println(err)
+					}
+					permissions := ""
+					if string(checked_or_unchecked) == ""{
+						permissions = "unchecked"
+					}else if string(checked_or_unchecked) != ""{
+						permissions = "checked"
+					}
+
+
+					hak_akses := ""
+					if string(kode_permissions) == string(kode_privilege)+"_1"{
+						hak_akses = "Create"
+					}else if string(kode_permissions) == string(kode_privilege)+"_2"{
+						hak_akses = "Read/View"
+					}else if string(kode_permissions) == string(kode_privilege)+"_3"{
+						hak_akses = "Edit"
+					}else if string(kode_permissions) == string(kode_privilege)+"_4"{
+						hak_akses = "Delete"
+					}
+
+					eachHakAkses.Key 		     = string(key)
+					eachHakAkses.Value  	     = hak_akses
+					eachHakAkses.Additional  	 = string(kode_permissions)
+					eachHakAkses.CheckOrUncheck  = permissions
+
+					resultHakAkses = append(resultHakAkses, eachHakAkses)
+				}
+
+		eachPrivilege.Id 	 			= string(id_setting_privilege)
+		eachPrivilege.Name_Menu  		= string(name_menu)
+		eachPrivilege.Kode_Privilege 	= string(kode_privilege)
+		eachPrivilege.Kode_Permissions 	= string(kode_permissions)
+		eachPrivilege.Permissions 		= resultHakAkses
+
+		resultPrivilege = append(resultPrivilege, eachPrivilege)
 	}
 
 
+	// get grup
+	rowsUserGrup, errUserGrup := db.Query(" SELECT id, name_grup, status FROM v_get_setting_grup WHERE status = 'Y' ORDER BY name_grup")
+	if errUserGrup != nil {
+		fmt.Println(errUserGrup)
+	}
 
-	return c.Redirect(301, "/lib/setting/grup_privilege/")
+	defer rowsUserGrup.Close()
+
+	eachUserGrup := models.SettingUserGrup{}
+	resultUserGrup := []models.SettingUserGrup{}
+
+	for rowsUserGrup.Next() {
+		var id, name_grup, status []byte
+
+		var err = rowsUserGrup.Scan(&id, &name_grup, &status)
+
+		if err != nil {
+			fmt.Println(errUserGrup)
+		}
+
+		eachUserGrup.Id = string(id)
+		eachUserGrup.Id_setting_grup = string(name_grup)
+		eachUserGrup.Status = string(status)
+
+		resultUserGrup = append(resultUserGrup, eachUserGrup)
+	}
+
+
+	data = pongo2.Context{
+		"user_grup"		  		: resultUserGrup,
+		"setting_grup_privilege": response,
+		"resultPrivilege"		: resultPrivilege,
+	}
+	return c.Render(http.StatusOK, "edit_setting_grup_privilege", data)
 }
 
 func UpdateSettingGrupPrivilege(c echo.Context) error {
 	db := database.CreateCon()
 	defer db.Close()
 
-	data_users	:= GetDataLogin(c)
-	if CheckPrivileges(data_users.Id_group, "setting.user.grupprivilege_3") == false{
-		return c.Render(403, "error_403", nil)
+	cc := &MyCustomContext{c}
+	data_users			:= cc.getDataLogin()
+
+	// check_privilege
+	var check_privilege []byte
+	check_privileges, errPriv := db.Prepare("SELECT kode_permissions FROM v_get_grup_privilege_detail WHERE id_setting_grup = ? AND kode_permissions = 'setting.user.grupprivilege_3'")
+	if errPriv != nil {
+		fmt.Printf("%s", errPriv)
 	}
-
-
-	requested_id := c.Param("id")
-
-	id_setting_grup := ConvertStringToInt(c.FormValue("id_setting_grup"))
-	remarks 		:= c.FormValue("remarks")
-	status 			:= c.FormValue("status")
-
-
-	// update_data
-	var grup_privilege models.SettingGrupPrivilege
-	update_grup_privilege := db.Model(&grup_privilege).Where("md5(id) = ?", requested_id).Updates(map[string]interface{}{
-		"id_setting_grup"    :  id_setting_grup,
-		"status"       		 :  status,
-		"remarks"            :  remarks,
-		"updated_at"         :  current_time("2006-01-02 15:04:05"),
-	})
-	if update_grup_privilege.Error != nil {
-		logs.Println(update_grup_privilege.Error)
-		return c.Render(500, "error_500", nil)
+	errPriv = check_privileges.QueryRow(data_users.Id_group).Scan(&check_privilege)	
+	defer check_privileges.Close()
+	if string(check_privilege) != "setting.user.grupprivilege_3"{
+		return c.Render(http.StatusInternalServerError, "error_403", nil)
 	}
+	//end check_privilege
 
-	//  get_data_grup_privilege
-	data_grup_privilege := GetDataGrupPrivilegeById(requested_id)
+	t := time.Now()
+	current_time := t.Format("2006-01-02 15:04:05")
+	
+	
+	emp := new(models.SettingGrupPrivilege)
+	if err := c.Bind(emp); err != nil {
+		return err
+	}
+	id := c.Param("id")
 
+	id_setting_grup := c.FormValue("id_setting_grup")
+	status := c.FormValue("status")
+	remarks := c.FormValue("remarks")
+
+	selDB, err2 := db.Prepare("UPDATE tb_setting_grup_privilege SET id_setting_grup=?, status=?, remarks=?, updated_at = ? WHERE md5(id)=?")
+	if err2 != nil {
+		return c.Render(http.StatusInternalServerError, "error_500", nil)
+	}
+	defer selDB.Close()
+	selDB.Exec(id_setting_grup, status, remarks, current_time, id)
+
+
+	// get id_setting_grup_privilege 
+	var id_setting_grup_privilege []byte
+	err := db.QueryRow("SELECT id FROM tb_setting_grup_privilege WHERE md5(id) = ?", id).Scan(&id_setting_grup_privilege)
+	if err != nil {
+		return c.Render(http.StatusInternalServerError, "error_500", nil)
+	}
+	fmt.Println(string(id_setting_grup_privilege))
+
+	// Delete
+	sql2 := "DELETE FROM tb_setting_grup_privilege_detail WHERE md5(id_setting_grup_privilege) = ?"
+	stmt, err := db.Prepare(sql2)
+	if err != nil {
+		return c.Render(http.StatusInternalServerError, "error_500", nil)
+	}
+	defer stmt.Close()
+	_, err3 := stmt.Exec(id)
+	if err3 != nil {
+		return c.Render(http.StatusInternalServerError, "error_500", nil)
+	}
 
 	// update permissions
-	if DeleteSettingGrupPrivilegeDetail(requested_id) == false{
-		return c.Render(500, "error_500", nil)
+	form, err := c.MultipartForm()
+	if err != nil {
+		return c.Render(http.StatusInternalServerError, "error_500", nil)
 	}
+	permissions := form.Value["hak_akses[]"]
 
-	form, _ := c.MultipartForm()
-	permissions := form.Value["permission[]"]
 	for _, value := range permissions {
-		// insert_grup_privilege_detail
-		grup_privilege_detail := models.SettingGrupPrivilegeDetail{
-			Id_setting_grup_privilege 	: ConvertStringToInt(data_grup_privilege.ID),
-			Code_permissions 			: value,
-			CreatedAt 					: current_time("2006-01-02 15:04:05"),
+
+		sql := "INSERT INTO tb_setting_grup_privilege_detail(id_setting_grup_privilege, kode_permissions, created_at) VALUES(?, ?, ?)"
+		insert, err := db.Prepare(sql)
+		if err != nil {
+			return c.Render(http.StatusInternalServerError, "error_500", nil)
 		}
-		if error_insert := db.Create(&grup_privilege_detail); error_insert.Error != nil {
-			logs.Println(error_insert)
-			return c.Render(500, "error_500", nil)
-		}
-		db.NewRecord(grup_privilege_detail)
+		defer insert.Close()
+		_, err2 := insert.Exec(string(id_setting_grup_privilege), value,  current_time)
+		if err2 != nil {
+			return c.Render(http.StatusInternalServerError, "error_500", nil)
+		}		
 	}
 
 	return c.Redirect(301, "/lib/setting/grup_privilege/")
 }
 
-func DeleteSettingGrupPrivilege(id_grup_privilege string /*convert_to_md5*/) bool{
+func ShowSettingGrupPrivilege(c echo.Context) error {
+
 	db := database.CreateCon()
 	defer db.Close()
 
-	var data models.SettingGrupPrivilege
-	delete := db.Unscoped().Where("md5(id) = ?", id_grup_privilege).Delete(&data)
-	if delete.Error != nil {
-		logs.Println(delete.Error)
-		return false
+	cc := &MyCustomContext{c}
+	data_users			:= cc.getDataLogin()
+
+	// check_privilege
+	var check_privilege []byte
+	check_privileges, errPriv := db.Prepare("SELECT kode_permissions FROM v_get_grup_privilege_detail WHERE id_setting_grup = ? AND kode_permissions = 'setting.user.grupprivilege_2'")
+	if errPriv != nil {
+		fmt.Printf("%s", errPriv)
 	}
-	return true
+	errPriv = check_privileges.QueryRow(data_users.Id_group).Scan(&check_privilege)	
+	defer check_privileges.Close()
+	if string(check_privilege) != "setting.user.grupprivilege_2"{
+		return c.Render(http.StatusInternalServerError, "error_403", nil)
+	}
+	//end check_privilege
+
+	requested_id := c.Param("id")
+
+	var name_grup, status, remarks []byte
+
+	err := db.QueryRow("SELECT name_grup, status, remarks FROM v_get_grup_privilege WHERE md5(id) = ?", requested_id).Scan(&name_grup, &status, &remarks)
+	if err != nil {
+		return c.Render(http.StatusInternalServerError, "error_500", nil)
+	}
+
+	response := models.SettingGrupPrivilege{
+		Id:             		requested_id,
+		Name_grup:        string(name_grup),
+		Status:       	  		string(status),
+		Keterangan:     		string(remarks)}
+
+
+	// get permissions menu
+	rowsPrivilege, errPrivilege := db.Query("SELECT id_setting_privilege, name_menu,  kode_privilege, kode_permissions, permissions FROM v_get_privilege GROUP BY id_setting_privilege ORDER BY kode_permissions ASC")
+	if errPrivilege != nil {
+		fmt.Println(errPrivilege)
+	}
+
+	defer rowsPrivilege.Close()
+
+	eachPrivilege   := models.SettingPrivilege{}
+	resultPrivilege := []models.SettingPrivilege{}
+
+	for rowsPrivilege.Next() {
+		var id_setting_privilege, 
+			name_menu, 
+			kode_privilege,
+			kode_permissions,
+			permissions []byte
+
+		var err = rowsPrivilege.Scan(&id_setting_privilege, &name_menu, &kode_privilege, &kode_permissions, &permissions)
+		if err != nil {
+			fmt.Println(errPrivilege)
+		}
+
+				//get hak aksess
+				rows, err2 := db.Query("SELECT permissions, kode_permissions FROM v_get_privilege WHERE id_setting_privilege = ?", string(id_setting_privilege))
+				if err2 != nil {
+					fmt.Println(err2)
+				}
+				defer rows.Close()
+
+				eachHakAkses := models.MasterPermissions{}
+				resultHakAkses := []models.MasterPermissions{}
+
+				for rows.Next() {
+
+					var key,
+						kode_permissions []byte
+
+					err2 := rows.Scan(&key, &kode_permissions)
+					if err2 != nil {
+						fmt.Println(err2)
+					}
+					// check or unchecked
+					var checked_or_unchecked []byte
+					err := db.QueryRow("SELECT kode_permissions FROM tb_setting_grup_privilege_detail WHERE md5(id_setting_grup_privilege) = ? AND kode_permissions = ?", requested_id, string(kode_permissions)).Scan(&checked_or_unchecked)
+					if err != nil {
+						fmt.Println(err)
+					}
+					permissions := ""
+					if string(checked_or_unchecked) == ""{
+						permissions = "unchecked"
+					}else if string(checked_or_unchecked) != ""{
+						permissions = "checked"
+					}
+
+
+					hak_akses := ""
+					if string(kode_permissions) == string(kode_privilege)+"_1"{
+						hak_akses = "Create"
+					}else if string(kode_permissions) == string(kode_privilege)+"_2"{
+						hak_akses = "Read/View"
+					}else if string(kode_permissions) == string(kode_privilege)+"_3"{
+						hak_akses = "Edit"
+					}else if string(kode_permissions) == string(kode_privilege)+"_4"{
+						hak_akses = "Delete"
+					}
+
+					eachHakAkses.Key 		     = string(key)
+					eachHakAkses.Value  	     = hak_akses
+					eachHakAkses.Additional  	 = string(kode_permissions)
+					eachHakAkses.CheckOrUncheck  = permissions
+
+					resultHakAkses = append(resultHakAkses, eachHakAkses)
+				}
+
+		eachPrivilege.Id 	 			= string(id_setting_privilege)
+		eachPrivilege.Name_Menu  		= string(name_menu)
+		eachPrivilege.Kode_Privilege 	= string(kode_privilege)
+		eachPrivilege.Kode_Permissions 	= string(kode_permissions)
+		eachPrivilege.Permissions 		= resultHakAkses
+
+		resultPrivilege = append(resultPrivilege, eachPrivilege)
+	}
+
+
+	// get grup
+	rowsUserGrup, errUserGrup := db.Query(" SELECT id, name_grup, status FROM v_get_setting_grup WHERE status = 'Y' ORDER BY name_grup")
+	if errUserGrup != nil {
+		fmt.Println(errUserGrup)
+	}
+
+	defer rowsUserGrup.Close()
+
+	eachUserGrup := models.SettingUserGrup{}
+	resultUserGrup := []models.SettingUserGrup{}
+
+	for rowsUserGrup.Next() {
+		var id, name_grup, status []byte
+
+		var err = rowsUserGrup.Scan(&id, &name_grup, &status)
+
+		if err != nil {
+			fmt.Println(errUserGrup)
+		}
+
+		eachUserGrup.Id = string(id)
+		eachUserGrup.Id_setting_grup = string(name_grup)
+		eachUserGrup.Status = string(status)
+
+		resultUserGrup = append(resultUserGrup, eachUserGrup)
+	}
+
+
+	data = pongo2.Context{
+		"user_grup"		  		: resultUserGrup,
+		"setting_grup_privilege": response,
+		"resultPrivilege"		: resultPrivilege,
+	}
+	return c.Render(http.StatusOK, "show_setting_grup_privilege", data)
 }
 
-func DeleteSettingGrupPrivilegeDetail(id_grup_privilege string /*convert_to_md5*/) bool{
-	db := database.CreateCon()
-	defer db.Close()
-
-	var data models.SettingGrupPrivilegeDetail
-	delete := db.Unscoped().Where("md5(id_setting_grup_privilege) = ?", id_grup_privilege).Delete(&data)
-	if delete.Error != nil {
-		logs.Println(delete.Error)
-		return false
-	}
-	return true
-}
