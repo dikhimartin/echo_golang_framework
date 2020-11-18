@@ -15,7 +15,7 @@
 ### 1. Docker (portablelize)
 
 #### Intro 
-Docker adalah sebuah platform open source untuk menyatukan file-file yang dibutuhkan sebuah software sehingga menjadi menjadi satu kesatuan yang lengkap dan berfungsi secara portabel dan bersifat virtual server. 
+Docker adalah sebuah platform open source untuk menyatukan file-file yang dibutuhkan sebuah software sehingga menjadi menjadi satu kesatuan yang lengkap , bekerja secara portabel dan bersifat virtual server. 
 
 #### Requirement install
 - Docker Engine
