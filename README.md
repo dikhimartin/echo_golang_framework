@@ -12,13 +12,7 @@
 [![License](http://img.shields.io/badge/license-mit-blue.svg?style=flat-square)](https://raw.githubusercontent.com/labstack/echo/master/LICENSE)
 
 
-## Requirement Server
-- GO => go1.15.1
-- Redis Server (4.0.9)
-- Mysql (mysql  Ver 14.14 Distrib 5.7.30, for Linux)
-
-
-## Cara Menjalankan
+## 1.a. Cara Menjalankan Service (docker)
 ``` shell
 cp app/.env.example app/.env
 cd app/
@@ -28,6 +22,30 @@ docker-compose exec go bash
 ```shell
 go run main.go
 ```
+
+
+## 1.b. Cara Menjalankan Service (Go bash)
+### Requirement Server install
+- GO            => go1.15.1
+- Redis Server  => 4.0.9)
+- Mysql         => (mysql  Ver 14.14 Distrib 5.7.30, for Linux)
+
+ ``` shell
+ cd app/
+ go run main.go 
+ ```
+ 
+ 
+## 2. Server Running
+```shell
+http://localhost:8888/
+```
+
+## 3. Stop Server
+```shell
+docker-compose down
+```
+
 
 ## Manage Redis Cache
 ```shell
