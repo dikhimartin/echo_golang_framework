@@ -1,4 +1,4 @@
-# GOLANG | Echo Framework v.2
+# GOLANG | Echo Framework | GORM | v.2
 <a href="https://echo.labstack.com"><img height="80" src="https://cdn.labstack.com/images/echo-logo.svg"></a>
 
 [![Sourcegraph](https://sourcegraph.com/github.com/labstack/echo/-/badge.svg?style=flat-square)](https://sourcegraph.com/github.com/labstack/echo?badge)
@@ -11,14 +11,19 @@
 [![Twitter](https://img.shields.io/badge/twitter-@labstack-55acee.svg?style=flat-square)](https://twitter.com/labstack)
 [![License](http://img.shields.io/badge/license-mit-blue.svg?style=flat-square)](https://raw.githubusercontent.com/labstack/echo/master/LICENSE)
 
+## Opsi 
+### 1. Docker (portablelize)
 
-## Requirement Server
-- GO => go1.15.1
-- Redis Server (4.0.9)
-- Mysql (mysql  Ver 14.14 Distrib 5.7.30, for Linux)
+#### Intro 
+Docker adalah sebuah platform open source untuk menyatukan file-file yang dibutuhkan sebuah software sehingga menjadi menjadi satu kesatuan yang lengkap , bekerja secara portabel dan bersifat virtual server. 
 
+#### Requirement install
+- Docker Engine
+https://docs.docker.com/engine/install/
+- Docker Compose
+https://docs.docker.com/compose/install/
 
-## Cara Menjalankan
+#### Cara Menjalankan 
 ``` shell
 cp app/.env.example app/.env
 cd app/
@@ -29,15 +34,55 @@ docker-compose exec go bash
 go run main.go
 ```
 
-## Manage Redis Cache
+#### Server Running
+```shell
+http://localhost:8888/
+```
+
+#### Stop Server
+```shell
+docker-compose down
+```
+#### Manage Redis Cache
 ```shell
 docker-compose exec redis redis-cli
 ```
 
-## Manage Mysql Database
+#### Manage Mysql Database
 ```shell
 docker-compose exec mysql sh 
 mysql -u user -p
 Enter password: user
 ```
+
+
+### 2. Bash (manual native) 
+
+#### Requirement install
+- GO            => go1.15.1
+https://golang.org/dl/
+- Redis Server  => 4.0.9)
+https://download.redis.io/releases/
+- Mysql         => (mysql  Ver 14.14 Distrib 5.7.30, for Linux)
+https://dev.mysql.com/doc/mysql-installation-excerpt/5.7/en/
+
+#### Cara Menjalankan 
+ ``` shell
+ cd app/
+ go run main.go 
+ ```
+ 
+#### Server Running
+```shell
+http://localhost:8888/
+```
+
+
+
+
+## Author Owner
+- [Dikhi Martin](https://www.linkedin.com/in/dikhi-martin/)
+
+## License
+[MIT](https://github.com/labstack/echo/blob/master/LICENSE)
 
