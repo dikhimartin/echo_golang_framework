@@ -60,9 +60,11 @@ Enter password: user
 
 #### Requirement install
 - GO            => go1.15.1
+https://golang.org/dl/
 - Redis Server  => 4.0.9)
+https://download.redis.io/releases/
 - Mysql         => (mysql  Ver 14.14 Distrib 5.7.30, for Linux)
-
+https://dev.mysql.com/doc/mysql-installation-excerpt/5.7/en/
 
 #### Cara Menjalankan 
  ``` shell
