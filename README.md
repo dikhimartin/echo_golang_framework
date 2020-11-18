@@ -11,8 +11,19 @@
 [![Twitter](https://img.shields.io/badge/twitter-@labstack-55acee.svg?style=flat-square)](https://twitter.com/labstack)
 [![License](http://img.shields.io/badge/license-mit-blue.svg?style=flat-square)](https://raw.githubusercontent.com/labstack/echo/master/LICENSE)
 
+## Opsi 
+### 1. Docker
 
-## 1.a. Cara Menjalankan Service (docker)
+#### Sumary 
+Docker adalah sebuah platform open source untuk menyatukan file-file yang dibutuhkan sebuah software sehingga menjadi menjadi satu kesatuan yang lengkap dan berfungsi secara portabel dan bersifat virtual server. 
+
+#### Requirement install
+- Docker Engine
+https://docs.docker.com/engine/install/
+- Docker Compose
+https://docs.docker.com/compose/install/
+
+#### Cara Menjalankan 
 ``` shell
 cp app/.env.example app/.env
 cd app/
@@ -22,6 +33,9 @@ docker-compose exec go bash
 ```shell
 go run main.go
 ```
+
+
+
 
 
 ## 1.b. Cara Menjalankan Service (Go bash)
