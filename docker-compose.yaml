@@ -1,0 +1,48 @@
+  version: '3.7'
+  networks:
+    receipt_service: {}
+  services:
+    go:
+      image: golang:1.15-buster
+      env_file: app/.env
+      working_dir: /opt/app
+      environment:
+        - TZ=Asia/Jakarta
+      volumes:
+        - ./app:/opt/app
+        - ./.cache/go-build:/root/.cache/go-build
+        - ./.cache/src:/go/src
+        - ./.cache/bin:/go/bin
+      ports:
+        - "${APP_PORT:-3333}:${APP_PORT:-3333}"
+      command: ["tail", "-f", "/etc/hosts"]
+      networks:
+        receipt_service:
+          aliases:
+            - mysql
+    mysql:
+      image: mysql:5.7
+      command: mysqld --sql_mode="STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION"
+      volumes:
+        - ./mysql-data:/var/lib/mysql
+      user: "${USER_ID:-1000}:${GROUP_ID:-1000}"
+      environment:
+        - TZ=Asia/Jakarta
+        - MYSQL_ROOT_PASSWORD=${DB_PASS:-user}
+        - MYSQL_DATABASE=${DB_NAME:-db_receipt_golang_crud_v_2}
+        - MYSQL_USER=${DB_USER:-user}
+        - MYSQL_PASSWORD=${DB_PASS:-user}
+      ports: 
+        - 6612:3306
+      networks:
+        receipt_service:
+          aliases:
+            - mysql
+    redis:
+      image: redis:alpine
+      environment:
+        - TZ=Asia/Jakarta
+      networks:
+        receipt_service:
+          aliases:
+            - redis

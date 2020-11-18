@@ -25,7 +25,7 @@ https://docs.docker.com/compose/install/
 
 #### Cara Menjalankan 
 ``` shell
-cp app/.env.example app/.env
+cp app/.env.docker.example app/.env
 cd app/
 docker-compose up -d
 docker-compose exec go bash

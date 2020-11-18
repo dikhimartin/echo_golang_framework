@@ -141,3 +141,25 @@ func UpdateProfileController(c echo.Context) error{
 	return c.JSON(200, "true")
 }
 
+
+func UpdateInlineProfile(c echo.Context) error {
+	db := database.CreateCon()
+	defer db.Close()
+
+	data_users	:= GetDataLogin(c)
+	id_users 	:=	data_users.Id_user
+	
+	field 		:= c.Param("field")
+	value 	    := c.FormValue("value")
+
+	var update models.SettingUser
+	update_user := db.Model(&update).Where("id = ?", id_users).Updates(map[string]interface{}{
+		""+ field +""    :    value,
+	})
+	if update_user.Error != nil {
+		logs.Println(update_user.Error)
+		return c.JSON(500, "error")
+	}
+
+	return c.JSON(200, value)
+}
