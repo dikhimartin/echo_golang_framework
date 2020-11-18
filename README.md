@@ -12,7 +12,7 @@
 [![License](http://img.shields.io/badge/license-mit-blue.svg?style=flat-square)](https://raw.githubusercontent.com/labstack/echo/master/LICENSE)
 
 ## Opsi 
-### 1. Docker (portablize)
+### 1. Docker (portablelize)
 
 #### Intro 
 Docker adalah sebuah platform open source untuk menyatukan file-file yang dibutuhkan sebuah software sehingga menjadi menjadi satu kesatuan yang lengkap dan berfungsi secara portabel dan bersifat virtual server. 
