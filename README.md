@@ -1,4 +1,4 @@
-# GOLANG | Echo Framework v.2
+# GOLANG | Echo Framework | GORM | v.2
 <a href="https://echo.labstack.com"><img height="80" src="https://cdn.labstack.com/images/echo-logo.svg"></a>
 
 [![Sourcegraph](https://sourcegraph.com/github.com/labstack/echo/-/badge.svg?style=flat-square)](https://sourcegraph.com/github.com/labstack/echo?badge)
@@ -55,7 +55,6 @@ mysql -u user -p
 Enter password: user
 ```
 
-#### Sumary
 
 ### 2. Bash (manual native) 
 
