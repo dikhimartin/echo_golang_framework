@@ -1,7 +1,7 @@
 package database
 
 import(
-	"../application/models"
+	"receipt/application/models"
 )
 
 func AutoMigrate(){

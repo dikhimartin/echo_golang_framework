@@ -86,7 +86,7 @@ func MainMiddleware(e *echo.Group) {
 	e.Use(middleware.JWTWithConfig(middleware.JWTConfig{
 		SigningMethod: "HS512",
 		SigningKey:    []byte(JWT_KEY),
-		TokenLookup:   "header:UMKMKita",
+		TokenLookup:   "header:ReciptGoV2",
 	}))
 }
 

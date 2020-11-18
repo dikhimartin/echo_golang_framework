@@ -3,9 +3,9 @@ package controllers
 import (
 	"time"
 	"net/http"
-	"../models"
-	"../../database"
-	lib      "../../lib"
+	"receipt/application/models"
+	"receipt/database"
+	lib      "receipt/lib"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/labstack/echo"
 )

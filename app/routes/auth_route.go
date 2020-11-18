@@ -1,8 +1,8 @@
 package routes
 
 import (
-	"../application/controllers"
-	lib "../lib"
+	"receipt/application/controllers"
+	lib "receipt/lib"
 	"github.com/labstack/echo"
 )
 

@@ -1,8 +1,8 @@
 package controllers
 
 import (
-	"../models"
-	"../../database"
+	"receipt/application/models"
+	"receipt/database"
 	"github.com/labstack/echo"
 	"github.com/dikhimartin/beego-v1.12.0/utils/pagination"
 )

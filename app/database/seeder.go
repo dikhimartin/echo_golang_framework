@@ -3,7 +3,7 @@ package database
 import(
 	"strconv"
 	"encoding/json"
-	"../application/models"
+	"receipt/application/models"
 )
 
 // data_seeder_here

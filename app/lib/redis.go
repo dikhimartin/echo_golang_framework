@@ -6,7 +6,7 @@ import (
 	"strconv"
 	"fmt"
 	"github.com/labstack/echo"
-	"github.com/dikhimartin/redis"
+	"github.com/go-redis/redis"
 )
 
 func RedisConnection() *redis.Client {
