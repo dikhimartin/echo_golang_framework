@@ -1,6 +1,13 @@
 {{define "list_setting_grup"}}
 	{{template "layout"}}
 
+     <style type="text/css">
+        table , td, th {
+            border: 1px solid #595959;
+            border-collapse: collapse;
+        }
+    </style> 
+
 	<div class="page-wrapper">
         <!-- Bread crumb and right sidebar toggle -->
         <div class="row page-titles">
@@ -19,151 +26,145 @@
 
 
         <!-- Konten -->
-		<div class="container-fluid">
+        <div class="container-fluid">
             <div class="row">
-				<!-- Filter Data -->
-				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-					<div class="card card-default">
-						<div class="card-header bg-info text-white">
-							<div class="card-actions">
-								<a class="" data-action="collapse"><i class="ti-minus"></i></a>
-							</div>
-							<h4 class="card-title m-b-0 text-white">Filter Data</h4>
-						</div>
-						<div class="card-body p-0 collapse show">
-							<div class="card-body">
-								<form action="" method="GET">
-									<div class="row">
-										<div class="col-sm-6">
-											<div class="form-group">
-												<label for="searchStatus">Search</label>
-												<input type="text" name="search" class="form-control" value="{{.search}}" placeholder="Search data...">
-											</div>
-										</div>
+                <!-- Filter Data -->
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="card card-default">
+                        <div class="card-header bg-info text-white">
+                            <div class="card-actions">
+                                <a class="" data-action="collapse"><i class="ti-minus"></i></a>
+                            </div>
+                            <h4 class="card-title m-b-0 text-white">Filter Data</h4>
+                        </div>
+                        <div class="card-body p-0 collapse show">
+                            <div class="card-body">
+                                <form action="" method="GET">
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <label for="searchStatus">Search</label>
+                                                <input type="text" name="search" class="form-control" value="{{.search}}" placeholder="Search data...">
+                                            </div>
+                                        </div>
 
-										<div class="col-md-6">
-											<div class="form-group">
-												<label for="searchStatus">Status</label>
-												<select name="searchStatus" data-placeholder="Choose..." class="form-control custom-select" tabindex="-1">
-													<option value="">--- Show All --- </option>
-													<option value="Y"{{if eq (.searchStatus) ("Y")}} selected {{end}}>Active</option>
-													<option value="N"{{if eq (.searchStatus) ("N")}} selected {{end}}>Non Active</option>
-												</select>
-											</div>
-										</div>
-										</div>
-									<div class="button-group">
-											<button class="btn btn-info btn-sm waves-light" type="submit" data-toggle="tooltip" data-placement="top" title="Filter"><span class="btn-label"><i class="fa fa-search"></i></span>&nbsp;Filter
-											</button>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="searchStatus">Status</label>
+                                                <select name="searchStatus" data-placeholder="Choose..." class="form-control custom-select" tabindex="-1">
+                                                    <option value="">--- Show All --- </option>
+                                                    <option value="Y"{{if eq (.searchStatus) ("Y")}} selected {{end}}>Active</option>
+                                                    <option value="N"{{if eq (.searchStatus) ("N")}} selected {{end}}>Non Active</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        </div>
+                                    <div class="button-group">
+                                            <button class="btn btn-info btn-sm waves-light" type="submit" data-toggle="tooltip" data-placement="top" title="Filter"><span class="btn-label"><i class="fa fa-search"></i></span>&nbsp;Filter
+                                            </button>
 
-										<a href="/lib/setting/grup/" class="btn btn-warning btn-sm" data-toggle="tooltip" data-placement="top" title="Refresh">
-											<i class="fa fa-refresh"></i>&nbsp;Refresh
-										</a>
+                                        <a href="/lib/setting/grup/" class="btn btn-warning btn-sm" data-toggle="tooltip" data-placement="top" title="Refresh">
+                                            <i class="fa fa-refresh"></i>&nbsp;Refresh
+                                        </a>
 
-									</div>
-								</form>
-							</div>
-						</div>
-					</div>
-				</div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
 
-            	<!-- Data -->
+                <!-- Data -->
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="card">
-						<div class="card-header bg-info text-white">
-							<h4 class="card-title m-b-0 text-white">List Data</h4>
-						</div>
+                        <div class="card-header bg-info text-white">
+                            <h4 class="card-title m-b-0 text-white">List Data</h4>
+                        </div>
                             <div class="card-body">
                             <div class="row">
-                            	<div class="col-md-4">
-	                                <div class="button-group">
-	                                	 <a href="/lib/setting/grup/addform/">
-		                                     <button class="btn btn-info btn-sm waves-light" type="button" data-toggle="tooltip" data-placement="top" title="Add New"><span class="btn-label"><i class="fa fa-plus"></i></span>&nbsp;Add New
-		                                     </button>
-		                                 </a>
-	                                </div>
-                            	</div>
+                                <div class="col-md-4">
+                                    <div class="button-group">
+                                         <a href="/lib/setting/grup/addform/">
+                                             <button class="btn btn-info btn-sm waves-light" type="button" data-toggle="tooltip" data-placement="top" title="Add New"><span class="btn-label"><i class="fa fa-plus"></i></span>&nbsp;Add New
+                                             </button>
+                                         </a>
+                                    </div>
+                                </div>
 
                             </div>
                             <p style="margin-bottom: 20px;"></p>
 
-                            	<div id="notif_success"></div>
-						        <div class="table-responsive">
-						        	<table class="table table-hover" id="recordsTable">
-										<thead>
-											<tr class="bg-secondary text-white">
-												<th>Name Grup</th>
-												<th>Status</th>
-												<th width="130">Action</th>
-											</tr>
-										</thead>
-										<tbody>
-											{{if .setting_grup}}
-												{{range .setting_grup}}
-												<tr>
-													<td>{{ .Name_Grup }}</td>
-													<td>
-														{{if (eq .Status "Y") }}
-														<label class="label label-success">Active</label>
-														{{else if (eq .Status "N") }}
-														<label class="label label-danger">Non-Active</label>
-														{{else}}
-														<label class="label label-danger">Empty</label>
-														{{end}}
-													</td>
-													<td class="text-nowrap">
-														<a href="/lib/setting/grup/editform/{{.Id}}/" class="btn btn-sm btn-info" data-toggle="tooltip" data-placement="top" title="Edit data!">
-															<i class="fa fa-pencil"></i>
-														</a>
-													</td>
-												</tr>
-												{{end}}
-												{{else}}
-												<tr>
-													<td colspan="3" class="text-center alert-danger">Data is empty</td>
-												</tr>
-												{{end}}
-										</tbody>
-									</table>
-						        </div>
-								<p style="margin-bottom: 20px;"></p>
-								<div class="text-center">
-									{{if .paginator.HasPages}}
-										<ul class="pagination">
-											{{if .paginator.HasPrev }}
-												<li class="page-item"><a class="page-link" href="{{.paginator.PageLinkFirst}}">First</a></li>
-												<li class="page-item"><a class="page-link" href="{{.paginator.PageLinkPrev}}">&lt;</a></li>
-											{{ else }}
-												<li class="page-item disabled"><a class="page-link"> First</a></li>
-												<li class="page-item disabled"><a class="page-link">&lt;</a></li>
-											{{ end }}
+                                <div id="notif_success"></div>
+                                <div class="table-responsive">
+                                    <table class="table table-hover" id="recordsTable">
+                                        <thead>
+                                            <tr class="bg-secondary text-white">
+                                                <td>Name Grup</td>
+                                                <td>Status</td>
+                                                <td width="130">Action</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {{if .data}}
+                                                {{range .data}}
+                                                <tr>
+                                                    <td>{{ .Name_Grup }}</td>
+                                                    <td>
+                                                        {{if (eq .Status "Y") }}
+                                                            <label class="label label-success">Active</label>
+                                                        {{else if (eq .Status "N") }}
+                                                            <label class="label label-danger">Non-Active</label>
+                                                        {{end}}
+                                                    </td>
+                                                    <td class="text-nowrap">
+                                                        <a href="/lib/setting/grup/editform/{{.ID}}/" class="btn btn-sm btn-info" data-toggle="tooltip" data-placement="top" title="Edit data!">
+                                                            <i class="fa fa-pencil"></i>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                                {{end}}
+                                                {{else}}
+                                                <tr>
+                                                    <td colspan="3" class="text-center alert-danger">Data is empty</td>
+                                                </tr>
+                                                {{end}}
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <p style="margin-bottom: 20px;"></p>
+                                <div class="text-center">
+                                    {{if .paginator.HasPages}}
+                                        <ul class="pagination">
+                                            {{if .paginator.HasPrev }}
+                                                <li class="page-item"><a class="page-link" href="{{.paginator.PageLinkFirst}}">First</a></li>
+                                                <li class="page-item"><a class="page-link" href="{{.paginator.PageLinkPrev}}">&lt;</a></li>
+                                            {{ else }}
+                                                <li class="page-item disabled"><a class="page-link"> First</a></li>
+                                                <li class="page-item disabled"><a class="page-link">&lt;</a></li>
+                                            {{ end }}
 
-											{{range $index, $page := .paginator.Pages}}
-												<li{{if $.paginator.IsActive .}} class="page-item active"{{end}}>
-													<a class="page-link" href="{{$.paginator.PageLink $page}}">{{$page}}</a>
-												</li>
-											{{end}}
+                                            {{range $index, $page := .paginator.Pages}}
+                                                <li{{if $.paginator.IsActive .}} class="page-item active"{{end}}>
+                                                    <a class="page-link" href="{{$.paginator.PageLink $page}}">{{$page}}</a>
+                                                </li>
+                                            {{end}}
 
-											{{ if .paginator.HasNext }}
-												<li class="page-item"><a class="page-link" href="{{.paginator.PageLinkNext}}">&gt;</a></li>
-												<li class="page-item"><a class="page-link" href="{{.paginator.PageLinkLast}}">Last</a></li>
-											{{ else }}
-												<li class="page-item disabled"><a class="page-link">&gt;</a></li>
-												<li class="page-item disabled"><a class="page-link">Last</a></li>
-											{{end}}
-										</ul>
-									{{end}}
-								</div>
+                                            {{ if .paginator.HasNext }}
+                                                <li class="page-item"><a class="page-link" href="{{.paginator.PageLinkNext}}">&gt;</a></li>
+                                                <li class="page-item"><a class="page-link" href="{{.paginator.PageLinkLast}}">Last</a></li>
+                                            {{ else }}
+                                                <li class="page-item disabled"><a class="page-link">&gt;</a></li>
+                                                <li class="page-item disabled"><a class="page-link">Last</a></li>
+                                            {{end}}
+                                        </ul>
+                                    {{end}}
+                                </div>
                        </div>
                 </div>
             </div>
-		</div>
-
-
-
+        </div>
     </div>
-
 	{{template "footer"}}
 	{{template "lastfooter"}}
 {{end}}

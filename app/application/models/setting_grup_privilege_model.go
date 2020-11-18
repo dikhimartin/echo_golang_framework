@@ -1,18 +1,37 @@
 package models
 
+// its use for definition database GORM
 type SettingGrupPrivilege struct {
-	Id             		   string `json:"id"`
-	Id_setting_grup        string `json:"id_setting_grup"`
-	Name_grup        	   string `json:"name_grup"`
-	Kode_Privilege 		   string `json:"kode_privilege"`
-	Hak_Akses              string `json:"hak_akses"`
-	Created_at             string `json:"created_at"`
-	Updated_at             string `json:"updated_at"`
-	Status           	   string `json:"status"`
-	Keterangan     		   string `json:"keterangan"`
+  ID                int      `gorm:"AUTO_INCREMENT;PRIMARY_KEY"`
+  Id_setting_grup   int      `gorm:"type:int(10); index; NOT NULL"` 
+  Remarks         	string   `gorm:"type:varchar(50)"`
+  Status            string   `gorm:"type:enum('Y','N'); comment:'Y:Active, N:Inactive'; default:'Y'"`
+  CreatedAt         string   `gorm:"type:timestamp(0); default:CURRENT_TIMESTAMP"`
+  UpdatedAt         string   `gorm:"type:timestamp(0); default:CURRENT_TIMESTAMP""`
+  Additional        string   `gorm:"type:varchar(191)"`
+}
+func (SettingGrupPrivilege) TableName() string {
+  return "tb_setting_grup_privilege"
 }
 
-type SettingGrupPrivileges struct {
-	SettingGrupPrivileges []SettingGrupPrivilege `json:"setting_grup_privilege"`
+// its use for call model from controllers
+type ModelGrupPrivilege struct {
+    ID                  string   `json:"id"` 
+    Id_setting_grup     string   `json:"id_setting_grup"`
+    Name_grup           string   `json:"name_grup"`
+    Remarks             string   `json:"remarks"`
+    Status              string   `json:"status"`
+    CreatedAt           string   `json:"created_at"`
+    UpdatedAt           string   `json:"updated_at"`
+    Additional          string   `json:"additional"`
 }
+
+// == its use for migration view_schema
+type SchemeGrupPrivilege struct {
+  	ID              	  string   `json:"id"` 
+  	Id_setting_grup     string   `json:"id_setting_grup"`
+  	Remarks       		  string   `json:"remarks"`
+  	Status        		  string   `json:"status"`
+}
+
 

@@ -1,13 +1,15 @@
 package models
 
-
 type GetDataLogin struct {
-	Id_users       	string `json:"id_users"`
-	Id_group       	string `json:"id_group"`
-	Name_users     	string `json:"name_users"`
-	Name_group     	string `json:"name_group"`    
-    Jti    			string
-    Exp    	   	 	string
-    Image    	   	string
-    Extension    	string
+  Id_user               int   		 `json:"id_user"`		     	
+  Id_group   			     int      	     `json:"id_group"`
+  Name_grup         	 string      `json:"name_grup"`     
+  Full_name            string      `json:"full_name"`     
+  Username          	 string      `json:"username"`     
+  Email           		 string      `json:"email"`     
+  Telephone         	 string      `json:"telephone"`     
+  Address         		 string      `json:"address"`     
+  Gender       	    	 string      `json:"gender"`    
+  Image             	 string      `json:"image"`     
+  Status            	 string      `json:"status"`    
 }

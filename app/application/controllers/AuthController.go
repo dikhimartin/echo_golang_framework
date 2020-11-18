@@ -1,91 +1,142 @@
 package controllers
 
 import (
-	// "fmt"
-
-	"crypto/md5"
-	"encoding/hex"
-	"net/http"
-	"strconv"
 	"time"
-
-	// "../models"
-	// "../database"
-	"../../customlogger"
-	"../../logincache"
+	"net/http"
+	"../models"
+	"../../database"
+	lib      "../../lib"
+	"github.com/dgrijalva/jwt-go"
 	"github.com/labstack/echo"
 )
 
-var authCode = "026556298d4ff7fc742a2daeb1748b0a"
-
 func FormLogin(c echo.Context) error {
-	customlogger.SetUser("LOGIN")
-	customlogger.Debug("Login Page")
-	return c.Render(http.StatusOK, "form_login", nil)
+	return c.Render(200, "form_login", nil)
 }
 
-func ProsesLogin(c echo.Context) error {
+func AuthorizationSignIn(c echo.Context) error {
+	db := database.CreateCon()
+	defer db.Close()
 
-	idUser := "1"
+	formusername := c.FormValue("username")
+	formpassword := c.FormValue("password")
 
-	// Create a new random session token
-	sessionToken := createToken(idUser)
-
-	// Set the token in the cache, along with the user whom it represents
-	// The token has an expiry time of 120 seconds
-	_, err := logincache.Cache.Do("SETEX", sessionToken, "120", "admin")
-	if err != nil {
-		// If there is an error in setting the cache, return an internal server error
-		// c.Response().WriteHeader(http.StatusInternalServerError)
-		return c.JSON(http.StatusInternalServerError, echo.Map{
-			"token": sessionToken,
-		})
-		// return c.Render(http.StatusInternalServerError, "form_login", nil)
+	// check_authentification
+	check_authentification := CheckPassword(formusername, formpassword)
+	if check_authentification == "username_false"{
+		return c.Redirect(http.StatusTemporaryRedirect, "/?login_verification=username_false")
+	}else if check_authentification == "password_false"{
+		return c.Redirect(http.StatusTemporaryRedirect, "/?login_verification=password_false")
 	}
 
-	// Finally, we set the client cookie for "session_token" as the session token we just generated
-	// we also set an expiry time of 120 seconds, the same as the cache
-	// http.SetCookie(c.Response(), &http.Cookie{
-	// 	Name:    "session_token",
-	// 	Value:   sessionToken,
-	// 	Expires: time.Now().Add(120 * time.Second),
-	// })
-	writeCookie(c, sessionToken)
+	// get_data_auth
+	var id_user []byte
+	row := db.Table("tb_setting_user").Where("username = ?", formusername).Select("id").Row() // (*sql.Row)
+	err := row.Scan(&id_user)
+	if err != nil{
+		logs.Println("users = "+ formusername + " Has Failed Loged in by password false")
+		logs.Println(err)
+		return c.Redirect(http.StatusTemporaryRedirect, "/?login_verification=password_false")
+	}
 
-	// return c.Redirect(301, "/")
+	// set_key_token
+	key_token := "receipt_go_" + ConvertToMD5("receipt_go_" + string(id_user))
 
-	return c.JSON(http.StatusOK, echo.Map{
-		"token": sessionToken,
-	})
+	//set_jwt
+	struct_claims := lib.JwtClaims{
+		jwt.StandardClaims{
+			Id 			: key_token,
+			ExpiresAt	: time.Now().Add(time.Duration(ConvertStringToInt(lib.GetEnv("SESSION_DURATION")))  * time.Hour).Unix(),
+		},
+	}
+	token, err := lib.CreateJwtToken(struct_claims)
+	if err != nil {
+		logs.Println("error create jwt token", err)
+		return c.Render(http.StatusInternalServerError, "error_500", nil)
+	}
 
-	// return c.Render(http.StatusOK, "form_login", nil)
-}
-
-func createToken(idUser string) string {
-	tm := time.Now().UnixNano()
-
-	// logger.Println(tm)
-	// return strconv.FormatInt(tm, 21)
-
-	hasher := md5.New()
-	hasher.Write([]byte(strconv.FormatInt(tm, 21) + authCode + idUser))
-	return hex.EncodeToString(hasher.Sum(nil))
-}
-
-func writeCookie(c echo.Context, sessionToken string) {
-	cookie := new(http.Cookie)
-	cookie.Name = "_t"
-	cookie.Value = sessionToken
-	cookie.Expires = time.Now().Add(24 * time.Second)
+	//set_cookie
+	cookie := &http.Cookie{}
+	cookie.Name    = lib.COOKIE_NAME
+	cookie.Value   = key_token
+	cookie.Path    = "/"
+	cookie.Expires = time.Now().Add(time.Duration(ConvertStringToInt(lib.GetEnv("SESSION_DURATION")))  * time.Hour)
 	c.SetCookie(cookie)
-	// return c.String(http.StatusOK, "write a cookie")
+
+	// set_redis
+	err = redis_connect.Set(key_token, token, 0).Err()
+	if err != nil {
+		logs.Println(err)
+		return c.Render(http.StatusInternalServerError, "error_500", nil)
+	}
+	redis_connect.Expire(key_token, time.Duration(ConvertStringToInt(lib.GetEnv("SESSION_DURATION"))) *time.Hour)
+
+
+	// // save_auth_token
+	var user models.SettingUser
+	update_token := db.Model(&user).Where("id = ?", string(id_user)).Update("auth_token", token)
+	if update_token.Error != nil{
+		logs.Println(update_token.Error)
+		return c.Render(http.StatusInternalServerError, "error_500", nil)
+	}
+
+	return c.Redirect(http.StatusTemporaryRedirect, "/lib/sign/redirect/")
 }
 
-func readCookie(c echo.Context, cookieName string) string {
-	cookie, err := c.Cookie(cookieName)
-	if err != nil {
-		return err.Error()
+func CheckPassword(formusername, formpassword string) string{
+	db := database.CreateCon()
+	defer db.Close()
+
+	//check_username
+	var username, password []byte
+	row := db.Table("tb_setting_user").Where("username = ?", formusername).Select("username, password").Row() // (*sql.Row)
+	err := row.Scan(&username, &password)
+	if err != nil{
+		logs.Println("users = "+ string(username) + " Has Failed Loged in by username false")
+		logs.Println(err)
+		return "username_false"
 	}
-	return cookie.Value
-	// return c.String(http.StatusOK, "read a cookie")
+
+	// check_password
+	validate_password := CheckPasswordHash(formpassword, string(password))
+	if validate_password == true{
+		logs.Println("users = "+ string(username) + " Has Loged in Succesfully")
+	}else{
+		logs.Println("users = "+ string(username) + " Has Failed Loged in by password false")
+		return "password_false"
+	}
+	return "success"
 }
+
+func GetDataLogin(c echo.Context) (models.GetDataLogin) {
+	db := database.CreateCon()
+	defer db.Close()
+
+	var id, id_grup, name_grup, full_name, username, email, telephone, address, gender, status, image []byte
+	row := db.Table("tb_setting_user user").Joins("LEFT JOIN tb_setting_user_grup user_grup ON user.id = user_grup.id_setting_user").Joins("LEFT JOIN tb_setting_grup grup ON user_grup.id_setting_grup = grup.id").Where("auth_token = ?", lib.GetTokenRedis(lib.GetKeyJwt(c))).Select("user.id, user_grup.id_setting_grup,  grup.name_grup, user.full_name, user.username, user.email, user.telephone, user.address, user.gender, user.status, user.image").Row() 
+	err := row.Scan(&id, &id_grup, &name_grup, &full_name, &username, &email, &telephone, &address, &gender, &status, &image)
+	if err != nil {
+		logs.Println(err)
+	}
+
+	data_users 			:= models.GetDataLogin{
+		Id_user  	: 	ConvertStringToInt(string(id)),
+		Id_group  	: 	ConvertStringToInt(string(id_grup)),
+		Name_grup  	: 	string(name_grup),
+		Full_name  	: 	string(full_name),
+		Username  	: 	string(username),
+		Email  		: 	string(email),
+		Telephone  	: 	string(telephone),
+		Address  	: 	string(address),
+		Gender  	: 	string(gender),
+		Status  	: 	string(status),
+		Image  		: 	string(image),
+	}
+
+	return data_users
+}
+
+
+
+
+
