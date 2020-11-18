@@ -12,9 +12,9 @@
 [![License](http://img.shields.io/badge/license-mit-blue.svg?style=flat-square)](https://raw.githubusercontent.com/labstack/echo/master/LICENSE)
 
 ## Opsi 
-### 1. Docker
+### 1. Docker (portablize)
 
-#### Sumary 
+#### Intro 
 Docker adalah sebuah platform open source untuk menyatukan file-file yang dibutuhkan sebuah software sehingga menjadi menjadi satu kesatuan yang lengkap dan berfungsi secara portabel dan bersifat virtual server. 
 
 #### Requirement install
@@ -34,44 +34,49 @@ docker-compose exec go bash
 go run main.go
 ```
 
-
-
-
-
-## 1.b. Cara Menjalankan Service (Go bash)
-### Requirement Server install
-- GO            => go1.15.1
-- Redis Server  => 4.0.9)
-- Mysql         => (mysql  Ver 14.14 Distrib 5.7.30, for Linux)
-
- ``` shell
- cd app/
- go run main.go 
- ```
- 
- 
-## 2. Server Running
+#### Server Running
 ```shell
 http://localhost:8888/
 ```
 
-## 3. Stop Server
+#### Stop Server
 ```shell
 docker-compose down
 ```
-
-
-## Manage Redis Cache
+#### Manage Redis Cache
 ```shell
 docker-compose exec redis redis-cli
 ```
 
-## Manage Mysql Database
+#### Manage Mysql Database
 ```shell
 docker-compose exec mysql sh 
 mysql -u user -p
 Enter password: user
 ```
+
+#### Sumary
+
+### 2. Bash (manual native) 
+
+#### Requirement install
+- GO            => go1.15.1
+- Redis Server  => 4.0.9)
+- Mysql         => (mysql  Ver 14.14 Distrib 5.7.30, for Linux)
+
+
+#### Cara Menjalankan 
+ ``` shell
+ cd app/
+ go run main.go 
+ ```
+ 
+#### Server Running
+```shell
+http://localhost:8888/
+```
+
+
 
 
 ## Author Owner
