@@ -11,12 +11,12 @@
 [![Twitter](https://img.shields.io/badge/twitter-@labstack-55acee.svg?style=flat-square)](https://twitter.com/labstack)
 [![License](http://img.shields.io/badge/license-mit-blue.svg?style=flat-square)](https://raw.githubusercontent.com/labstack/echo/master/LICENSE)
 
-<!-- 
+
 ## Requirement Server
-- GO => go1.13.12
+- GO => go1.15.1
 - Redis Server (4.0.9)
 - Mysql (mysql  Ver 14.14 Distrib 5.7.30, for Linux)
- -->
+
 
 ## Cara Menjalankan
 ``` shell
@@ -25,12 +25,6 @@ cd app/
 docker-compose up -d
 docker-compose exec go bash
 ```
-
-Note : Apabila package belum terinstall 
-```shell
-go get -v
-```
-
 ```shell
 go run main.go
 ```

@@ -3,7 +3,7 @@ package controllers
 import (
 	"fmt"
 	"strconv"
-	"../../database"
+	"receipt/database"
 	"github.com/labstack/echo"
 )
 

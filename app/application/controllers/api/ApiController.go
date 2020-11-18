@@ -3,10 +3,10 @@ package api
 import (
 	"fmt"
 	"net/http"
-	"../../models"
-	"../../../database"
-	controllers ".."
-	lib      	"../../../lib"
+	"receipt/application/models"
+	"receipt/database"
+	controllers "receipt/application/controllers"
+	lib      	"receipt/lib"
 	"github.com/labstack/echo"
 )
 var logs 		  			= lib.RecordLog("SYSTEMS -")

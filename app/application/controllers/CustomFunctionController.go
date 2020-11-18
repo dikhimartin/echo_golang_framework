@@ -13,7 +13,7 @@ import (
 	"encoding/json"
 	"github.com/labstack/echo"
 	"github.com/dikhimartin/beego-v1.12.0/utils/pagination"
-	lib      "../../lib"
+	lib      "receipt/lib"
 )
 
 // ## Define Config Variable Global

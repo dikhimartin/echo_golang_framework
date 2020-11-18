@@ -2,7 +2,7 @@ package database
 
 import (
 	"fmt"
-	lib   "../lib"
+	lib   "receipt/lib"
      _"github.com/jinzhu/gorm/dialects/mysql"
     "github.com/jinzhu/gorm"
 )

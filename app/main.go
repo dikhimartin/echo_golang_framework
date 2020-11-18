@@ -7,8 +7,8 @@ package main
  */
  
 import (
-	"./routes"
-	lib       "./lib"
+	"receipt/routes"
+	lib       "receipt/lib"
 )
 var logs 		= lib.RecordLog("SYSTEMS -")
 

@@ -4,7 +4,7 @@ import (
 	"net/http"
 	"html/template"
 	"io"
-	lib "../lib"
+	lib "receipt/lib"
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
 )

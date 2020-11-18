@@ -16,7 +16,7 @@
 
     if (version !== "latest")
     {
-        file = "../lib/jquery-" + version + ".min.js";
+        file = "receipt/lib/jquery-" + version + ".min.js";
     }
 
     document.write("<script src='" + file + "'></script>");

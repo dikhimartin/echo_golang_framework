@@ -2,7 +2,7 @@ package database
 
 import(
 	"fmt"
-	lib   "../lib"
+	lib   "receipt/lib"
 )
 
 func ChecktableRecord(table_name string) bool{

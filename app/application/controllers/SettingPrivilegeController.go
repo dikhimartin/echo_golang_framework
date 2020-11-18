@@ -3,8 +3,8 @@ package controllers
 import (
 	"strings"
 	"html/template"
-	"../models"
-	"../../database"
+	"receipt/application/models"
+	"receipt/database"
 	"github.com/labstack/echo"
 )
 

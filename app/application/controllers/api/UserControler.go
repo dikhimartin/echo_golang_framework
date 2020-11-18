@@ -2,8 +2,8 @@ package api
 
 import(
 	"time"
-	controllers ".."
-	"../../../database"
+	controllers "receipt/application/controllers"
+	"receipt/database"
 	"github.com/labstack/echo"
 )
 

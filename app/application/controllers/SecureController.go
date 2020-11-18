@@ -1,7 +1,7 @@
 package controllers
 
 import (
-	"../../database"
+	"receipt/database"
 )
 
 
