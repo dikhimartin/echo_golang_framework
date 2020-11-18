@@ -61,7 +61,7 @@ func ViewMigrate(){
 	// v_get_grup_privilege_detail
 	if DropViewIfExist("v_get_grup_privilege_detail") != false{
 		if ChecktableExist("v_get_grup_privilege_detail") == true {
-			db.Exec("CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_get_grup_privilege_detail`  AS  "+ v_get_grup_privilege_detail() +";")
+			db.Exec("CREATE ALGORITHM=UNDEFINED DEFINER=`user`@`localhost` SQL SECURITY DEFINER VIEW `v_get_grup_privilege_detail`  AS  "+ v_get_grup_privilege_detail() +";")
 		}
 	}
 
