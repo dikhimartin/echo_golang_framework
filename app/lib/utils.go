@@ -30,7 +30,7 @@ func IsNilInterface(request ...interface{}) bool {
 //server header
 func ServerHeader(next echo.HandlerFunc) echo.HandlerFunc {
 	return func(c echo.Context) error {
-		c.Response().Header().Set(echo.HeaderServer, "UMKMKITA/0.1")
+		c.Response().Header().Set(echo.HeaderServer, "ReceiptGo/0.2")
 		return next(c)
 	}
 }
