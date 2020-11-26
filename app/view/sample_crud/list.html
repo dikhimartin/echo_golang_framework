@@ -99,32 +99,30 @@
 											</tr>
 										</thead>
 										<tbody>
-											{{if .posts}}
-											{{range .posts}}
-											<tr id='tr_{{.Id}}'>
+											{{if .data}}
+											{{range .data}}
+											<tr id='tr_{{.ID}}'>
 												<td>
 		                                            <label class="custom-control custom-checkbox">
-		                                                <input  name="ceklis_data" type="checkbox" class="custom-control-input" id='del_{{.Id}}'>
+		                                                <input  name="ceklis_data" type="checkbox" class="custom-control-input" id='del_{{.ID}}'>
 		                                                <span class="custom-control-label"></span>
 		                                            </label>
 		                                        </td>
 												<td>{{.Text_input}}</td>
-												<td>{{.Created_at}}</td>
-												<td>{{.Updated_at}}</td>
+												<td>{{.CreatedAt}}</td>
+												<td>{{.UpdatedAt}}</td>
 												<td>
 													{{if (eq .Status "Y") }}
-													<label class="label label-success">Active</label>
+														<label class="label label-success">Active</label>
 													{{else if (eq .Status "N") }}
-													<label class="label label-danger">Non-Active</label>
-													{{else}}
-													<label class="label label-danger">Empty</label>
+														<label class="label label-danger">Non-Active</label>
 													{{end}}
 												</td>
 												<td class="text-nowrap">
-													<a href="/lib/sample_crud/editform/{{.Id}}" class="btn btn-sm btn-info" data-toggle="tooltip" data-placement="top" title="Edit data!">
+													<a href="/lib/sample_crud/editform/{{.ID}}" class="btn btn-sm btn-info" data-toggle="tooltip" data-placement="top" title="Edit data!">
 														<i class="fa fa-pencil"></i>
 													</a>
-													<a href="javascript:void(0)" onclick=delete_data({{ .Id }})><button type="button" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="Delete data!">
+													<a href="javascript:void(0)" onclick=delete_data({{ .ID }})><button type="button" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="Delete data!">
 														<i class="fa fa-trash"></i>
 														</button>
 													</a>
@@ -274,10 +272,10 @@
 		                        type: "POST",
 		                        data: {"id":id},
 		                        dataType: "JSON",
-		                        success: function(result)
-		                        {
-		                             if(result) //if success close modal and reload ajax table
-		                            {
+		                        success: function(result){
+		                        	console.log("result = ", result);
+		                        	
+		                             if(result){
 		                                swal("Done!","File deleted successfully!","success");
 						                    $("#tr_"+id).remove();
 

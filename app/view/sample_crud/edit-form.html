@@ -17,7 +17,7 @@
         </div>
         <!-- End Bread crumb and right sidebar toggle -->
 
-            <!-- Konten -->
+        <!-- Konten -->
         <div class="container-fluid">
             <div class="row ">
                 <!-- Data -->
@@ -27,32 +27,32 @@
                             <h4 class="card-title m-b-0 text-white">Edit Data</h4>
                         </div>
                         <div class="card-body">
-                            <form action="/lib/sample_crud/editform/{{.response.Id}}" method="POST" enctype="multipart/form-data"
+                            <form action="/lib/sample_crud/editform/{{.data.Additional}}" method="POST" enctype="multipart/form-data"
                             onsubmit="return validasi_input(this)">
                             <div class="row">
                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                     <div class="form-group" id="text_input">
                                         <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12">Text Input <span class="required">*</span></label>
                                         <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
-                                            <input type="text" class="form-control" name="text_input" placeholder="Text Input" value="{{.response.Text_input}}" />
+                                            <input type="text" class="form-control" name="text_input" placeholder="Text Input" value="{{.data.Text_input}}" />
                                             <small class='form-control-feedback' id='alert-text-input'></small>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12">Text Area</label>
                                         <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
-                                             <textarea name="text_area" class="form-control" placeholder="Text Area" data-autosize>{{.response.Text_area}}</textarea>
+                                             <textarea name="text_area" class="form-control" placeholder="Text Area" data-autosize>{{.data.Text_area}}</textarea>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12">Radio Button</label>
                                         <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
                                             <label class="custom-control custom-radio">
-                                                <input id="radio1" name="status" type="radio" class="custom-control-input" value="Y" {{if eq (.response.Status) ("Y")}} checked="" {{end}}>
+                                                <input id="radio1" name="status" type="radio" class="custom-control-input" value="Y" {{if eq (.data.Status) ("Y")}} checked="" {{end}}>
                                                 <span class="custom-control-label">Aktif</span>
                                             </label>
                                             <label class="custom-control custom-radio">
-                                                <input id="radio2" name="status" type="radio" class="custom-control-input" value="N" {{if eq (.response.Status) ("N")}} checked="" {{end}}>
+                                                <input id="radio2" name="status" type="radio" class="custom-control-input" value="N" {{if eq (.data.Status) ("N")}} checked="" {{end}}>
                                                 <span class="custom-control-label">Non Aktif</span>
                                             </label>
                                         </div>
