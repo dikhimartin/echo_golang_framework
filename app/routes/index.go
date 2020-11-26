@@ -125,12 +125,11 @@ func Index() *echo.Echo {
 	e.Static("static", "assets")
 	e.Static("upload", "upload")
 	
-
 	//Dashbord
 	DashboardRoute(AuthGroup)
 
 	// Modul Sample Crud
-	// SampleCrud(cookieGroup)
+	SampleCrud(AuthGroup)
 
 	// Modul Setting
 	SettingGrup(AuthGroup)

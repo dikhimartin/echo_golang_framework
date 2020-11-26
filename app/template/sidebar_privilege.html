@@ -5,90 +5,121 @@
             $.ajax({
                 url : "/lib/api/getsidebarprivilege/",
                 type: "GET",
-                success: function(get_sidebar){
-                    var menu         = get_sidebar;
+                success: function(result){
+                    var menu         = result.data;
+                    var developer    = result.developer;
                     var curents_url  = window.location.href;
 
+                    var sample_crud;                
+                    var setting_grup;                
+                    var setting_privilege;           
+                    var setting_user;                
+                    var setting_grup_privilege;      
+
+                    $.each(menu, function( key, value ) {
+                        if (value == "samplecrud_2"){
+                            sample_crud = value;
+                        }
+                        if (value == "setting.user.grup_2"){
+                            setting_grup = value;
+                        }
+                        if (value == "setting.user.privilege_2"){
+                            setting_privilege = value;
+                        }
+                        if (value == "setting.user.user_2"){
+                            setting_user = value;
+                        }
+                        if (value == "setting.user.grupprivilege_2"){
+                            setting_grup_privilege = value;
+                        }
+                    });    
+
                     // => SAMPLE_CRUD
-                    if (menu.Sample_crud == "samplecrud_2") {
-                        var  sample_crud = "";
+                    if (sample_crud == "samplecrud_2") {
+                        var  menu = "";
                         if (curents_url.match("/lib/sample_crud/") != null) {
                             $("#sample_crud").addClass("active");
-                            sample_crud += '<a class="waves-effect waves-dark" href="/lib/sample_crud/" aria-expanded="false"><i class="fa fa-table" aria-hidden="true"></i><span class="hide-menu">Sample Crud</span></a>';
+                            menu += '<a class="waves-effect waves-dark" href="/lib/sample_crud/" aria-expanded="false"><i class="fa fa-table" aria-hidden="true"></i><span class="hide-menu">Sample Crud</span></a>';
                         }else{
-                            sample_crud += '<a class="waves-effect waves-dark" href="/lib/sample_crud/" aria-expanded="false"><i class="fa fa-table" aria-hidden="true"></i><span class="hide-menu">Sample Crud</span></a>';
+                            menu += '<a class="waves-effect waves-dark" href="/lib/sample_crud/" aria-expanded="false"><i class="fa fa-table" aria-hidden="true"></i><span class="hide-menu">Sample Crud</span></a>';
                         }
-                        $("#sample_crud").html(sample_crud)
+                        $("#sample_crud").html(menu)
                     }
-
+                    
                     // => SETTING
-                    if (menu.Setting_grup == "" && menu.Setting_privilege == "" && menu.Setting_user == "" && menu.Setting_grup_privilege == "") {
+                    if (setting_grup == "" && setting_privilege == "" && setting_user == "" && setting_grup_privilege == "") {
                         $("#setting").remove();
                     }
-                    // User Privileges
-                    if (menu.Setting_grup == "" && menu.Setting_privilege == "" && menu.Setting_user == "" && menu.Setting_grup_privilege == "") {
-                        $("#users_privilege").remove();
+                        // User Privileges
+                        if (setting_grup == "" && setting_privilege == "" && setting_user == "" && setting_grup_privilege == "") {
+                            $("#users_privilege").remove();
+                        }
+                        if (setting_grup == "setting.user.grup_2") {
+                            var menu = "";
+                            if (curents_url.match("/lib/setting/grup/") != null) {
+                                $("#setting").addClass("active");
+                                $("#setting_expand").attr('aria-expanded', true);
+                                $("#setting_expand").addClass('collapse in');
+                                $("#users_privilege ul").attr('aria-expanded', true);
+                                $("#users_privilege ul").addClass('collapse in');
+                                $("#setting_user_grup").addClass("active");
+                                menu += '<a class="active" href="/lib/setting/grup/"><i class="fa fa-angle-double-right" aria-hidden="true"></i>&nbsp;Grup</a>';
+                             }else{
+                                menu += '<a href="/lib/setting/grup/"><i class="fa fa-angle-double-right" aria-hidden="true"></i>&nbsp;Grup</a>';
+                             }
+                                $("#setting_user_grup").html(menu);
+                        }                    
+                        if (setting_user == "setting.user.user_2") {
+                            var menu = "";
+                            if (curents_url.match("/lib/setting/user/") != null) {
+                                $("#setting").addClass("active");
+                                $("#setting_expand").attr('aria-expanded', true);
+                                $("#setting_expand").addClass('collapse in');
+                                $("#users_privilege ul").attr('aria-expanded', true);
+                                $("#users_privilege ul").addClass('collapse in');
+                                $("#setting_user_users").addClass("active");
+                                menu += '<a class="active" href="/lib/setting/user/"><i class="fa fa-angle-double-right" aria-hidden="true"></i>&nbsp;User</a>';
+                             }else{
+                                menu += '<a href="/lib/setting/user/"><i class="fa fa-angle-double-right" aria-hidden="true"></i>&nbsp;User</a>';
+                             }
+                                $("#setting_user_users").html(menu);
+                        }
+                        if (setting_grup_privilege == "setting.user.grupprivilege_2") {
+                            var menu = "";
+                            if (curents_url.match("/lib/setting/grup_privilege/") != null) {
+                                $("#setting").addClass("active");
+                                $("#setting_expand").attr('aria-expanded', true);
+                                $("#setting_expand").addClass('collapse in');
+                                $("#users_privilege ul").attr('aria-expanded', true);
+                                $("#users_privilege ul").addClass('collapse in');
+                                $("#setting_user_grup_privilege").addClass("active");
+                                menu += '<a class="active" href="/lib/setting/grup_privilege/"><i class="fa fa-angle-double-right" aria-hidden="true"></i>&nbsp;Grup Privilege</a>';
+                             }else{
+                                menu += '<a href="/lib/setting/grup_privilege/"><i class="fa fa-angle-double-right" aria-hidden="true"></i>&nbsp;Grup Privilege</a>';
+                             }
+                                $("#setting_user_grup_privilege").html(menu);
+                        }
+
+
+                    // Developer Use
+                    if (developer == "developer"){
+                        if (setting_privilege == "setting.user.privilege_2") {
+                            var menu = "";
+                            if (curents_url.match("/lib/setting/privilege/") != null) {
+                                $("#setting").addClass("active");
+                                $("#setting_expand").attr('aria-expanded', true);
+                                $("#setting_expand").addClass('collapse in');
+                                $("#users_privilege ul").attr('aria-expanded', true);
+                                $("#users_privilege ul").addClass('collapse in');
+                                $("#setting_user_privilege").addClass("active");
+                                menu += '<a class="active" href="/lib/setting/privilege/"><i class="fa fa-angle-double-right" aria-hidden="true"></i>&nbsp;Privilege</a>';
+                             }else{
+                                menu += '<a href="/lib/setting/privilege/"><i class="fa fa-angle-double-right" aria-hidden="true"></i>&nbsp;Privilege</a>';
+                             }
+                                $("#setting_user_privilege").html(menu);
+                        }
                     }
-                    if (menu.Setting_grup == "setting.user.grup_2") {
-                        var setting_user_grup = "";
-                        if (curents_url.match("/lib/setting/grup/") != null) {
-                            $("#setting").addClass("active");
-                            $("#setting_expand").attr('aria-expanded', true);
-                            $("#setting_expand").addClass('collapse in');
-                            $("#users_privilege ul").attr('aria-expanded', true);
-                            $("#users_privilege ul").addClass('collapse in');
-                            $("#setting_user_grup").addClass("active");
-                            setting_user_grup += '<a class="active" href="/lib/setting/grup/"><i class="fa fa-angle-double-right" aria-hidden="true"></i>&nbsp;Grup</a>';
-                         }else{
-                            setting_user_grup += '<a href="/lib/setting/grup/"><i class="fa fa-angle-double-right" aria-hidden="true"></i>&nbsp;Grup</a>';
-                         }
-                            $("#setting_user_grup").html(setting_user_grup);
-                    }
-                    if (menu.Setting_privilege == "setting.user.privilege_2") {
-                        var setting_user_privilege = "";
-                        if (curents_url.match("/lib/setting/privilege/") != null) {
-                            $("#setting").addClass("active");
-                            $("#setting_expand").attr('aria-expanded', true);
-                            $("#setting_expand").addClass('collapse in');
-                            $("#users_privilege ul").attr('aria-expanded', true);
-                            $("#users_privilege ul").addClass('collapse in');
-                            $("#setting_user_privilege").addClass("active");
-                            setting_user_privilege += '<a class="active" href="/lib/setting/privilege/"><i class="fa fa-angle-double-right" aria-hidden="true"></i>&nbsp;Privilege</a>';
-                         }else{
-                            setting_user_privilege += '<a href="/lib/setting/privilege/"><i class="fa fa-angle-double-right" aria-hidden="true"></i>&nbsp;Privilege</a>';
-                         }
-                            $("#setting_user_privilege").html(setting_user_privilege);
-                    }
-                    if (menu.Setting_user == "setting.user.user_2") {
-                        var setting_user_users = "";
-                        if (curents_url.match("/lib/setting/user/") != null) {
-                            $("#setting").addClass("active");
-                            $("#setting_expand").attr('aria-expanded', true);
-                            $("#setting_expand").addClass('collapse in');
-                            $("#users_privilege ul").attr('aria-expanded', true);
-                            $("#users_privilege ul").addClass('collapse in');
-                            $("#setting_user_users").addClass("active");
-                            setting_user_users += '<a class="active" href="/lib/setting/user/"><i class="fa fa-angle-double-right" aria-hidden="true"></i>&nbsp;User</a>';
-                         }else{
-                            setting_user_users += '<a href="/lib/setting/user/"><i class="fa fa-angle-double-right" aria-hidden="true"></i>&nbsp;User</a>';
-                         }
-                            $("#setting_user_users").html(setting_user_users);
-                    }
-                    if (menu.Setting_grup_privilege == "setting.user.grupprivilege_2") {
-                        var setting_user_grup_privilege = "";
-                        if (curents_url.match("/lib/setting/grup_privilege/") != null) {
-                            $("#setting").addClass("active");
-                            $("#setting_expand").attr('aria-expanded', true);
-                            $("#setting_expand").addClass('collapse in');
-                            $("#users_privilege ul").attr('aria-expanded', true);
-                            $("#users_privilege ul").addClass('collapse in');
-                            $("#setting_user_grup_privilege").addClass("active");
-                            setting_user_grup_privilege += '<a class="active" href="/lib/setting/grup_privilege/"><i class="fa fa-angle-double-right" aria-hidden="true"></i>&nbsp;Grup Privilege</a>';
-                         }else{
-                            setting_user_grup_privilege += '<a href="/lib/setting/grup_privilege/"><i class="fa fa-angle-double-right" aria-hidden="true"></i>&nbsp;Grup Privilege</a>';
-                         }
-                            $("#setting_user_grup_privilege").html(setting_user_grup_privilege);
-                    }
+
 
                 },
                 error: function (jqXHR, textStatus, errorThrown){

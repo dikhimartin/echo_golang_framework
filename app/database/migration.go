@@ -15,6 +15,7 @@ func AutoMigrate(){
 		&models.SettingGrupPrivilegeDetail{},
 		&models.SettingUserGrup{},
 		&models.Permission{},
+		&models.SampleCrud{},
 	)
 	defer db.Close()
 }
