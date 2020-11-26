@@ -68,6 +68,7 @@ https://dev.mysql.com/doc/mysql-installation-excerpt/5.7/en/
 
 #### Cara Menjalankan 
  ``` shell
+ cp app/.env.bash.example app/.env
  cd app/
  go run main.go 
  ```
